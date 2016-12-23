@@ -117,7 +117,7 @@ func parseIP(s string) (net.IP, error) {
 func parseTCPAddr(s string) (net.TCPAddr, error) {
 	tcpADDR, err := net.ResolveTCPAddr("tcp", strings.TrimSpace(s))
 	if err != nil {
-		return net.TCPAddr{}, err
+		return net.TCPAddr{}, fmt.Errorf("failed to parse TCPAddr: %q", s)
 	}
 	return *tcpADDR, nil
 }

@@ -1,4 +1,4 @@
-# sflags - Generate flags by parsing structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)
+# Generate flags based on structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)
  [![Go Report Card](https://goreportcard.com/badge/github.com/octago/sflags)](https://goreportcard.com/report/github.com/octago/sflags)
 
 
@@ -122,8 +122,8 @@ Supported flags and cli libraries:
 Matrix:
 
 | Name | Hidden | Deprecated | Short | Env |
-|----|----|----|----|
+| --- | --- | --- | --- | --- |
 | flag | - | - | - | - |
-| pflag | [ ] | [ ] | [ ] | [ ] |
+| pflag | [ ] | [ ] | [x] | - |
 | kingpin | [ ] | [ ] | [ ] | [ ] |
-| urfave | [ ] | [ ] | [ ] | [ ] |
+| urfave | [x] | - | [x] | [x] |

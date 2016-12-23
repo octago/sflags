@@ -11,6 +11,7 @@ all: prepare
 travis: info vet lint check test_v
 
 coverage:
+	@echo "$(OK_COLOR)Generate coverage$(NO_COLOR)"
 	@./scripts/cover_multi.sh
 
 prepare: generate fmt vet lint check test race
