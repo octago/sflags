@@ -1,6 +1,6 @@
 package main
 
-// This packages shows how to use sflags with urfave/cli library.
+// This packages shows how to use sflags with kingpin library.
 
 import (
 	"fmt"
@@ -9,14 +9,14 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/alecthomas/kingpin"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/octago/sflags"
-	"github.com/octago/sflags/gen/gcli"
-	"github.com/urfave/cli"
+	"github.com/octago/sflags/gen/gkingpin"
 )
 
 type httpConfig struct {
-	Host    string ` desc:"HTTP host"`
+	Host    string `desc:"HTTP host2"`
 	Port    int    `flag:"port p"`
 	SSL     bool
 	Timeout time.Duration
@@ -46,31 +46,28 @@ func main() {
 		Regexp: regexp.MustCompile("abc"),
 	}
 
-	flags, err := gcli.Parse(cfg)
+	app := kingpin.New("testApp", "")
+	app.Terminate(nil)
+
+	err := gkingpin.ParseTo(cfg, app, sflags.Prefix("kingpin."))
 	if err != nil {
 		log.Fatalf("err: %v", err)
 	}
-	cliApp := cli.NewApp()
-	cliApp.Action = func(c *cli.Context) error {
-		return nil
-	}
-	cliApp.Flags = flags
+
 	// print usage
-	err = cliApp.Run([]string{"cliApp", "--help"})
+	_, err = app.Parse([]string{"--help"})
 	if err != nil {
 		fmt.Printf("err: %v", err)
 	}
-	err = cliApp.Run([]string{
-		"cliApp",
-		"--count=10",
-		"--http-host", "localhost",
+	_, err = app.Parse([]string{
+		"--kingpin.http-host", "localhost",
 		"-p", "9000",
-		"--http-ssl",
-		"--http-timeout", "30s",
-		"--http-addr", "google.com:8000",
-		"--regexp", "ddfd",
-		"--count", "--count",
-		"--hidden-flag", "hidden_value",
+		"--kingpin.http-ssl",
+		"--kingpin.http-timeout", "30s",
+		"--kingpin.http-addr", "google.com:8000",
+		"--kingpin.regexp", "ddfd",
+		"--kingpin.count", "--kingpin.count",
+		"--kingpin.hidden-flag", "hidden_value",
 	})
 	if err != nil {
 		fmt.Printf("err: %v", err)

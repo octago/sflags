@@ -7,7 +7,7 @@
  - [x] [spf13/pflag](https://github.com/spf13/pflag)
  - [ ] [spf13/cobra](https://github.com/spf13/cobra)
  - [x] [urfave/cli](https://github.com/urfave/cli)
- - [ ] [kingpin](https://github.com/alecthomas/kingpin)
+ - [x] [kingpin](https://github.com/alecthomas/kingpin)
 
 ## Features:
 
@@ -58,7 +58,7 @@
 | --- | --- | --- | --- | --- |
 | flag | - | - | - | - |
 | pflag | [x] | [x] | [x] | - |
-| kingpin | [ ] | [ ] | [ ] | [ ] |
+| kingpin | [x] | [ ] | [x] | [x] |
 | urfave | [x] | - | [x] | [x] |
 | cobra | [ ] | [ ] | [ ] | [ ] |
 
@@ -188,3 +188,7 @@ func FlagDivider(val string)
 func EnvDivider(val string)
 ```
 
+
+## Known issues
+
+ - kingpin doesn't pass value for boolean arguments. Counter can't get initial value from arguments.
