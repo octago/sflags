@@ -169,16 +169,22 @@ Custom types:
 
 Supported flags and cli libraries:
 
- - [ ] [flag](https://golang.org/pkg/flag/)
- - [ ] [spf13/pflag](https://github.com/spf13/pflag)
+ - [x] [flag](https://golang.org/pkg/flag/)
+ - [x] [spf13/pflag](https://github.com/spf13/pflag)
  - [ ] [spf13/cobra](https://github.com/spf13/cobra)
- - [ ] [urfave/cli](https://github.com/urfave/cli)
+ - [x] [urfave/cli](https://github.com/urfave/cli)
+ - [ ] [kingpin](https://github.com/alecthomas/kingpin)
 
-Matrix:
+Supported features matrix:
 
 | Name | Hidden | Deprecated | Short | Env |
 | --- | --- | --- | --- | --- |
 | flag | - | - | - | - |
-| pflag | [ ] | [ ] | [x] | - |
+| pflag | [x] | [x] | [x] | - |
 | kingpin | [ ] | [ ] | [ ] | [ ] |
 | urfave | [x] | - | [x] | [x] |
+| cobra | [ ] | [ ] | [ ] | [ ] |
+
+  \[x] - feature is supported and implemented
+  
+  `-` - feature can't be implemented for this cli library
