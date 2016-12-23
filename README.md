@@ -1,8 +1,64 @@
-# Generate flags based on structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)
+# Flags based on structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)
  [![Go Report Card](https://goreportcard.com/badge/github.com/octago/sflags)](https://goreportcard.com/report/github.com/octago/sflags)
 
+Simple example for standard flag:
 
-Look at the examples in examples folder for different flag libraries.
+```golang
+package main
+
+
+import (
+	"log"
+	"time"
+	"flag"
+
+	"github.com/octago/sflags/gen/gflag"
+)
+
+type httpConfig struct {
+	Host    string `desc:"HTTP host"`
+	Port    int
+	SSL     bool
+	Timeout time.Duration
+}
+
+type config struct {
+	HTTP   httpConfig
+}
+
+func main() {
+	cfg := &config{
+		HTTP: httpConfig{
+			Host:    "127.0.0.1",
+			Port:    6000,
+			SSL:     false,
+			Timeout: 15 * time.Second,
+		},
+	}
+	err := gflag.ParseToDef(cfg)
+	if err != nil {
+		log.Fatalf("err: %v", err)
+	}
+	flag.Parse()
+}
+```
+
+That code generates next output:
+```
+go run ./main.go --help
+Usage of _obj/exe/main:
+  -http-host value
+    	HTTP host (default 127.0.0.1)
+  -http-port value
+    	 (default 6000)
+  -http-ssl
+
+  -http-timeout value
+    	 (default 15s)
+exit status 2
+```
+
+Look at other [examples](https://github.com/octago/sflags/blob/master/examples) different flag libraries.
 
 ## Options for flag tag
 
