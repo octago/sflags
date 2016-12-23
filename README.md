@@ -1,5 +1,71 @@
 # Flags based on structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)  [![Go Report Card](https://goreportcard.com/badge/github.com/octago/sflags)](https://goreportcard.com/report/github.com/octago/sflags)
 
+
+## Supported flags and cli libraries:
+
+ - [x] [flag](https://golang.org/pkg/flag/)
+ - [x] [spf13/pflag](https://github.com/spf13/pflag)
+ - [ ] [spf13/cobra](https://github.com/spf13/cobra)
+ - [x] [urfave/cli](https://github.com/urfave/cli)
+ - [ ] [kingpin](https://github.com/alecthomas/kingpin)
+
+## Features:
+
+ - [x] Set environment name
+ - [x] Set usage
+ - [x] Long and short forms
+ - [x] Skip field
+ - [ ] Required
+ - [ ] Placeholders (by `name`)
+ - [x] Deprecated and hidden options
+ - [ ] Multiple ENV names
+ - [x] Interface for user types.
+
+
+## Supported types in structures:
+
+ - [x] `int`, `int8`, `int16`, `int32`, `int64`
+ - [x] `uint`, `uint8`, `uint16`, `uint32`, `uint64`
+ - [x] `float32`, `float64`
+ - [x] slices for all previous numeric types (e.g. `[]int`, `[]float64`)
+ - [x] `bool`
+ - [x] `[]bool`
+ - [x] `string`
+ - [x] `[]string`
+ - [x] nested structures
+ - [x] net.TCPAddr
+ - [x] net.IP
+ - [x] time.Duration
+ - [x] regexp.Regexp
+
+
+## Custom types:
+ - [x] HexBytes
+
+ - [x] count
+ - [ ] ipmask
+ - [ ] enum values
+ - [ ] enum list values
+ - [ ] file
+ - [ ] file list
+ - [ ] url
+ - [ ] url list
+ - [ ] units (bytes 1kb = 1024b, speed, etc)
+
+## Supported features matrix:
+
+| Name | Hidden | Deprecated | Short | Env |
+| --- | --- | --- | --- | --- |
+| flag | - | - | - | - |
+| pflag | [x] | [x] | [x] | - |
+| kingpin | [ ] | [ ] | [ ] | [ ] |
+| urfave | [x] | - | [x] | [x] |
+| cobra | [ ] | [ ] | [ ] | [ ] |
+
+  \[x] - feature is supported and implemented
+  
+  `-` - feature can't be implemented for this cli library
+
 Simple example for standard flag:
 
 ```golang
@@ -122,67 +188,3 @@ func FlagDivider(val string)
 func EnvDivider(val string)
 ```
 
-## Features:
-
- - [x] Set environment name
- - [x] Set usage
- - [x] Long and short forms
- - [x] Skip field
- - [ ] Required
- - [ ] Placeholders (by `name`)
- - [x] Deprecated and hidden options
- - [ ] Multiple ENV names
- - [x] Interface for user types.
-
-
-## Supported types in structures:
-
- - [x] `int`, `int8`, `int16`, `int32`, `int64`
- - [x] `uint`, `uint8`, `uint16`, `uint32`, `uint64`
- - [x] `float32`, `float64`
- - [x] slices for all previous numeric types (e.g. `[]int`, `[]float64`)
- - [x] `bool`
- - [x] `[]bool`
- - [x] `string`
- - [x] `[]string`
- - [x] nested structures
- - [x] net.TCPAddr
- - [x] net.IP
- - [x] time.Duration
- - [x] regexp.Regexp
-
-
-## Custom types:
- - [x] HexBytes
-
- - [x] count
- - [ ] ipmask
- - [ ] enum values
- - [ ] enum list values
- - [ ] file
- - [ ] file list
- - [ ] url
- - [ ] url list
- - [ ] units (bytes 1kb = 1024b, speed, etc)
-
-## Supported flags and cli libraries:
-
- - [x] [flag](https://golang.org/pkg/flag/)
- - [x] [spf13/pflag](https://github.com/spf13/pflag)
- - [ ] [spf13/cobra](https://github.com/spf13/cobra)
- - [x] [urfave/cli](https://github.com/urfave/cli)
- - [ ] [kingpin](https://github.com/alecthomas/kingpin)
-
-## Supported features matrix:
-
-| Name | Hidden | Deprecated | Short | Env |
-| --- | --- | --- | --- | --- |
-| flag | - | - | - | - |
-| pflag | [x] | [x] | [x] | - |
-| kingpin | [ ] | [ ] | [ ] | [ ] |
-| urfave | [x] | - | [x] | [x] |
-| cobra | [ ] | [ ] | [ ] | [ ] |
-
-  \[x] - feature is supported and implemented
-  
-  `-` - feature can't be implemented for this cli library
