@@ -122,22 +122,20 @@ func FlagDivider(val string)
 func EnvDivider(val string)
 ```
 
+## Features:
 
-
-Features:
-
- - [ ] Set environment name
- - [ ] Set usage
- - [ ] Long and short forms
- - [ ] Skip field
+ - [x] Set environment name
+ - [x] Set usage
+ - [x] Long and short forms
+ - [x] Skip field
  - [ ] Required
  - [ ] Placeholders (by `name`)
- - [ ] Deprecated and hidden options
+ - [x] Deprecated and hidden options
  - [ ] Multiple ENV names
- - [ ] Interface for user types.
+ - [x] Interface for user types.
 
 
-Supported types in structures:
+## Supported types in structures:
 
  - [x] `int`, `int8`, `int16`, `int32`, `int64`
  - [x] `uint`, `uint8`, `uint16`, `uint32`, `uint64`
@@ -154,7 +152,7 @@ Supported types in structures:
  - [x] regexp.Regexp
 
 
-Custom types:
+## Custom types:
  - [x] HexBytes
 
  - [x] count
@@ -167,7 +165,7 @@ Custom types:
  - [ ] url list
  - [ ] units (bytes 1kb = 1024b, speed, etc)
 
-Supported flags and cli libraries:
+## Supported flags and cli libraries:
 
  - [x] [flag](https://golang.org/pkg/flag/)
  - [x] [spf13/pflag](https://github.com/spf13/pflag)
@@ -175,7 +173,7 @@ Supported flags and cli libraries:
  - [x] [urfave/cli](https://github.com/urfave/cli)
  - [ ] [kingpin](https://github.com/alecthomas/kingpin)
 
-Supported features matrix:
+## Supported features matrix:
 
 | Name | Hidden | Deprecated | Short | Env |
 | --- | --- | --- | --- | --- |
