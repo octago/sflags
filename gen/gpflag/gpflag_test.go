@@ -19,6 +19,7 @@ type cfg1 struct {
 	CounterValue1 sflags.Counter
 
 	StringSliceValue1 []string
+	DeprecatedValue1  string `flag:",deprecated" desc:"DEP_MESSAGE"`
 }
 
 func TestParse(t *testing.T) {

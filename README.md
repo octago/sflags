@@ -1,5 +1,24 @@
 # Flags based on structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)  [![Go Report Card](https://goreportcard.com/badge/github.com/octago/sflags)](https://goreportcard.com/report/github.com/octago/sflags)
 
+The sflags package uses structs, reflection and struct field tags
+to allow you to specify command line options. It supports [different types](#supported-types-in-structures) and [features](#features)
+For example:
+
+```
+type HTTPConfig struct {
+	Host    string `desc:"HTTP host"`
+	Port    int `flag:"port p" desc:"some port"`
+	SSL     bool `env:"HTTP_SSL_VALUE"`
+	Timeout time.Duration `flag:",deprecated,hidden"`
+}
+
+type Config struct {
+	HTTP   HTTPConfig
+	Stats  StatsConfig
+}
+```
+
+And you can use your favorite flag or cli library!
 
 ## Supported flags and cli libraries:
 
@@ -37,7 +56,8 @@
  - [x] net.IP
  - [x] time.Duration
  - [x] regexp.Regexp
-
+ - [ ] map[string]string
+ - [ ] map[string]int
 
 ## Custom types:
  - [x] HexBytes
