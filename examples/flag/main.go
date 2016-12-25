@@ -44,10 +44,12 @@ func main() {
 		Regexp: regexp.MustCompile("smth"),
 		Count:  10,
 	}
+	// Use gflags.ParseToDef if you want default `flag.CommandLine`
 	fs, err := gflag.Parse(cfg)
 	if err != nil {
 		log.Fatalf("err: %v", err)
 	}
+	// You should run fs.Parse(os.Args[1:]), but this is an example.
 	err = fs.Parse([]string{
 		"-count=20",
 		"-http-host", "localhost",

@@ -137,7 +137,7 @@ func (v *stringValue) String() string {
 	return ""
 }
 
-func (v *stringValue) Type() string { return "stringtring" }
+func (v *stringValue) Type() string { return "string" }
 
 // -- stringSlice Value
 
@@ -186,7 +186,7 @@ func (v *stringSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *stringSliceValue) Type() string { return "stringtringSlice" }
+func (v *stringSliceValue) Type() string { return "stringSlice" }
 
 func (v *stringSliceValue) IsCumulative() bool {
 	return true
@@ -227,7 +227,7 @@ func (v *boolValue) String() string {
 	return ""
 }
 
-func (v *boolValue) Type() string { return "boolool" }
+func (v *boolValue) Type() string { return "bool" }
 
 // -- boolSlice Value
 
@@ -285,7 +285,7 @@ func (v *boolSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *boolSliceValue) Type() string { return "booloolSlice" }
+func (v *boolSliceValue) Type() string { return "boolSlice" }
 
 func (v *boolSliceValue) IsCumulative() bool {
 	return true
@@ -326,7 +326,7 @@ func (v *uintValue) String() string {
 	return ""
 }
 
-func (v *uintValue) Type() string { return "uintint" }
+func (v *uintValue) Type() string { return "uint" }
 
 // -- uintSlice Value
 
@@ -384,7 +384,7 @@ func (v *uintSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *uintSliceValue) Type() string { return "uintintSlice" }
+func (v *uintSliceValue) Type() string { return "uintSlice" }
 
 func (v *uintSliceValue) IsCumulative() bool {
 	return true
@@ -425,7 +425,7 @@ func (v *uint8Value) String() string {
 	return ""
 }
 
-func (v *uint8Value) Type() string { return "uint8int8" }
+func (v *uint8Value) Type() string { return "uint8" }
 
 // -- uint8Slice Value
 
@@ -483,7 +483,7 @@ func (v *uint8SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *uint8SliceValue) Type() string { return "uint8int8Slice" }
+func (v *uint8SliceValue) Type() string { return "uint8Slice" }
 
 func (v *uint8SliceValue) IsCumulative() bool {
 	return true
@@ -524,7 +524,7 @@ func (v *uint16Value) String() string {
 	return ""
 }
 
-func (v *uint16Value) Type() string { return "uint16int16" }
+func (v *uint16Value) Type() string { return "uint16" }
 
 // -- uint16Slice Value
 
@@ -582,7 +582,7 @@ func (v *uint16SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *uint16SliceValue) Type() string { return "uint16int16Slice" }
+func (v *uint16SliceValue) Type() string { return "uint16Slice" }
 
 func (v *uint16SliceValue) IsCumulative() bool {
 	return true
@@ -623,7 +623,7 @@ func (v *uint32Value) String() string {
 	return ""
 }
 
-func (v *uint32Value) Type() string { return "uint32int32" }
+func (v *uint32Value) Type() string { return "uint32" }
 
 // -- uint32Slice Value
 
@@ -681,7 +681,7 @@ func (v *uint32SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *uint32SliceValue) Type() string { return "uint32int32Slice" }
+func (v *uint32SliceValue) Type() string { return "uint32Slice" }
 
 func (v *uint32SliceValue) IsCumulative() bool {
 	return true
@@ -722,7 +722,7 @@ func (v *uint64Value) String() string {
 	return ""
 }
 
-func (v *uint64Value) Type() string { return "uint64int64" }
+func (v *uint64Value) Type() string { return "uint64" }
 
 // -- uint64Slice Value
 
@@ -780,7 +780,7 @@ func (v *uint64SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *uint64SliceValue) Type() string { return "uint64int64Slice" }
+func (v *uint64SliceValue) Type() string { return "uint64Slice" }
 
 func (v *uint64SliceValue) IsCumulative() bool {
 	return true
@@ -821,7 +821,7 @@ func (v *intValue) String() string {
 	return ""
 }
 
-func (v *intValue) Type() string { return "intnt" }
+func (v *intValue) Type() string { return "int" }
 
 // -- intSlice Value
 
@@ -879,7 +879,7 @@ func (v *intSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *intSliceValue) Type() string { return "intntSlice" }
+func (v *intSliceValue) Type() string { return "intSlice" }
 
 func (v *intSliceValue) IsCumulative() bool {
 	return true
@@ -920,7 +920,7 @@ func (v *int8Value) String() string {
 	return ""
 }
 
-func (v *int8Value) Type() string { return "int8nt8" }
+func (v *int8Value) Type() string { return "int8" }
 
 // -- int8Slice Value
 
@@ -978,7 +978,7 @@ func (v *int8SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *int8SliceValue) Type() string { return "int8nt8Slice" }
+func (v *int8SliceValue) Type() string { return "int8Slice" }
 
 func (v *int8SliceValue) IsCumulative() bool {
 	return true
@@ -1019,7 +1019,7 @@ func (v *int16Value) String() string {
 	return ""
 }
 
-func (v *int16Value) Type() string { return "int16nt16" }
+func (v *int16Value) Type() string { return "int16" }
 
 // -- int16Slice Value
 
@@ -1077,7 +1077,7 @@ func (v *int16SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *int16SliceValue) Type() string { return "int16nt16Slice" }
+func (v *int16SliceValue) Type() string { return "int16Slice" }
 
 func (v *int16SliceValue) IsCumulative() bool {
 	return true
@@ -1118,7 +1118,7 @@ func (v *int32Value) String() string {
 	return ""
 }
 
-func (v *int32Value) Type() string { return "int32nt32" }
+func (v *int32Value) Type() string { return "int32" }
 
 // -- int32Slice Value
 
@@ -1176,7 +1176,7 @@ func (v *int32SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *int32SliceValue) Type() string { return "int32nt32Slice" }
+func (v *int32SliceValue) Type() string { return "int32Slice" }
 
 func (v *int32SliceValue) IsCumulative() bool {
 	return true
@@ -1217,7 +1217,7 @@ func (v *int64Value) String() string {
 	return ""
 }
 
-func (v *int64Value) Type() string { return "int64nt64" }
+func (v *int64Value) Type() string { return "int64" }
 
 // -- int64Slice Value
 
@@ -1275,7 +1275,7 @@ func (v *int64SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *int64SliceValue) Type() string { return "int64nt64Slice" }
+func (v *int64SliceValue) Type() string { return "int64Slice" }
 
 func (v *int64SliceValue) IsCumulative() bool {
 	return true
@@ -1316,7 +1316,7 @@ func (v *float64Value) String() string {
 	return ""
 }
 
-func (v *float64Value) Type() string { return "float64loat64" }
+func (v *float64Value) Type() string { return "float64" }
 
 // -- float64Slice Value
 
@@ -1374,7 +1374,7 @@ func (v *float64SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *float64SliceValue) Type() string { return "float64loat64Slice" }
+func (v *float64SliceValue) Type() string { return "float64Slice" }
 
 func (v *float64SliceValue) IsCumulative() bool {
 	return true
@@ -1415,7 +1415,7 @@ func (v *float32Value) String() string {
 	return ""
 }
 
-func (v *float32Value) Type() string { return "float32loat32" }
+func (v *float32Value) Type() string { return "float32" }
 
 // -- float32Slice Value
 
@@ -1473,7 +1473,7 @@ func (v *float32SliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *float32SliceValue) Type() string { return "float32loat32Slice" }
+func (v *float32SliceValue) Type() string { return "float32Slice" }
 
 func (v *float32SliceValue) IsCumulative() bool {
 	return true
@@ -1514,7 +1514,7 @@ func (v *durationValue) String() string {
 	return ""
 }
 
-func (v *durationValue) Type() string { return "durationuration" }
+func (v *durationValue) Type() string { return "duration" }
 
 // -- time.DurationSlice Value
 
@@ -1572,7 +1572,7 @@ func (v *durationSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *durationSliceValue) Type() string { return "durationurationSlice" }
+func (v *durationSliceValue) Type() string { return "durationSlice" }
 
 func (v *durationSliceValue) IsCumulative() bool {
 	return true
@@ -1613,7 +1613,7 @@ func (v *ipValue) String() string {
 	return ""
 }
 
-func (v *ipValue) Type() string { return "ipP" }
+func (v *ipValue) Type() string { return "ip" }
 
 // -- net.IPSlice Value
 
@@ -1671,7 +1671,7 @@ func (v *ipSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *ipSliceValue) Type() string { return "ipPSlice" }
+func (v *ipSliceValue) Type() string { return "ipSlice" }
 
 func (v *ipSliceValue) IsCumulative() bool {
 	return true
@@ -1712,7 +1712,7 @@ func (v *hexBytesValue) String() string {
 	return ""
 }
 
-func (v *hexBytesValue) Type() string { return "hexBytesexBytes" }
+func (v *hexBytesValue) Type() string { return "hexBytes" }
 
 // -- HexBytesSlice Value
 
@@ -1770,7 +1770,7 @@ func (v *hexBytesSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *hexBytesSliceValue) Type() string { return "hexBytesexBytesSlice" }
+func (v *hexBytesSliceValue) Type() string { return "hexBytesSlice" }
 
 func (v *hexBytesSliceValue) IsCumulative() bool {
 	return true
@@ -1811,7 +1811,7 @@ func (v *regexpValue) String() string {
 	return ""
 }
 
-func (v *regexpValue) Type() string { return "regexpegexp" }
+func (v *regexpValue) Type() string { return "regexp" }
 
 // -- *regexp.RegexpSlice Value
 
@@ -1869,7 +1869,7 @@ func (v *regexpSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *regexpSliceValue) Type() string { return "regexpegexpSlice" }
+func (v *regexpSliceValue) Type() string { return "regexpSlice" }
 
 func (v *regexpSliceValue) IsCumulative() bool {
 	return true
@@ -1910,7 +1910,7 @@ func (v *tcpAddrValue) String() string {
 	return ""
 }
 
-func (v *tcpAddrValue) Type() string { return "tcpAddrCPAddr" }
+func (v *tcpAddrValue) Type() string { return "tcpAddr" }
 
 // -- net.TCPAddrSlice Value
 
@@ -1968,7 +1968,7 @@ func (v *tcpAddrSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *tcpAddrSliceValue) Type() string { return "tcpAddrCPAddrSlice" }
+func (v *tcpAddrSliceValue) Type() string { return "tcpAddrSlice" }
 
 func (v *tcpAddrSliceValue) IsCumulative() bool {
 	return true
@@ -2009,7 +2009,7 @@ func (v *ipNetValue) String() string {
 	return ""
 }
 
-func (v *ipNetValue) Type() string { return "ipNetPNet" }
+func (v *ipNetValue) Type() string { return "ipNet" }
 
 // -- net.IPNetSlice Value
 
@@ -2067,7 +2067,7 @@ func (v *ipNetSliceValue) String() string {
 	return "[" + strings.Join(out, ",") + "]"
 }
 
-func (v *ipNetSliceValue) Type() string { return "ipNetPNetSlice" }
+func (v *ipNetSliceValue) Type() string { return "ipNetSlice" }
 
 func (v *ipNetSliceValue) IsCumulative() bool {
 	return true

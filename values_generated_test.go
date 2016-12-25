@@ -29,7 +29,7 @@ func TestStringValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "string", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "stringtring", v.Type())
+		assert.Equal(t, "string", v.Type())
 	})
 
 }
@@ -56,7 +56,7 @@ func TestStringSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[val1,val2,val3,val4]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "stringtringSlice", v.Type())
+		assert.Equal(t, "stringSlice", v.Type())
 	})
 
 }
@@ -79,7 +79,7 @@ func TestBoolValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "true", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "boolool", v.Type())
+		assert.Equal(t, "bool", v.Type())
 	})
 	t.Run("in: false", func(t *testing.T) {
 		a := new(bool)
@@ -89,7 +89,7 @@ func TestBoolValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "false", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "boolool", v.Type())
+		assert.Equal(t, "bool", v.Type())
 	})
 	t.Run("in: 1", func(t *testing.T) {
 		a := new(bool)
@@ -99,7 +99,7 @@ func TestBoolValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "true", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "boolool", v.Type())
+		assert.Equal(t, "bool", v.Type())
 	})
 	t.Run("in: 0", func(t *testing.T) {
 		a := new(bool)
@@ -109,7 +109,7 @@ func TestBoolValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "false", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "boolool", v.Type())
+		assert.Equal(t, "bool", v.Type())
 	})
 	t.Run("in: unexpected", func(t *testing.T) {
 		a := new(bool)
@@ -119,7 +119,7 @@ func TestBoolValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
 		assert.Equal(t, "false", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "boolool", v.Type())
+		assert.Equal(t, "bool", v.Type())
 	})
 
 }
@@ -146,7 +146,7 @@ func TestBoolSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[true,false,true]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "booloolSlice", v.Type())
+		assert.Equal(t, "boolSlice", v.Type())
 	})
 	t.Run("in: [true,unexpected]", func(t *testing.T) {
 		var err error
@@ -158,7 +158,7 @@ func TestBoolSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "booloolSlice", v.Type())
+		assert.Equal(t, "boolSlice", v.Type())
 	})
 
 }
@@ -181,7 +181,7 @@ func TestUintValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "18446744073709551615", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uintint", v.Type())
+		assert.Equal(t, "uint", v.Type())
 	})
 	t.Run("in: 18446744073709551616", func(t *testing.T) {
 		a := new(uint)
@@ -191,7 +191,7 @@ func TestUintValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"18446744073709551616\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uintint", v.Type())
+		assert.Equal(t, "uint", v.Type())
 	})
 	t.Run("in: -1", func(t *testing.T) {
 		a := new(uint)
@@ -201,7 +201,7 @@ func TestUintValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uintint", v.Type())
+		assert.Equal(t, "uint", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(uint)
@@ -211,7 +211,7 @@ func TestUintValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uintint", v.Type())
+		assert.Equal(t, "uint", v.Type())
 	})
 
 }
@@ -238,7 +238,7 @@ func TestUintSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,0]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uintintSlice", v.Type())
+		assert.Equal(t, "uintSlice", v.Type())
 	})
 	t.Run("in: [-1,0]", func(t *testing.T) {
 		var err error
@@ -250,7 +250,7 @@ func TestUintSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uintintSlice", v.Type())
+		assert.Equal(t, "uintSlice", v.Type())
 	})
 
 }
@@ -273,7 +273,7 @@ func TestUint8Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "255", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint8int8", v.Type())
+		assert.Equal(t, "uint8", v.Type())
 	})
 	t.Run("in: 256", func(t *testing.T) {
 		a := new(uint8)
@@ -283,7 +283,7 @@ func TestUint8Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"256\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint8int8", v.Type())
+		assert.Equal(t, "uint8", v.Type())
 	})
 	t.Run("in: -1", func(t *testing.T) {
 		a := new(uint8)
@@ -293,7 +293,7 @@ func TestUint8Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint8int8", v.Type())
+		assert.Equal(t, "uint8", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(uint8)
@@ -303,7 +303,7 @@ func TestUint8Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint8int8", v.Type())
+		assert.Equal(t, "uint8", v.Type())
 	})
 
 }
@@ -330,7 +330,7 @@ func TestUint8SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,0]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint8int8Slice", v.Type())
+		assert.Equal(t, "uint8Slice", v.Type())
 	})
 	t.Run("in: [-1,0]", func(t *testing.T) {
 		var err error
@@ -342,7 +342,7 @@ func TestUint8SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint8int8Slice", v.Type())
+		assert.Equal(t, "uint8Slice", v.Type())
 	})
 
 }
@@ -365,7 +365,7 @@ func TestUint16Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "65535", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint16int16", v.Type())
+		assert.Equal(t, "uint16", v.Type())
 	})
 	t.Run("in: 65536", func(t *testing.T) {
 		a := new(uint16)
@@ -375,7 +375,7 @@ func TestUint16Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"65536\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint16int16", v.Type())
+		assert.Equal(t, "uint16", v.Type())
 	})
 	t.Run("in: -1", func(t *testing.T) {
 		a := new(uint16)
@@ -385,7 +385,7 @@ func TestUint16Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint16int16", v.Type())
+		assert.Equal(t, "uint16", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(uint16)
@@ -395,7 +395,7 @@ func TestUint16Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint16int16", v.Type())
+		assert.Equal(t, "uint16", v.Type())
 	})
 
 }
@@ -422,7 +422,7 @@ func TestUint16SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,0]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint16int16Slice", v.Type())
+		assert.Equal(t, "uint16Slice", v.Type())
 	})
 	t.Run("in: [-1,0]", func(t *testing.T) {
 		var err error
@@ -434,7 +434,7 @@ func TestUint16SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint16int16Slice", v.Type())
+		assert.Equal(t, "uint16Slice", v.Type())
 	})
 
 }
@@ -457,7 +457,7 @@ func TestUint32Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "4294967295", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint32int32", v.Type())
+		assert.Equal(t, "uint32", v.Type())
 	})
 	t.Run("in: 4294967296", func(t *testing.T) {
 		a := new(uint32)
@@ -467,7 +467,7 @@ func TestUint32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"4294967296\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint32int32", v.Type())
+		assert.Equal(t, "uint32", v.Type())
 	})
 	t.Run("in: -1", func(t *testing.T) {
 		a := new(uint32)
@@ -477,7 +477,7 @@ func TestUint32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint32int32", v.Type())
+		assert.Equal(t, "uint32", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(uint32)
@@ -487,7 +487,7 @@ func TestUint32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint32int32", v.Type())
+		assert.Equal(t, "uint32", v.Type())
 	})
 
 }
@@ -514,7 +514,7 @@ func TestUint32SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,0]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint32int32Slice", v.Type())
+		assert.Equal(t, "uint32Slice", v.Type())
 	})
 	t.Run("in: [-1,0]", func(t *testing.T) {
 		var err error
@@ -526,7 +526,7 @@ func TestUint32SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint32int32Slice", v.Type())
+		assert.Equal(t, "uint32Slice", v.Type())
 	})
 
 }
@@ -549,7 +549,7 @@ func TestUint64Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "18446744073709551615", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint64int64", v.Type())
+		assert.Equal(t, "uint64", v.Type())
 	})
 	t.Run("in: 18446744073709551616", func(t *testing.T) {
 		a := new(uint64)
@@ -559,7 +559,7 @@ func TestUint64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"18446744073709551616\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint64int64", v.Type())
+		assert.Equal(t, "uint64", v.Type())
 	})
 	t.Run("in: -1", func(t *testing.T) {
 		a := new(uint64)
@@ -569,7 +569,7 @@ func TestUint64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint64int64", v.Type())
+		assert.Equal(t, "uint64", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(uint64)
@@ -579,7 +579,7 @@ func TestUint64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint64int64", v.Type())
+		assert.Equal(t, "uint64", v.Type())
 	})
 
 }
@@ -606,7 +606,7 @@ func TestUint64SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,0]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint64int64Slice", v.Type())
+		assert.Equal(t, "uint64Slice", v.Type())
 	})
 	t.Run("in: [-1,0]", func(t *testing.T) {
 		var err error
@@ -618,7 +618,7 @@ func TestUint64SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "uint64int64Slice", v.Type())
+		assert.Equal(t, "uint64Slice", v.Type())
 	})
 
 }
@@ -641,7 +641,7 @@ func TestIntValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "9223372036854775807", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: -9223372036854775808", func(t *testing.T) {
 		a := new(int)
@@ -651,7 +651,7 @@ func TestIntValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "-9223372036854775808", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: 0x10", func(t *testing.T) {
 		a := new(int)
@@ -661,7 +661,7 @@ func TestIntValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "16", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: 0210", func(t *testing.T) {
 		a := new(int)
@@ -671,7 +671,7 @@ func TestIntValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "136", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: 0710", func(t *testing.T) {
 		a := new(int)
@@ -681,7 +681,7 @@ func TestIntValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "456", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: -9223372036854775809", func(t *testing.T) {
 		a := new(int)
@@ -691,7 +691,7 @@ func TestIntValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"-9223372036854775809\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: 9223372036854775808", func(t *testing.T) {
 		a := new(int)
@@ -701,7 +701,7 @@ func TestIntValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"9223372036854775808\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(int)
@@ -711,7 +711,7 @@ func TestIntValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intnt", v.Type())
+		assert.Equal(t, "int", v.Type())
 	})
 
 }
@@ -738,7 +738,7 @@ func TestIntSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,-1]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intntSlice", v.Type())
+		assert.Equal(t, "intSlice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -750,7 +750,7 @@ func TestIntSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "intntSlice", v.Type())
+		assert.Equal(t, "intSlice", v.Type())
 	})
 
 }
@@ -773,7 +773,7 @@ func TestInt8Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "127", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8", v.Type())
+		assert.Equal(t, "int8", v.Type())
 	})
 	t.Run("in: -128", func(t *testing.T) {
 		a := new(int8)
@@ -783,7 +783,7 @@ func TestInt8Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "-128", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8", v.Type())
+		assert.Equal(t, "int8", v.Type())
 	})
 	t.Run("in: -129", func(t *testing.T) {
 		a := new(int8)
@@ -793,7 +793,7 @@ func TestInt8Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"-129\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8", v.Type())
+		assert.Equal(t, "int8", v.Type())
 	})
 	t.Run("in: 128", func(t *testing.T) {
 		a := new(int8)
@@ -803,7 +803,7 @@ func TestInt8Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"128\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8", v.Type())
+		assert.Equal(t, "int8", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(int8)
@@ -813,7 +813,7 @@ func TestInt8Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8", v.Type())
+		assert.Equal(t, "int8", v.Type())
 	})
 
 }
@@ -840,7 +840,7 @@ func TestInt8SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,-1]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8Slice", v.Type())
+		assert.Equal(t, "int8Slice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -852,7 +852,7 @@ func TestInt8SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int8nt8Slice", v.Type())
+		assert.Equal(t, "int8Slice", v.Type())
 	})
 
 }
@@ -875,7 +875,7 @@ func TestInt16Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "32767", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16", v.Type())
+		assert.Equal(t, "int16", v.Type())
 	})
 	t.Run("in: -32768", func(t *testing.T) {
 		a := new(int16)
@@ -885,7 +885,7 @@ func TestInt16Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "-32768", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16", v.Type())
+		assert.Equal(t, "int16", v.Type())
 	})
 	t.Run("in: -32769", func(t *testing.T) {
 		a := new(int16)
@@ -895,7 +895,7 @@ func TestInt16Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"-32769\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16", v.Type())
+		assert.Equal(t, "int16", v.Type())
 	})
 	t.Run("in: 32768", func(t *testing.T) {
 		a := new(int16)
@@ -905,7 +905,7 @@ func TestInt16Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"32768\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16", v.Type())
+		assert.Equal(t, "int16", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(int16)
@@ -915,7 +915,7 @@ func TestInt16Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16", v.Type())
+		assert.Equal(t, "int16", v.Type())
 	})
 
 }
@@ -942,7 +942,7 @@ func TestInt16SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,-1]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16Slice", v.Type())
+		assert.Equal(t, "int16Slice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -954,7 +954,7 @@ func TestInt16SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int16nt16Slice", v.Type())
+		assert.Equal(t, "int16Slice", v.Type())
 	})
 
 }
@@ -977,7 +977,7 @@ func TestInt32Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "2147483647", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32", v.Type())
+		assert.Equal(t, "int32", v.Type())
 	})
 	t.Run("in: -2147483648", func(t *testing.T) {
 		a := new(int32)
@@ -987,7 +987,7 @@ func TestInt32Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "-2147483648", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32", v.Type())
+		assert.Equal(t, "int32", v.Type())
 	})
 	t.Run("in: -2147483649", func(t *testing.T) {
 		a := new(int32)
@@ -997,7 +997,7 @@ func TestInt32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"-2147483649\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32", v.Type())
+		assert.Equal(t, "int32", v.Type())
 	})
 	t.Run("in: 2147483648", func(t *testing.T) {
 		a := new(int32)
@@ -1007,7 +1007,7 @@ func TestInt32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"2147483648\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32", v.Type())
+		assert.Equal(t, "int32", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(int32)
@@ -1017,7 +1017,7 @@ func TestInt32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32", v.Type())
+		assert.Equal(t, "int32", v.Type())
 	})
 
 }
@@ -1044,7 +1044,7 @@ func TestInt32SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,-1]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32Slice", v.Type())
+		assert.Equal(t, "int32Slice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -1056,7 +1056,7 @@ func TestInt32SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int32nt32Slice", v.Type())
+		assert.Equal(t, "int32Slice", v.Type())
 	})
 
 }
@@ -1079,7 +1079,7 @@ func TestInt64Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "3", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64", v.Type())
+		assert.Equal(t, "int64", v.Type())
 	})
 	t.Run("in: -3", func(t *testing.T) {
 		a := new(int64)
@@ -1089,7 +1089,7 @@ func TestInt64Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "-3", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64", v.Type())
+		assert.Equal(t, "int64", v.Type())
 	})
 	t.Run("in: -9223372036854775809", func(t *testing.T) {
 		a := new(int64)
@@ -1099,7 +1099,7 @@ func TestInt64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"-9223372036854775809\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64", v.Type())
+		assert.Equal(t, "int64", v.Type())
 	})
 	t.Run("in: 9223372036854775808", func(t *testing.T) {
 		a := new(int64)
@@ -1109,7 +1109,7 @@ func TestInt64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"9223372036854775808\": value out of range")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64", v.Type())
+		assert.Equal(t, "int64", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(int64)
@@ -1119,7 +1119,7 @@ func TestInt64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64", v.Type())
+		assert.Equal(t, "int64", v.Type())
 	})
 
 }
@@ -1146,7 +1146,7 @@ func TestInt64SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10,20,-1]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64Slice", v.Type())
+		assert.Equal(t, "int64Slice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -1158,7 +1158,7 @@ func TestInt64SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "int64nt64Slice", v.Type())
+		assert.Equal(t, "int64Slice", v.Type())
 	})
 
 }
@@ -1181,7 +1181,7 @@ func TestFloat64Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "11.11", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float64loat64", v.Type())
+		assert.Equal(t, "float64", v.Type())
 	})
 	t.Run("in: 11.11.11", func(t *testing.T) {
 		a := new(float64)
@@ -1191,7 +1191,7 @@ func TestFloat64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"11.11.11\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float64loat64", v.Type())
+		assert.Equal(t, "float64", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(float64)
@@ -1201,7 +1201,7 @@ func TestFloat64Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float64loat64", v.Type())
+		assert.Equal(t, "float64", v.Type())
 	})
 
 }
@@ -1228,7 +1228,7 @@ func TestFloat64SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10.2,20.99,3.4]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float64loat64Slice", v.Type())
+		assert.Equal(t, "float64Slice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -1240,7 +1240,7 @@ func TestFloat64SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float64loat64Slice", v.Type())
+		assert.Equal(t, "float64Slice", v.Type())
 	})
 
 }
@@ -1263,7 +1263,7 @@ func TestFloat32Value(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "11.11", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float32loat32", v.Type())
+		assert.Equal(t, "float32", v.Type())
 	})
 	t.Run("in: 11.11.11", func(t *testing.T) {
 		a := new(float32)
@@ -1273,7 +1273,7 @@ func TestFloat32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"11.11.11\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float32loat32", v.Type())
+		assert.Equal(t, "float32", v.Type())
 	})
 	t.Run("in: a", func(t *testing.T) {
 		a := new(float32)
@@ -1283,7 +1283,7 @@ func TestFloat32Value(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
 		assert.Equal(t, "0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float32loat32", v.Type())
+		assert.Equal(t, "float32", v.Type())
 	})
 
 }
@@ -1310,7 +1310,7 @@ func TestFloat32SliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10.2,20.99,3.4]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float32loat32Slice", v.Type())
+		assert.Equal(t, "float32Slice", v.Type())
 	})
 	t.Run("in: [1,a]", func(t *testing.T) {
 		var err error
@@ -1322,7 +1322,7 @@ func TestFloat32SliceValue(t *testing.T) {
 		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "float32loat32Slice", v.Type())
+		assert.Equal(t, "float32Slice", v.Type())
 	})
 
 }
@@ -1345,7 +1345,7 @@ func TestDurationValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "3s", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "durationuration", v.Type())
+		assert.Equal(t, "duration", v.Type())
 	})
 	t.Run("in: 3l", func(t *testing.T) {
 		a := new(time.Duration)
@@ -1355,7 +1355,7 @@ func TestDurationValue(t *testing.T) {
 		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
 		assert.Equal(t, "0s", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "durationuration", v.Type())
+		assert.Equal(t, "duration", v.Type())
 	})
 
 }
@@ -1382,7 +1382,7 @@ func TestDurationSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[10s,30m0s,1ms]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "durationurationSlice", v.Type())
+		assert.Equal(t, "durationSlice", v.Type())
 	})
 	t.Run("in: [1s,3l]", func(t *testing.T) {
 		var err error
@@ -1394,7 +1394,7 @@ func TestDurationSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "durationurationSlice", v.Type())
+		assert.Equal(t, "durationSlice", v.Type())
 	})
 
 }
@@ -1417,7 +1417,7 @@ func TestIPValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "127.0.0.1", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipP", v.Type())
+		assert.Equal(t, "ip", v.Type())
 	})
 	t.Run("in: 127.0.0.1.3", func(t *testing.T) {
 		a := new(net.IP)
@@ -1427,7 +1427,7 @@ func TestIPValue(t *testing.T) {
 		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
 		assert.Equal(t, "<nil>", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipP", v.Type())
+		assert.Equal(t, "ip", v.Type())
 	})
 
 }
@@ -1454,7 +1454,7 @@ func TestIPSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[127.0.0.1,127.0.0.2,127.0.0.3]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipPSlice", v.Type())
+		assert.Equal(t, "ipSlice", v.Type())
 	})
 	t.Run("in: [127.0.0.3,127.0.0.1.3]", func(t *testing.T) {
 		var err error
@@ -1466,7 +1466,7 @@ func TestIPSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipPSlice", v.Type())
+		assert.Equal(t, "ipSlice", v.Type())
 	})
 
 }
@@ -1489,7 +1489,7 @@ func TestHexBytesValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "ffffff", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "hexBytesexBytes", v.Type())
+		assert.Equal(t, "hexBytes", v.Type())
 	})
 	t.Run("in: FFFFFF", func(t *testing.T) {
 		a := new(HexBytes)
@@ -1499,7 +1499,7 @@ func TestHexBytesValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "ffffff", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "hexBytesexBytes", v.Type())
+		assert.Equal(t, "hexBytes", v.Type())
 	})
 	t.Run("in: g", func(t *testing.T) {
 		a := new(HexBytes)
@@ -1509,7 +1509,7 @@ func TestHexBytesValue(t *testing.T) {
 		assert.EqualError(t, err, "encoding/hex: odd length hex string")
 		assert.Equal(t, "", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "hexBytesexBytes", v.Type())
+		assert.Equal(t, "hexBytes", v.Type())
 	})
 	t.Run("in: gg", func(t *testing.T) {
 		a := new(HexBytes)
@@ -1519,7 +1519,7 @@ func TestHexBytesValue(t *testing.T) {
 		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
 		assert.Equal(t, "", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "hexBytesexBytes", v.Type())
+		assert.Equal(t, "hexBytes", v.Type())
 	})
 
 }
@@ -1546,7 +1546,7 @@ func TestHexBytesSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[ff,aa,bb,cc]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "hexBytesexBytesSlice", v.Type())
+		assert.Equal(t, "hexBytesSlice", v.Type())
 	})
 	t.Run("in: [ff,gg]", func(t *testing.T) {
 		var err error
@@ -1558,7 +1558,7 @@ func TestHexBytesSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "hexBytesexBytesSlice", v.Type())
+		assert.Equal(t, "hexBytesSlice", v.Type())
 	})
 
 }
@@ -1581,7 +1581,7 @@ func TestRegexpValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "abcdef.*", v.String())
 		assert.Equal(t, a, v.Get())
-		assert.Equal(t, "regexpegexp", v.Type())
+		assert.Equal(t, "regexp", v.Type())
 	})
 	t.Run("in: [abc", func(t *testing.T) {
 		a := new(regexp.Regexp)
@@ -1591,7 +1591,7 @@ func TestRegexpValue(t *testing.T) {
 		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
 		assert.Equal(t, "", v.String())
 		assert.Equal(t, a, v.Get())
-		assert.Equal(t, "regexpegexp", v.Type())
+		assert.Equal(t, "regexp", v.Type())
 	})
 
 }
@@ -1618,7 +1618,7 @@ func TestRegexpSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[abc.*,def.*,xyz.*]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "regexpegexpSlice", v.Type())
+		assert.Equal(t, "regexpSlice", v.Type())
 	})
 	t.Run("in: [[abc,def]", func(t *testing.T) {
 		var err error
@@ -1630,7 +1630,7 @@ func TestRegexpSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "regexpegexpSlice", v.Type())
+		assert.Equal(t, "regexpSlice", v.Type())
 	})
 
 }
@@ -1653,7 +1653,7 @@ func TestTCPAddrValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "127.0.0.1:8000", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "tcpAddrCPAddr", v.Type())
+		assert.Equal(t, "tcpAddr", v.Type())
 	})
 	t.Run("in: localhost:80", func(t *testing.T) {
 		a := new(net.TCPAddr)
@@ -1663,7 +1663,7 @@ func TestTCPAddrValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "127.0.0.1:80", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "tcpAddrCPAddr", v.Type())
+		assert.Equal(t, "tcpAddr", v.Type())
 	})
 	t.Run("in: 127.0.0.1", func(t *testing.T) {
 		a := new(net.TCPAddr)
@@ -1673,7 +1673,7 @@ func TestTCPAddrValue(t *testing.T) {
 		assert.EqualError(t, err, "failed to parse TCPAddr: \"127.0.0.1\"")
 		assert.Equal(t, ":0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "tcpAddrCPAddr", v.Type())
+		assert.Equal(t, "tcpAddr", v.Type())
 	})
 	t.Run("in: 127.0.0.1.3:8000", func(t *testing.T) {
 		a := new(net.TCPAddr)
@@ -1683,7 +1683,7 @@ func TestTCPAddrValue(t *testing.T) {
 		assert.EqualError(t, err, "failed to parse TCPAddr: \"127.0.0.1.3:8000\"")
 		assert.Equal(t, ":0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "tcpAddrCPAddr", v.Type())
+		assert.Equal(t, "tcpAddr", v.Type())
 	})
 
 }
@@ -1710,7 +1710,7 @@ func TestTCPAddrSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[127.0.0.1:80,127.0.0.2:80,127.0.0.3:8800]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "tcpAddrCPAddrSlice", v.Type())
+		assert.Equal(t, "tcpAddrSlice", v.Type())
 	})
 	t.Run("in: [127.0.0.3:8000,127.0.0.1.3:8000]", func(t *testing.T) {
 		var err error
@@ -1722,7 +1722,7 @@ func TestTCPAddrSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "failed to parse TCPAddr: \"127.0.0.1.3:8000\"")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "tcpAddrCPAddrSlice", v.Type())
+		assert.Equal(t, "tcpAddrSlice", v.Type())
 	})
 
 }
@@ -1745,7 +1745,7 @@ func TestIPNetValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "0.0.0.0/0", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNet", v.Type())
+		assert.Equal(t, "ipNet", v.Type())
 	})
 	t.Run("in: 1.2.3.4/8", func(t *testing.T) {
 		a := new(net.IPNet)
@@ -1755,7 +1755,7 @@ func TestIPNetValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "1.0.0.0/8", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNet", v.Type())
+		assert.Equal(t, "ipNet", v.Type())
 	})
 	t.Run("in: 255.255.255.255/19", func(t *testing.T) {
 		a := new(net.IPNet)
@@ -1765,7 +1765,7 @@ func TestIPNetValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "255.255.224.0/19", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNet", v.Type())
+		assert.Equal(t, "ipNet", v.Type())
 	})
 	t.Run("in: 255.255.255.255/32", func(t *testing.T) {
 		a := new(net.IPNet)
@@ -1775,7 +1775,7 @@ func TestIPNetValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "255.255.255.255/32", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNet", v.Type())
+		assert.Equal(t, "ipNet", v.Type())
 	})
 	t.Run("in: ", func(t *testing.T) {
 		a := new(net.IPNet)
@@ -1785,7 +1785,7 @@ func TestIPNetValue(t *testing.T) {
 		assert.EqualError(t, err, "invalid CIDR address: ")
 		assert.Equal(t, "<nil>", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNet", v.Type())
+		assert.Equal(t, "ipNet", v.Type())
 	})
 	t.Run("in: 0.0.0.256/16", func(t *testing.T) {
 		a := new(net.IPNet)
@@ -1795,7 +1795,7 @@ func TestIPNetValue(t *testing.T) {
 		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
 		assert.Equal(t, "<nil>", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNet", v.Type())
+		assert.Equal(t, "ipNet", v.Type())
 	})
 
 }
@@ -1822,7 +1822,7 @@ func TestIPNetSliceValue(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, "[0.0.0.0/0,1.0.0.0/8,255.255.224.0/19]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNetSlice", v.Type())
+		assert.Equal(t, "ipNetSlice", v.Type())
 	})
 	t.Run("in: [0.0.0.0/0,0.0.0.256/16]", func(t *testing.T) {
 		var err error
@@ -1834,7 +1834,7 @@ func TestIPNetSliceValue(t *testing.T) {
 		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
 		assert.Equal(t, "[]", v.String())
 		assert.Equal(t, *a, v.Get())
-		assert.Equal(t, "ipNetPNetSlice", v.Type())
+		assert.Equal(t, "ipNetSlice", v.Type())
 	})
 
 }

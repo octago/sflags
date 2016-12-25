@@ -4,7 +4,7 @@ The sflags package uses structs, reflection and struct field tags
 to allow you to specify command line options. It supports [different types](#supported-types-in-structures) and [features](#features)
 For example:
 
-```
+```golang
 type HTTPConfig struct {
 	Host    string `desc:"HTTP host"`
 	Port    int `flag:"port p" desc:"some port"`
@@ -22,11 +22,12 @@ And you can use your favorite flag or cli library!
 
 ## Supported flags and cli libraries:
 
- - [x] [flag](https://golang.org/pkg/flag/)
- - [x] [spf13/pflag](https://github.com/spf13/pflag)
- - [ ] [spf13/cobra](https://github.com/spf13/cobra)
- - [x] [urfave/cli](https://github.com/urfave/cli)
- - [x] [kingpin](https://github.com/alecthomas/kingpin)
+ - [x] [flag](https://golang.org/pkg/flag/) - [example](https://github.com/octago/sflags/blob/master/examples/flag/main.go)
+ - [x] [spf13/pflag](https://github.com/spf13/pflag) - [example](https://github.com/octago/sflags/blob/master/examples/pflag/main.go)
+ - [x] [spf13/cobra](https://github.com/spf13/cobra) - [example](https://github.com/octago/sflags/blob/master/examples/cobra/main.go)
+ - [ ] [spf13/cobra](https://github.com/spf13/viper)
+ - [x] [urfave/cli](https://github.com/urfave/cli) [example](https://github.com/octago/sflags/blob/master/examples/urfave_cli/main.go)
+ - [x] [kingpin](https://github.com/alecthomas/kingpin) [example](https://github.com/octago/sflags/blob/master/examples/kingpin/main.go)
 
 ## Features:
 
@@ -39,6 +40,7 @@ And you can use your favorite flag or cli library!
  - [x] Deprecated and hidden options
  - [ ] Multiple ENV names
  - [x] Interface for user types.
+ - [ ] Validation
 
 
 ## Supported types in structures:
@@ -80,7 +82,8 @@ And you can use your favorite flag or cli library!
 | pflag | [x] | [x] | [x] | - |
 | kingpin | [x] | [ ] | [x] | [x] |
 | urfave | [x] | - | [x] | [x] |
-| cobra | [ ] | [ ] | [ ] | [ ] |
+| cobra | [x] | [x] | [x] | - |
+| viper | [ ] | [ ] | [ ] | [ ] |
 
   \[x] - feature is supported and implemented
   

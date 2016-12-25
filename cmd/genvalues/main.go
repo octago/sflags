@@ -371,7 +371,7 @@ func main() {
 		},
 		"Type": func(v *value) string {
 			name := valueName(v)
-			return camelToLower(name) + name[1:]
+			return camelToLower(name)
 		},
 		"InterfereType": func(v *value) string {
 			if v.Type[0:1] == "*" {
@@ -381,7 +381,7 @@ func main() {
 		},
 		"SliceType": func(v *value) string {
 			name := valueName(v)
-			return camelToLower(name) + name[1:]
+			return camelToLower(name)
 		},
 	})
 
