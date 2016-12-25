@@ -1,8 +1,9 @@
 # Flags based on structures. [![GoDoc](https://godoc.org/github.com/octago/sflags?status.svg)](http://godoc.org/github.com/octago/sflags) [![Build Status](https://travis-ci.org/octago/sflags.svg?branch=master)](https://travis-ci.org/octago/sflags)  [![codecov](https://codecov.io/gh/octago/sflags/branch/master/graph/badge.svg)](https://codecov.io/gh/octago/sflags)  [![Go Report Card](https://goreportcard.com/badge/github.com/octago/sflags)](https://goreportcard.com/report/github.com/octago/sflags)
 
 The sflags package uses structs, reflection and struct field tags
-to allow you to specify command line options. It supports [different types](#supported-types-in-structures) and [features](#features)
-For example:
+to allow you specify command line options. It supports [different types](#supported-types-in-structures) and [features](#features).
+
+An example:
 
 ```golang
 type HTTPConfig struct {
@@ -89,7 +90,7 @@ And you can use your favorite flag or cli library!
   
   `-` - feature can't be implemented for this cli library
 
-Simple example for standard flag:
+Simple example for flag library:
 
 ```golang
 package main
