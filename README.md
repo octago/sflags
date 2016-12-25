@@ -25,7 +25,7 @@ And you can use your favorite flag or cli library!
  - [x] [flag](https://golang.org/pkg/flag/) - [example](https://github.com/octago/sflags/blob/master/examples/flag/main.go)
  - [x] [spf13/pflag](https://github.com/spf13/pflag) - [example](https://github.com/octago/sflags/blob/master/examples/pflag/main.go)
  - [x] [spf13/cobra](https://github.com/spf13/cobra) - [example](https://github.com/octago/sflags/blob/master/examples/cobra/main.go)
- - [ ] [spf13/cobra](https://github.com/spf13/viper)
+ - [ ] [spf13/viper](https://github.com/spf13/viper)
  - [x] [urfave/cli](https://github.com/urfave/cli) [example](https://github.com/octago/sflags/blob/master/examples/urfave_cli/main.go)
  - [x] [kingpin](https://github.com/alecthomas/kingpin) [example](https://github.com/octago/sflags/blob/master/examples/kingpin/main.go)
 
