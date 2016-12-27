@@ -3,8 +3,10 @@ package gpflag
 import (
 	"errors"
 	"io/ioutil"
+	"net"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/octago/sflags"
 	"github.com/spf13/pflag"
@@ -158,4 +160,140 @@ func TestParseToDef(t *testing.T) {
 	assert.Equal(t, "value2", cfg.StringValue1)
 	err = ParseToDef("bad string")
 	assert.Error(t, err)
+}
+
+func TestPFlagGetters(t *testing.T) {
+	// Test that pflag getter functions like GetInt work as expected.
+	_, ipNet, err := net.ParseCIDR("127.0.0.1/24")
+	require.NoError(t, err)
+
+	cfg := &struct {
+		IntValue   int
+		Int8Value  int8
+		Int32Value int32
+		Int64Value int64
+
+		UintValue   uint
+		Uint8Value  uint8
+		Uint16Value uint16
+		Uint32Value uint32
+		Uint64Value uint64
+
+		Float32Value float32
+		Float64Value float64
+
+		BoolValue     bool
+		StringValue   string
+		DurationValue time.Duration
+		CountValue    sflags.Counter
+
+		IPValue    net.IP
+		IPNetValue net.IPNet
+
+		StringSliceValue []string
+		IntSliceValue    []int
+	}{
+		IntValue:   10,
+		Int8Value:  11,
+		Int32Value: 12,
+		Int64Value: 13,
+
+		UintValue:   14,
+		Uint8Value:  15,
+		Uint16Value: 16,
+		Uint32Value: 17,
+		Uint64Value: 18,
+
+		Float32Value: 19.1,
+		Float64Value: 20.1,
+
+		BoolValue:     true,
+		StringValue:   "stringValue",
+		DurationValue: time.Second * 10,
+		CountValue:    30,
+
+		IPValue:    net.ParseIP("127.0.0.1"),
+		IPNetValue: *ipNet,
+
+		StringSliceValue: []string{"one", "two"},
+		IntSliceValue:    []int{10, 20},
+	}
+	flagSet, err := Parse(cfg)
+	require.NoError(t, err)
+
+	intValue, err := flagSet.GetInt("int-value")
+	assert.NoError(t, err)
+	assert.Equal(t, 10, intValue)
+
+	int8Value, err := flagSet.GetInt8("int8-value")
+	assert.NoError(t, err)
+	assert.Equal(t, int8(11), int8Value)
+
+	int32Value, err := flagSet.GetInt32("int32-value")
+	assert.NoError(t, err)
+	assert.Equal(t, int32(12), int32Value)
+
+	int64Value, err := flagSet.GetInt64("int64-value")
+	assert.NoError(t, err)
+	assert.Equal(t, int64(13), int64Value)
+
+	uintValue, err := flagSet.GetUint("uint-value")
+	assert.NoError(t, err)
+	assert.Equal(t, uint(14), uintValue)
+
+	uint8Value, err := flagSet.GetUint8("uint8-value")
+	assert.NoError(t, err)
+	assert.Equal(t, uint8(15), uint8Value)
+
+	uint16Value, err := flagSet.GetUint16("uint16-value")
+	assert.NoError(t, err)
+	assert.Equal(t, uint16(16), uint16Value)
+
+	uint32Value, err := flagSet.GetUint32("uint32-value")
+	assert.NoError(t, err)
+	assert.Equal(t, uint32(17), uint32Value)
+
+	uint64Value, err := flagSet.GetUint64("uint64-value")
+	assert.NoError(t, err)
+	assert.Equal(t, uint64(18), uint64Value)
+
+	float32Value, err := flagSet.GetFloat32("float32-value")
+	assert.NoError(t, err)
+	assert.Equal(t, float32(19.1), float32Value)
+
+	float64Value, err := flagSet.GetFloat64("float64-value")
+	assert.NoError(t, err)
+	assert.Equal(t, float64(20.1), float64Value)
+
+	boolValue, err := flagSet.GetBool("bool-value")
+	assert.NoError(t, err)
+	assert.Equal(t, true, boolValue)
+
+	countValue, err := flagSet.GetCount("count-value")
+	assert.NoError(t, err)
+	assert.Equal(t, 30, countValue)
+
+	durationValue, err := flagSet.GetDuration("duration-value")
+	assert.NoError(t, err)
+	assert.Equal(t, time.Second*10, durationValue)
+
+	stringValue, err := flagSet.GetString("string-value")
+	assert.NoError(t, err)
+	assert.Equal(t, "stringValue", stringValue)
+
+	ipValue, err := flagSet.GetIP("ip-value")
+	assert.NoError(t, err)
+	assert.Equal(t, net.ParseIP("127.0.0.1"), ipValue)
+
+	ipNetValue, err := flagSet.GetIPNet("ip-net-value")
+	assert.NoError(t, err)
+	assert.Equal(t, cfg.IPNetValue, ipNetValue)
+
+	stringSliceValue, err := flagSet.GetStringSlice("string-slice-value")
+	assert.NoError(t, err)
+	assert.Equal(t, []string{"one", "two"}, stringSliceValue)
+
+	intSliceValue, err := flagSet.GetIntSlice("int-slice-value")
+	assert.NoError(t, err)
+	assert.Equal(t, []int{10, 20}, intSliceValue)
 }
