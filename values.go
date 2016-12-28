@@ -49,6 +49,42 @@ type RepeatableFlag interface {
 
 // === Custom values
 
+type validateValue struct {
+	Value
+	validateFunc func(val string) error
+}
+
+func (v *validateValue) IsBoolFlag() bool {
+	if boolFlag, casted := v.Value.(BoolFlag); casted {
+		return boolFlag.IsBoolFlag()
+	}
+	return false
+}
+
+func (v *validateValue) IsCumulative() bool {
+	if cumulativeFlag, casted := v.Value.(RepeatableFlag); casted {
+		return cumulativeFlag.IsCumulative()
+	}
+	return false
+}
+
+func (v *validateValue) String() string {
+	if v == nil || v.Value == nil {
+		return ""
+	}
+	return v.Value.String()
+}
+
+func (v *validateValue) Set(val string) error {
+	if v.validateFunc != nil {
+		err := v.validateFunc(val)
+		if err != nil {
+			return err
+		}
+	}
+	return v.Value.Set(val)
+}
+
 // HexBytes might be used if you want to parse slice of bytes as hex string.
 // Original `[]byte` or `[]uint8` parsed as a list of `uint8`.
 type HexBytes []byte

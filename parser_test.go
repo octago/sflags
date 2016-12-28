@@ -346,3 +346,12 @@ func TestFlagTag(t *testing.T) {
 	FlagTag("superflag")(&opt)
 	assert.Equal(t, "superflag", opt.flagTag)
 }
+
+func TestValidator(t *testing.T) {
+	var vf ValidateFunc
+	opt := opts{
+		validator: nil,
+	}
+	Validator(vf)(&opt)
+	assert.Equal(t, vf, opt.validator)
+}

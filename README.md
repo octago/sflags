@@ -41,7 +41,7 @@ And you can use your favorite flag or cli library!
  - [x] Deprecated and hidden options
  - [ ] Multiple ENV names
  - [x] Interface for user types.
- - [ ] Validation
+ - [x] Validation (using [govalidator](https://github.com/asaskevich/govalidator) package)
 
 
 ## Supported types in structures:

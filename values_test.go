@@ -1,6 +1,7 @@
 package sflags
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -42,4 +43,46 @@ func TestCounter_Set(t *testing.T) {
 func TestBoolValue_IsBoolFlag(t *testing.T) {
 	b := &boolValue{}
 	assert.True(t, b.IsBoolFlag())
+}
+
+func TestValidateValue_IsBoolFlag(t *testing.T) {
+	boolV := true
+	v := &validateValue{Value: newBoolValue(&boolV)}
+	assert.True(t, v.IsBoolFlag())
+
+	v = &validateValue{Value: newStringValue(strP("stringValue"))}
+	assert.False(t, v.IsBoolFlag())
+}
+
+func TestValidateValue_IsCumulative(t *testing.T) {
+	v := &validateValue{Value: newStringValue(strP("stringValue"))}
+	assert.False(t, v.IsCumulative())
+
+	v = &validateValue{Value: newStringSliceValue(&[]string{})}
+	assert.True(t, v.IsCumulative())
+}
+
+func TestValidateValue_String(t *testing.T) {
+	v := &validateValue{Value: newStringValue(strP("stringValue"))}
+	assert.Equal(t, "stringValue", v.String())
+
+	v = &validateValue{Value: nil}
+	assert.Equal(t, "", v.String())
+}
+
+func TestValidateValue_Set(t *testing.T) {
+	sV := strP("stringValue")
+	v := &validateValue{Value: newStringValue(sV)}
+	assert.NoError(t, v.Set("newVal"))
+	assert.Equal(t, "newVal", *sV)
+
+	v.validateFunc = func(val string) error {
+		return nil
+	}
+	assert.NoError(t, v.Set("newVal"))
+
+	v.validateFunc = func(val string) error {
+		return fmt.Errorf("invalid %s", val)
+	}
+	assert.EqualError(t, v.Set("newVal"), "invalid newVal")
 }

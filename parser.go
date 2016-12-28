@@ -14,6 +14,12 @@ const (
 	defaultEnvDivider  = "_"
 )
 
+// ValidateFunc describes a validation func,
+// that takes string val for flag from command line,
+// field that's associated with this flag in structure cfg.
+// Should return error if validation fails.
+type ValidateFunc func(val string, field reflect.StructField, cfg interface{}) error
+
 type opts struct {
 	descTag     string
 	flagTag     string
@@ -21,6 +27,7 @@ type opts struct {
 	envPrefix   string
 	flagDivider string
 	envDivider  string
+	validator   ValidateFunc
 }
 
 // OptFunc sets values in opts structure.
@@ -44,6 +51,10 @@ func FlagDivider(val string) OptFunc { return func(opt *opts) { opt.flagDivider 
 // EnvDivider sets custom divider for environment variables.
 // It is underscore by default. e.g. "ENV_NAME".
 func EnvDivider(val string) OptFunc { return func(opt *opts) { opt.envDivider = val } }
+
+// Validator sets validator function for flags.
+// Check existed validators in sflags/validator package.
+func Validator(val ValidateFunc) OptFunc { return func(opt *opts) { opt.validator = val } }
 
 func copyOpts(val opts) OptFunc { return func(opt *opts) { *opt = val } }
 
@@ -175,6 +186,14 @@ fields:
 		}
 		// check if field has required pointer type (**regex.Regexp f.e)
 		if val := parseGeneratedPtrs(fieldValueAddr); val != nil {
+			if opt.validator != nil {
+				val = &validateValue{
+					Value: val,
+					validateFunc: func(val string) error {
+						return opt.validator(val, field, cfg)
+					},
+				}
+			}
 			flag.Value = val
 			flag.DefValue = val.String()
 			flags = append(flags, flag)
@@ -196,6 +215,14 @@ fields:
 		}
 
 		if val != nil {
+			if opt.validator != nil {
+				val = &validateValue{
+					Value: val,
+					validateFunc: func(val string) error {
+						return opt.validator(val, field, cfg)
+					},
+				}
+			}
 			flag.Value = val
 			flag.DefValue = val.String()
 			flags = append(flags, flag)
