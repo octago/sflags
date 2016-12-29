@@ -114,7 +114,7 @@ func TestParse(t *testing.T) {
 		{
 			name:    "Test bad cfg value",
 			cfg:     "bad config",
-			expErr1: errors.New("cfg must be a pointer to a structure"),
+			expErr1: errors.New("object must be a pointer to struct or interface"),
 		},
 	}
 	for _, test := range tests {

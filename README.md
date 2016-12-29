@@ -42,7 +42,7 @@ And you can use your favorite flag or cli library!
  - [ ] Multiple ENV names
  - [x] Interface for user types.
  - [x] [Validation](https://godoc.org/github.com/octago/sflags/validator/govalidator#New) (using [govalidator](https://github.com/asaskevich/govalidator) package)
-
+ - [x] Anonymous nested structure support (anonymous structures flatten by default)
 
 ## Supported types in structures:
 
@@ -214,6 +214,9 @@ func EnvDivider(val string)
 // Validator sets validator function for flags.
 // Check existed validators in sflags/validator package.
 func Validator(val ValidateFunc)
+
+// Set to false if you don't want anonymous structure fields to be flatten.
+func Flatten(val bool)
 ```
 
 

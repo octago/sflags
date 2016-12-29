@@ -12,6 +12,7 @@ const (
 	defaultEnvTag      = "env"
 	defaultFlagDivider = "-"
 	defaultEnvDivider  = "_"
+	defaultFlatten     = true
 )
 
 // ValidateFunc describes a validation func,
@@ -27,7 +28,15 @@ type opts struct {
 	envPrefix   string
 	flagDivider string
 	envDivider  string
+	flatten     bool
 	validator   ValidateFunc
+}
+
+func (o opts) apply(optFuncs ...OptFunc) opts {
+	for _, optFunc := range optFuncs {
+		optFunc(&o)
+	}
+	return o
 }
 
 // OptFunc sets values in opts structure.
@@ -56,6 +65,10 @@ func EnvDivider(val string) OptFunc { return func(opt *opts) { opt.envDivider = 
 // Check existed validators in sflags/validator package.
 func Validator(val ValidateFunc) OptFunc { return func(opt *opts) { opt.validator = val } }
 
+// Flatten set flatten option.
+// Set to false if you don't want anonymous structure fields to be flatten.
+func Flatten(val bool) OptFunc { return func(opt *opts) { opt.flatten = val } }
+
 func copyOpts(val opts) OptFunc { return func(opt *opts) { *opt = val } }
 
 func hasOption(options []string, option string) bool {
@@ -65,6 +78,16 @@ func hasOption(options []string, option string) bool {
 		}
 	}
 	return false
+}
+
+func defOpts() opts {
+	return opts{
+		descTag:     defaultDescTag,
+		flagTag:     defaultFlagTag,
+		flagDivider: defaultFlagDivider,
+		envDivider:  defaultEnvDivider,
+		flatten:     defaultFlatten,
+	}
 }
 
 func parseFlagTag(field reflect.StructField, opt opts) *Flag {
@@ -134,92 +157,94 @@ func parseEnv(flagName string, field reflect.StructField, opt opts) string {
 }
 
 // ParseStruct parses structure and returns list of flags based on this structure.
-// This list of flags can be used by generators for
-// flag, kingpin, cobra, pflag, urfave/cli.
+// This list of flags can be used by generators for flag, kingpin, cobra, pflag, urfave/cli.
 func ParseStruct(cfg interface{}, optFuncs ...OptFunc) ([]*Flag, error) {
 	// what we want is Ptr to Structure
-	if reflect.ValueOf(cfg).Kind() != reflect.Ptr {
-		return nil, errors.New("cfg must be a pointer to a structure")
+	if cfg == nil {
+		return nil, errors.New("object cannot be nil")
 	}
-	cfgValue := reflect.Indirect(reflect.ValueOf(cfg))
-	if cfgValue.Kind() != reflect.Struct {
-		return nil, errors.New("cfg must be a pointer to a structure")
+	v := reflect.ValueOf(cfg)
+	if v.Kind() != reflect.Ptr {
+		return nil, errors.New("object must be a pointer to struct or interface")
 	}
-	opt := opts{
-		descTag:     defaultDescTag,
-		flagTag:     defaultFlagTag,
-		flagDivider: defaultFlagDivider,
-		envDivider:  defaultEnvDivider,
+	if v.IsNil() {
+		return nil, errors.New("object cannot be nil")
 	}
-	for _, optFunc := range optFuncs {
-		optFunc(&opt)
+	switch e := v.Elem(); e.Kind() {
+	case reflect.Struct:
+		return parseStruct(e, optFuncs...), nil
+	default:
+		return nil, errors.New("object must be a pointer to struct or interface")
 	}
+}
+
+func parseVal(value reflect.Value, optFuncs ...OptFunc) ([]*Flag, Value) {
+	// value is addressable, let's check if we can parse it
+	if value.CanAddr() && value.Addr().CanInterface() {
+		valueInterface := value.Addr().Interface()
+		val := parseGenerated(valueInterface)
+		if val != nil {
+			return nil, val
+		}
+		// check if field implements Value interface
+		if val, casted := valueInterface.(Value); casted {
+			return nil, val
+		}
+	}
+
+	switch value.Kind() {
+	case reflect.Ptr:
+		if value.IsNil() {
+			value.Set(reflect.New(value.Type().Elem()))
+		}
+		val := parseGeneratedPtrs(value.Addr().Interface())
+		if val != nil {
+			return nil, val
+		}
+		return parseVal(value.Elem(), optFuncs...)
+	case reflect.Struct:
+		flags := parseStruct(value, optFuncs...)
+		return flags, nil
+	}
+	return nil, nil
+}
+
+func parseStruct(value reflect.Value, optFuncs ...OptFunc) []*Flag {
+	opt := defOpts().apply(optFuncs...)
 
 	flags := []*Flag{}
 
-	cfgType := cfgValue.Type()
+	valueType := value.Type()
 fields:
-	for i := 0; i < cfgType.NumField(); i++ {
-		field := cfgType.Field(i)
-		fieldValue := cfgValue.FieldByName(field.Name)
+	for i := 0; i < value.NumField(); i++ {
+		field := valueType.Field(i)
+		fieldValue := value.Field(i)
+		// skip unexported and non anonymous fields
+		if field.PkgPath != "" && !field.Anonymous {
+			continue fields
+		}
 
 		flag := parseFlagTag(field, opt)
 		if flag == nil {
 			continue fields
 		}
 		flag.EnvName = parseEnv(flag.Name, field, opt)
-
 		flag.Usage = field.Tag.Get(opt.descTag)
-
-		if !(fieldValue.CanAddr() && fieldValue.Addr().CanInterface()) {
-			continue fields
+		prefix := flag.Name + opt.flagDivider
+		if field.Anonymous && opt.flatten {
+			prefix = opt.prefix
 		}
-
-		fieldValueAddr := fieldValue.Addr().Interface()
-		kind := fieldValue.Kind()
-
-		// if field is Ptr but it's nil then create new value for it.
-		if kind == reflect.Ptr {
-			if fieldValue.IsNil() {
-				fieldValue.Set(reflect.New(fieldValue.Type().Elem()))
-			}
-		}
-		// check if field has required pointer type (**regex.Regexp f.e)
-		if val := parseGeneratedPtrs(fieldValueAddr); val != nil {
-			if opt.validator != nil {
-				val = &validateValue{
-					Value: val,
-					validateFunc: func(val string) error {
-						return opt.validator(val, field, cfg)
-					},
-				}
-			}
-			flag.Value = val
-			flag.DefValue = val.String()
-			flags = append(flags, flag)
-			continue fields
-		}
-		// check if field is pointer to a value.
-		if kind == reflect.Ptr {
-			kind = fieldValue.Type().Elem().Kind()
-			fieldValueAddr = fieldValue.Interface()
-		}
-		var val Value
-		// check if field implements Value interface
-		if fieldIsVal, casted := fieldValueAddr.(Value); casted {
-			val = fieldIsVal
-		}
-		// check if field is from generated  types
-		if val == nil {
-			val = parseGenerated(fieldValueAddr)
-		}
-
+		nestedFlags, val := parseVal(fieldValue,
+			copyOpts(opt),
+			Prefix(prefix),
+		)
+		// field contains a simple value.
 		if val != nil {
 			if opt.validator != nil {
 				val = &validateValue{
 					Value: val,
 					validateFunc: func(val string) error {
-						return opt.validator(val, field, cfg)
+						return opt.validator(val, field, value.Interface())
 					},
 				}
 			}
@@ -228,21 +253,12 @@ fields:
 			flags = append(flags, flag)
 			continue fields
 		}
-
-		// field is a nested structure
-		switch kind {
-		case reflect.Struct:
-			subFlags, err := ParseStruct(fieldValueAddr,
-				copyOpts(opt),
-				Prefix(flag.Name+opt.flagDivider),
-			)
-			if err != nil {
-				return nil, err
-			}
-			flags = append(flags, subFlags...)
+		// field is a structure
+		if len(nestedFlags) > 0 {
+			flags = append(flags, nestedFlags...)
 			continue fields
 		}
 
 	}
-	return flags, nil
+	return flags
 }

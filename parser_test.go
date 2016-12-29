@@ -14,6 +14,10 @@ func strP(value string) *string {
 	return &value
 }
 
+type simple struct {
+	Name string
+}
+
 func TestParseStruct(t *testing.T) {
 	simpleCfg := &struct {
 		Name  string `desc:"name description" env:"-"`
@@ -39,6 +43,7 @@ func TestParseStruct(t *testing.T) {
 		BoolSliceValue   []bool
 		CounterValue     Counter
 		RegexpValue      *regexp.Regexp
+		FuncValue        func() // will be ignored
 	}{
 		StringValue:      "string",
 		ByteValue:        10,
@@ -81,6 +86,14 @@ func TestParseStruct(t *testing.T) {
 		Name  string `desc:"name description"`
 		Name2 string `description:"name2 description"`
 	}{}
+	anonymousCfg := &struct {
+		Name1 string
+		simple
+	}{
+		simple: simple{
+			Name: "name_value",
+		},
+	}
 
 	tt := []struct {
 		name string
@@ -277,15 +290,60 @@ func TestParseStruct(t *testing.T) {
 			},
 		},
 		{
+			name: "Anonymoust cfg with disabled flatten",
+			cfg:  anonymousCfg,
+			expFlagSet: []*Flag{
+				{
+					Name:    "name1",
+					EnvName: "NAME1",
+					Value:   newStringValue(&anonymousCfg.Name1),
+				},
+				{
+					Name:     "name",
+					EnvName:  "NAME",
+					DefValue: "name_value",
+					Value:    newStringValue(&anonymousCfg.Name),
+				},
+			},
+		},
+		{
+			name:     "Anonymoust cfg with enabled flatten",
+			cfg:      anonymousCfg,
+			optFuncs: []OptFunc{Flatten(false)},
+			expFlagSet: []*Flag{
+				{
+					Name:    "name1",
+					EnvName: "NAME1",
+					Value:   newStringValue(&anonymousCfg.Name1),
+				},
+				{
+					Name:     "simple-name",
+					EnvName:  "SIMPLE_NAME",
+					DefValue: "name_value",
+					Value:    newStringValue(&anonymousCfg.Name),
+				},
+			},
+		},
+		{
 			name: "We need pointer to structure",
 			cfg: struct {
 			}{},
-			expErr: errors.New("cfg must be a pointer to a structure"),
+			expErr: errors.New("object must be a pointer to struct or interface"),
 		},
 		{
 			name:   "We need pointer to structure 2",
 			cfg:    strP("something"),
-			expErr: errors.New("cfg must be a pointer to a structure"),
+			expErr: errors.New("object must be a pointer to struct or interface"),
+		},
+		{
+			name:   "We need non nil object",
+			cfg:    nil,
+			expErr: errors.New("object cannot be nil"),
+		},
+		{
+			name:   "We need non nil value",
+			cfg:    (*simple)(nil),
+			expErr: errors.New("object cannot be nil"),
 		},
 	}
 	for _, test := range tt {
@@ -354,4 +412,12 @@ func TestValidator(t *testing.T) {
 	}
 	Validator(vf)(&opt)
 	assert.Equal(t, vf, opt.validator)
+}
+
+func TestFlatten(t *testing.T) {
+	opt := opts{
+		flatten: true,
+	}
+	Flatten(false)(&opt)
+	assert.Equal(t, false, opt.flatten)
 }
