@@ -7,15 +7,15 @@ An example:
 
 ```golang
 type HTTPConfig struct {
-	Host    string `desc:"HTTP host"`
-	Port    int `flag:"port p" desc:"some port"`
-	SSL     bool `env:"HTTP_SSL_VALUE"`
+	Host    string        `desc:"HTTP host"`
+	Port    int           `flag:"port p" desc:"some port"`
+	SSL     bool          `env:"HTTP_SSL_VALUE"`
 	Timeout time.Duration `flag:",deprecated,hidden"`
 }
 
 type Config struct {
-	HTTP   HTTPConfig
-	Stats  StatsConfig
+	HTTP  HTTPConfig
+	Stats StatsConfig
 }
 ```
 
@@ -95,11 +95,10 @@ Simple example for flag library:
 ```golang
 package main
 
-
 import (
+	"flag"
 	"log"
 	"time"
-	"flag"
 
 	"github.com/octago/sflags/gen/gflag"
 )
@@ -112,7 +111,7 @@ type httpConfig struct {
 }
 
 type config struct {
-	HTTP   httpConfig
+	HTTP httpConfig
 }
 
 func main() {
