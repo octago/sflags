@@ -107,7 +107,7 @@ func (v *Counter) Set(s string) error {
 		*v++
 		return nil
 	}
-	parsed, err := strconv.ParseInt(s, 0, 64)
+	parsed, err := strconv.ParseInt(s, 0, 0)
 	if err != nil {
 		return err
 	}
@@ -121,19 +121,19 @@ func (v *Counter) Set(s string) error {
 }
 
 // Get method returns inner value for Counter.
-func (v *Counter) Get() interface{} { return (int)(*v) }
+func (v Counter) Get() interface{} { return int(v) }
 
 // IsBoolFlag returns true, because Counter might be used without value.
-func (v *Counter) IsBoolFlag() bool { return true }
+func (v Counter) IsBoolFlag() bool { return true }
 
 // String returns string representation of Counter
-func (v *Counter) String() string { return fmt.Sprintf("%d", *v) }
+func (v Counter) String() string { return strconv.Itoa(int(v)) }
 
 // IsCumulative returns true, because Counter might be used multiple times.
-func (v *Counter) IsCumulative() bool { return true }
+func (v Counter) IsCumulative() bool { return true }
 
 // Type returns `count` for Counter, it's mostly for pflag compatibility.
-func (v *Counter) Type() string { return "count" }
+func (v Counter) Type() string { return "count" }
 
 // === Some patches for generated flags
 
