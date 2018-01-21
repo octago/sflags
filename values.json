@@ -678,7 +678,7 @@
         "out": "ffffff"
       },
       {
-        "in": "g",
+        "in": "a",
         "out": "",
         "err": "encoding/hex: odd length hex string"
       },

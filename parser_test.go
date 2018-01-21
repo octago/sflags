@@ -3,6 +3,7 @@ package sflags
 import (
 	"errors"
 	"net"
+	"reflect"
 	"regexp"
 	"testing"
 
@@ -35,6 +36,7 @@ func TestParseStruct(t *testing.T) {
 		Addr: &net.TCPAddr{
 			IP: net.ParseIP("127.0.0.1"),
 		},
+		name6: "name6_value",
 	}
 	diffTypesCfg := &struct {
 		StringValue      string
@@ -406,12 +408,13 @@ func TestFlagTag(t *testing.T) {
 }
 
 func TestValidator(t *testing.T) {
-	var vf ValidateFunc
 	opt := opts{
 		validator: nil,
 	}
-	Validator(vf)(&opt)
-	assert.Equal(t, vf, opt.validator)
+	Validator(func(string, reflect.StructField, interface{}) error {
+		return nil
+	})(&opt)
+	assert.NotNil(t, opt.validator)
 }
 
 func TestFlatten(t *testing.T) {

@@ -1501,11 +1501,11 @@ func TestHexBytesValue(t *testing.T) {
 		assert.Equal(t, *a, v.Get())
 		assert.Equal(t, "hexBytes", v.Type())
 	})
-	t.Run("in: g", func(t *testing.T) {
+	t.Run("in: a", func(t *testing.T) {
 		a := new(HexBytes)
 		v := newHexBytesValue(a)
 		assert.Equal(t, parseGenerated(a), v)
-		err := v.Set("g")
+		err := v.Set("a")
 		assert.EqualError(t, err, "encoding/hex: odd length hex string")
 		assert.Equal(t, "", v.String())
 		assert.Equal(t, *a, v.Get())
