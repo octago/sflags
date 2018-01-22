@@ -14,6 +14,7 @@ import (
 	"time"
 )
 
+// MapAllowedKinds stores list of kinds allowed for map keys.
 var MapAllowedKinds = []reflect.Kind{
 
 	reflect.String,
