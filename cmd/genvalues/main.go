@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"reflect"
 	"text/template"
 	"unicode"
 	"unicode/utf8"
@@ -25,6 +26,12 @@ import (
 "{{.}}"{{end}}
 )
 
+{{$mapKeyTypes := .MapKeysTypes}}
+
+var MapAllowedKinds = []reflect.Kind{
+	reflect.String, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
+	reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64,
+}
 
 func parseGenerated(value interface{}) Value {
 	switch value.(type) {
@@ -174,6 +181,13 @@ func (v *{{.|SliceValueName}}) IsCumulative() bool {
 
 {{end}}
 
+{{ if not .NoMap }}
+{{$valueType := .Type}}
+{{range $mapKeyTypes}}
+// -- map{{.}}{{$valueType}} Value
+{{end}}
+{{end}}
+
 {{end}}
 
 
@@ -276,6 +290,12 @@ func Test{{.|Name}}SliceValue(t *testing.T) {
 	`
 )
 
+// MapAllowedKinds stores list of kinds allowed for map keys.
+var mapAllowedKinds = []reflect.Kind{
+	reflect.String, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
+	reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64,
+}
+
 type test struct {
 	In  string
 	Out string
@@ -310,6 +330,7 @@ type value struct {
 	Tests         []test      `json:"tests"`
 	SliceTests    []sliceTest `json:"slice_tests"`
 	NoSlice       bool        `json:"no_slice"`
+	NoMap         bool        `json:"no_map"`
 }
 
 func fatalIfError(err error) {
@@ -394,11 +415,13 @@ func main() {
 		defer w.Close()
 
 		err = t.Execute(w, struct {
-			Values  []value
-			Imports []string
+			Values       []value
+			Imports      []string
+			MapKeysTypes []string
 		}{
-			Values:  values,
-			Imports: imports,
+			Values:       values,
+			Imports:      imports,
+			MapKeysTypes: stringifyKinds(mapAllowedKinds),
 		})
 		fatalIfError(err)
 
@@ -413,6 +436,7 @@ func main() {
 		fatalIfError(err)
 		defer w.Close()
 
+		fmt.Println(stringifyKinds(mapAllowedKinds))
 		err = t.Execute(w, struct {
 			Values  []value
 			Imports []string
@@ -425,6 +449,16 @@ func main() {
 		gofmt("values_generated_test.go")
 	}
 
+}
+
+func stringifyKinds(kinds []reflect.Kind) []string {
+	var l []string
+
+	for _, kind := range kinds {
+		l = append(l, kind.String())
+	}
+
+	return l
 }
 
 func gofmt(path string) {

@@ -6,11 +6,17 @@ import (
 	"encoding/hex"
 	"fmt"
 	"net"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
+
+var MapAllowedKinds = []reflect.Kind{
+	reflect.String, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
+	reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64,
+}
 
 func parseGenerated(value interface{}) Value {
 	switch value.(type) {
@@ -192,6 +198,28 @@ func (v *stringSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringstring Value
+
+// -- mapintstring Value
+
+// -- mapint8string Value
+
+// -- mapint16string Value
+
+// -- mapint32string Value
+
+// -- mapint64string Value
+
+// -- mapuintstring Value
+
+// -- mapuint8string Value
+
+// -- mapuint16string Value
+
+// -- mapuint32string Value
+
+// -- mapuint64string Value
+
 // -- bool Value
 type boolValue struct {
 	value *bool
@@ -290,6 +318,28 @@ func (v *boolSliceValue) Type() string { return "boolSlice" }
 func (v *boolSliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringbool Value
+
+// -- mapintbool Value
+
+// -- mapint8bool Value
+
+// -- mapint16bool Value
+
+// -- mapint32bool Value
+
+// -- mapint64bool Value
+
+// -- mapuintbool Value
+
+// -- mapuint8bool Value
+
+// -- mapuint16bool Value
+
+// -- mapuint32bool Value
+
+// -- mapuint64bool Value
 
 // -- uint Value
 type uintValue struct {
@@ -390,6 +440,28 @@ func (v *uintSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringuint Value
+
+// -- mapintuint Value
+
+// -- mapint8uint Value
+
+// -- mapint16uint Value
+
+// -- mapint32uint Value
+
+// -- mapint64uint Value
+
+// -- mapuintuint Value
+
+// -- mapuint8uint Value
+
+// -- mapuint16uint Value
+
+// -- mapuint32uint Value
+
+// -- mapuint64uint Value
+
 // -- uint8 Value
 type uint8Value struct {
 	value *uint8
@@ -488,6 +560,28 @@ func (v *uint8SliceValue) Type() string { return "uint8Slice" }
 func (v *uint8SliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringuint8 Value
+
+// -- mapintuint8 Value
+
+// -- mapint8uint8 Value
+
+// -- mapint16uint8 Value
+
+// -- mapint32uint8 Value
+
+// -- mapint64uint8 Value
+
+// -- mapuintuint8 Value
+
+// -- mapuint8uint8 Value
+
+// -- mapuint16uint8 Value
+
+// -- mapuint32uint8 Value
+
+// -- mapuint64uint8 Value
 
 // -- uint16 Value
 type uint16Value struct {
@@ -588,6 +682,28 @@ func (v *uint16SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringuint16 Value
+
+// -- mapintuint16 Value
+
+// -- mapint8uint16 Value
+
+// -- mapint16uint16 Value
+
+// -- mapint32uint16 Value
+
+// -- mapint64uint16 Value
+
+// -- mapuintuint16 Value
+
+// -- mapuint8uint16 Value
+
+// -- mapuint16uint16 Value
+
+// -- mapuint32uint16 Value
+
+// -- mapuint64uint16 Value
+
 // -- uint32 Value
 type uint32Value struct {
 	value *uint32
@@ -686,6 +802,28 @@ func (v *uint32SliceValue) Type() string { return "uint32Slice" }
 func (v *uint32SliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringuint32 Value
+
+// -- mapintuint32 Value
+
+// -- mapint8uint32 Value
+
+// -- mapint16uint32 Value
+
+// -- mapint32uint32 Value
+
+// -- mapint64uint32 Value
+
+// -- mapuintuint32 Value
+
+// -- mapuint8uint32 Value
+
+// -- mapuint16uint32 Value
+
+// -- mapuint32uint32 Value
+
+// -- mapuint64uint32 Value
 
 // -- uint64 Value
 type uint64Value struct {
@@ -786,6 +924,28 @@ func (v *uint64SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringuint64 Value
+
+// -- mapintuint64 Value
+
+// -- mapint8uint64 Value
+
+// -- mapint16uint64 Value
+
+// -- mapint32uint64 Value
+
+// -- mapint64uint64 Value
+
+// -- mapuintuint64 Value
+
+// -- mapuint8uint64 Value
+
+// -- mapuint16uint64 Value
+
+// -- mapuint32uint64 Value
+
+// -- mapuint64uint64 Value
+
 // -- int Value
 type intValue struct {
 	value *int
@@ -884,6 +1044,28 @@ func (v *intSliceValue) Type() string { return "intSlice" }
 func (v *intSliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringint Value
+
+// -- mapintint Value
+
+// -- mapint8int Value
+
+// -- mapint16int Value
+
+// -- mapint32int Value
+
+// -- mapint64int Value
+
+// -- mapuintint Value
+
+// -- mapuint8int Value
+
+// -- mapuint16int Value
+
+// -- mapuint32int Value
+
+// -- mapuint64int Value
 
 // -- int8 Value
 type int8Value struct {
@@ -984,6 +1166,28 @@ func (v *int8SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringint8 Value
+
+// -- mapintint8 Value
+
+// -- mapint8int8 Value
+
+// -- mapint16int8 Value
+
+// -- mapint32int8 Value
+
+// -- mapint64int8 Value
+
+// -- mapuintint8 Value
+
+// -- mapuint8int8 Value
+
+// -- mapuint16int8 Value
+
+// -- mapuint32int8 Value
+
+// -- mapuint64int8 Value
+
 // -- int16 Value
 type int16Value struct {
 	value *int16
@@ -1082,6 +1286,28 @@ func (v *int16SliceValue) Type() string { return "int16Slice" }
 func (v *int16SliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringint16 Value
+
+// -- mapintint16 Value
+
+// -- mapint8int16 Value
+
+// -- mapint16int16 Value
+
+// -- mapint32int16 Value
+
+// -- mapint64int16 Value
+
+// -- mapuintint16 Value
+
+// -- mapuint8int16 Value
+
+// -- mapuint16int16 Value
+
+// -- mapuint32int16 Value
+
+// -- mapuint64int16 Value
 
 // -- int32 Value
 type int32Value struct {
@@ -1182,6 +1408,28 @@ func (v *int32SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringint32 Value
+
+// -- mapintint32 Value
+
+// -- mapint8int32 Value
+
+// -- mapint16int32 Value
+
+// -- mapint32int32 Value
+
+// -- mapint64int32 Value
+
+// -- mapuintint32 Value
+
+// -- mapuint8int32 Value
+
+// -- mapuint16int32 Value
+
+// -- mapuint32int32 Value
+
+// -- mapuint64int32 Value
+
 // -- int64 Value
 type int64Value struct {
 	value *int64
@@ -1280,6 +1528,28 @@ func (v *int64SliceValue) Type() string { return "int64Slice" }
 func (v *int64SliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringint64 Value
+
+// -- mapintint64 Value
+
+// -- mapint8int64 Value
+
+// -- mapint16int64 Value
+
+// -- mapint32int64 Value
+
+// -- mapint64int64 Value
+
+// -- mapuintint64 Value
+
+// -- mapuint8int64 Value
+
+// -- mapuint16int64 Value
+
+// -- mapuint32int64 Value
+
+// -- mapuint64int64 Value
 
 // -- float64 Value
 type float64Value struct {
@@ -1380,6 +1650,28 @@ func (v *float64SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringfloat64 Value
+
+// -- mapintfloat64 Value
+
+// -- mapint8float64 Value
+
+// -- mapint16float64 Value
+
+// -- mapint32float64 Value
+
+// -- mapint64float64 Value
+
+// -- mapuintfloat64 Value
+
+// -- mapuint8float64 Value
+
+// -- mapuint16float64 Value
+
+// -- mapuint32float64 Value
+
+// -- mapuint64float64 Value
+
 // -- float32 Value
 type float32Value struct {
 	value *float32
@@ -1478,6 +1770,28 @@ func (v *float32SliceValue) Type() string { return "float32Slice" }
 func (v *float32SliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringfloat32 Value
+
+// -- mapintfloat32 Value
+
+// -- mapint8float32 Value
+
+// -- mapint16float32 Value
+
+// -- mapint32float32 Value
+
+// -- mapint64float32 Value
+
+// -- mapuintfloat32 Value
+
+// -- mapuint8float32 Value
+
+// -- mapuint16float32 Value
+
+// -- mapuint32float32 Value
+
+// -- mapuint64float32 Value
 
 // -- time.Duration Value
 type durationValue struct {
@@ -1578,6 +1892,28 @@ func (v *durationSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringtime.Duration Value
+
+// -- mapinttime.Duration Value
+
+// -- mapint8time.Duration Value
+
+// -- mapint16time.Duration Value
+
+// -- mapint32time.Duration Value
+
+// -- mapint64time.Duration Value
+
+// -- mapuinttime.Duration Value
+
+// -- mapuint8time.Duration Value
+
+// -- mapuint16time.Duration Value
+
+// -- mapuint32time.Duration Value
+
+// -- mapuint64time.Duration Value
+
 // -- net.IP Value
 type ipValue struct {
 	value *net.IP
@@ -1676,6 +2012,28 @@ func (v *ipSliceValue) Type() string { return "ipSlice" }
 func (v *ipSliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringnet.IP Value
+
+// -- mapintnet.IP Value
+
+// -- mapint8net.IP Value
+
+// -- mapint16net.IP Value
+
+// -- mapint32net.IP Value
+
+// -- mapint64net.IP Value
+
+// -- mapuintnet.IP Value
+
+// -- mapuint8net.IP Value
+
+// -- mapuint16net.IP Value
+
+// -- mapuint32net.IP Value
+
+// -- mapuint64net.IP Value
 
 // -- HexBytes Value
 type hexBytesValue struct {
@@ -1776,6 +2134,28 @@ func (v *hexBytesSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringHexBytes Value
+
+// -- mapintHexBytes Value
+
+// -- mapint8HexBytes Value
+
+// -- mapint16HexBytes Value
+
+// -- mapint32HexBytes Value
+
+// -- mapint64HexBytes Value
+
+// -- mapuintHexBytes Value
+
+// -- mapuint8HexBytes Value
+
+// -- mapuint16HexBytes Value
+
+// -- mapuint32HexBytes Value
+
+// -- mapuint64HexBytes Value
+
 // -- *regexp.Regexp Value
 type regexpValue struct {
 	value **regexp.Regexp
@@ -1874,6 +2254,28 @@ func (v *regexpSliceValue) Type() string { return "regexpSlice" }
 func (v *regexpSliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstring*regexp.Regexp Value
+
+// -- mapint*regexp.Regexp Value
+
+// -- mapint8*regexp.Regexp Value
+
+// -- mapint16*regexp.Regexp Value
+
+// -- mapint32*regexp.Regexp Value
+
+// -- mapint64*regexp.Regexp Value
+
+// -- mapuint*regexp.Regexp Value
+
+// -- mapuint8*regexp.Regexp Value
+
+// -- mapuint16*regexp.Regexp Value
+
+// -- mapuint32*regexp.Regexp Value
+
+// -- mapuint64*regexp.Regexp Value
 
 // -- net.TCPAddr Value
 type tcpAddrValue struct {
@@ -1974,6 +2376,28 @@ func (v *tcpAddrSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- mapstringnet.TCPAddr Value
+
+// -- mapintnet.TCPAddr Value
+
+// -- mapint8net.TCPAddr Value
+
+// -- mapint16net.TCPAddr Value
+
+// -- mapint32net.TCPAddr Value
+
+// -- mapint64net.TCPAddr Value
+
+// -- mapuintnet.TCPAddr Value
+
+// -- mapuint8net.TCPAddr Value
+
+// -- mapuint16net.TCPAddr Value
+
+// -- mapuint32net.TCPAddr Value
+
+// -- mapuint64net.TCPAddr Value
+
 // -- net.IPNet Value
 type ipNetValue struct {
 	value *net.IPNet
@@ -2072,3 +2496,25 @@ func (v *ipNetSliceValue) Type() string { return "ipNetSlice" }
 func (v *ipNetSliceValue) IsCumulative() bool {
 	return true
 }
+
+// -- mapstringnet.IPNet Value
+
+// -- mapintnet.IPNet Value
+
+// -- mapint8net.IPNet Value
+
+// -- mapint16net.IPNet Value
+
+// -- mapint32net.IPNet Value
+
+// -- mapint64net.IPNet Value
+
+// -- mapuintnet.IPNet Value
+
+// -- mapuint8net.IPNet Value
+
+// -- mapuint16net.IPNet Value
+
+// -- mapuint32net.IPNet Value
+
+// -- mapuint64net.IPNet Value

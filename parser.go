@@ -132,7 +132,7 @@ func parseEnv(flagName string, field reflect.StructField, opt opts) string {
 			// if tag is `env:"-"` then won't fill flag from environment
 			envVar = ""
 		case "":
-		// if tag is `env:""` then env var will be taken from flag name
+			// if tag is `env:""` then env var will be taken from flag name
 		default:
 			// if tag is `env:"NAME"` then env var is envPrefix_flagPrefix_NAME
 			// if tag is `env:"~NAME"` then env var is NAME
@@ -205,6 +205,24 @@ func parseVal(value reflect.Value, optFuncs ...OptFunc) ([]*Flag, Value) {
 	case reflect.Struct:
 		flags := parseStruct(value, optFuncs...)
 		return flags, nil
+	case reflect.Map:
+		mapType := value.Type()
+		keyKind := value.Type().Key().Kind()
+
+		// check that map key is string or integer
+		if !anyOf(MapAllowedKinds, keyKind) {
+			break
+		}
+
+		if value.IsNil() {
+			value.Set(reflect.MakeMap(mapType))
+		}
+
+		valueInterface := value.Addr().Interface()
+		val := parseMapGenerated(valueInterface)
+		if val != nil {
+			return nil, val
+		}
 	}
 	return nil, nil
 }
@@ -228,16 +246,19 @@ fields:
 		if flag == nil {
 			continue fields
 		}
+
 		flag.EnvName = parseEnv(flag.Name, field, opt)
 		flag.Usage = field.Tag.Get(opt.descTag)
 		prefix := flag.Name + opt.flagDivider
 		if field.Anonymous && opt.flatten {
 			prefix = opt.prefix
 		}
+
 		nestedFlags, val := parseVal(fieldValue,
 			copyOpts(opt),
 			Prefix(prefix),
 		)
+
 		// field contains a simple value.
 		if val != nil {
 			if opt.validator != nil {
@@ -261,4 +282,14 @@ fields:
 
 	}
 	return flags
+}
+
+func anyOf(kinds []reflect.Kind, needle reflect.Kind) bool {
+	for _, kind := range kinds {
+		if kind == needle {
+			return true
+		}
+	}
+
+	return false
 }
