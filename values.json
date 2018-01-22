@@ -4,7 +4,8 @@
     "format": "*v.value",
     "import": [
       "fmt",
-      "reflect"
+      "reflect",
+      "errors"
     ],
     "tests": [
       {

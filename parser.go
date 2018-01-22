@@ -219,7 +219,7 @@ func parseVal(value reflect.Value, optFuncs ...OptFunc) ([]*Flag, Value) {
 		}
 
 		valueInterface := value.Addr().Interface()
-		val := parseMapGenerated(valueInterface)
+		val := parseGeneratedMap(valueInterface)
 		if val != nil {
 			return nil, val
 		}

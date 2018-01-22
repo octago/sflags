@@ -29,8 +29,8 @@ import (
 {{$mapKeyTypes := .MapKeysTypes}}
 
 var MapAllowedKinds = []reflect.Kind{
-	reflect.String, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
-	reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64,
+{{range $mapKeyTypes}}
+	reflect.{{. | Title}},{{end}}
 }
 
 func parseGenerated(value interface{}) Value {
@@ -54,6 +54,18 @@ func parseGeneratedPtrs(value interface{}) Value {
 	case *{{.Type}}:
 		return new{{.|Name}}Value(value.(*{{.Type}}))
 	{{end}}{{end}}\nn
+	default:
+		return nil
+	}
+}
+
+func parseGeneratedMap(value interface{}) Value {
+	switch value.(type) {
+	{{range .Values}}{{ if not .NoMap }}\nn
+	{{ $value := . }}{{range $mapKeyTypes}}
+	case *map[{{.}}]{{$value.Type}}:
+		return new{{MapValueName $value . | Title}}(value.(*map[{{.}}]{{$value.Type}}))
+	{{end}}{{end}}{{end}}\nn
 	default:
 		return nil
 	}
@@ -182,9 +194,95 @@ func (v *{{.|SliceValueName}}) IsCumulative() bool {
 {{end}}
 
 {{ if not .NoMap }}
-{{$valueType := .Type}}
+{{ $value := . }}
 {{range $mapKeyTypes}}
-// -- map{{.}}{{$valueType}} Value
+// -- {{ MapValueName $value . }}
+type {{ MapValueName $value . }} struct {
+	value *map[{{.}}]{{$value.Type}}
+}
+
+var _ RepeatableFlag = (*{{MapValueName $value .}})(nil)
+var _ Value = (*{{MapValueName $value .}})(nil)
+var _ Getter = (*{{MapValueName $value .}})(nil)
+
+
+func new{{MapValueName $value . | Title}}(m *map[{{.}}]{{$value.Type}}) *{{MapValueName $value .}}  {
+	return &{{MapValueName $value .}}{
+		value: m,
+	}
+}
+
+func (v *{{MapValueName $value .}}) Set(s string) error {
+	ss := strings.Split(s, ":")
+    if len(ss) < 2 {
+        return errors.New("invalid map flag syntax, use -map=key1:val1")
+    }
+
+	{{ $kindVal := KindValue . }}
+
+	s = ss[0]
+
+	{{if $kindVal.Parser }}\nn
+	parsedKey, err := {{$kindVal.Parser}}
+	if err != nil {
+        return err
+	}
+
+	{{if $kindVal.Convert}}\nn
+	key := ({{$kindVal.Type}})(parsedKey)
+	{{else}}\nn
+	key := parsedKey
+	{{end}}\nn
+
+	{{ else }}\nn
+	key := s
+	{{end}}\nn
+
+
+	s = ss[1]
+ 
+	{{if $value.Parser }}\nn
+	parsedVal, err := {{$value.Parser}}
+	if err != nil {
+        return err
+	}
+
+	{{if $value.Convert}}\nn
+	val := ({{$value.Type}})(parsedVal)
+	{{else}}\nn
+	val := parsedVal
+	{{end}}\nn
+
+	{{ else }}\nn
+	val := s
+	{{end}}\nn
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *{{MapValueName $value .}}) Get() interface{} {
+ 	if v != nil && v.value != nil {
+{{/* flag package create zero Value and compares it to actual Value */}}\nn
+ 		return *v.value
+ 	}
+	return nil
+}
+
+func (v *{{MapValueName $value .}}) String() string {
+	if v != nil && v.value != nil {
+{{/* flag package create zero Value and compares it to actual Value */}}\nn
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *{{MapValueName $value .}}) Type() string { return "map[{{.}}]{{$value.Type}}" }
+
+func (v *{{MapValueName $value .}}) IsCumulative() bool {
+	return true
+}
 {{end}}
 {{end}}
 
@@ -366,6 +464,7 @@ func main() {
 
 	baseT := template.New("genvalues").Funcs(template.FuncMap{
 		"Lower": strings.ToLower,
+		"Title": strings.Title,
 		"Format": func(v *value) string {
 			if v.Format != "" {
 				return v.Format
@@ -382,6 +481,20 @@ func main() {
 		"SliceValueName": func(v *value) string {
 			name := valueName(v)
 			return camelToLower(name) + "SliceValue"
+		},
+		"MapValueName": func(v *value, kind string) string {
+			name := valueName(v)
+
+			return kind + name + "MapValue"
+		},
+		"KindValue": func(kind string) value {
+			for _, value := range values {
+				if value.Type == kind {
+					return value
+				}
+			}
+
+			return value{}
 		},
 		"Name": valueName,
 		"Plural": func(v *value) string {
@@ -436,7 +549,6 @@ func main() {
 		fatalIfError(err)
 		defer w.Close()
 
-		fmt.Println(stringifyKinds(mapAllowedKinds))
 		err = t.Execute(w, struct {
 			Values  []value
 			Imports []string
