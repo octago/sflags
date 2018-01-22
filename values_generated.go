@@ -918,7 +918,7 @@ func (v *stringStringMapValue) Get() interface{} {
 }
 
 func (v *stringStringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -977,7 +977,7 @@ func (v *intStringMapValue) Get() interface{} {
 }
 
 func (v *intStringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1036,7 +1036,7 @@ func (v *int8StringMapValue) Get() interface{} {
 }
 
 func (v *int8StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1095,7 +1095,7 @@ func (v *int16StringMapValue) Get() interface{} {
 }
 
 func (v *int16StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1154,7 +1154,7 @@ func (v *int32StringMapValue) Get() interface{} {
 }
 
 func (v *int32StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1213,7 +1213,7 @@ func (v *int64StringMapValue) Get() interface{} {
 }
 
 func (v *int64StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1272,7 +1272,7 @@ func (v *uintStringMapValue) Get() interface{} {
 }
 
 func (v *uintStringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1331,7 +1331,7 @@ func (v *uint8StringMapValue) Get() interface{} {
 }
 
 func (v *uint8StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1390,7 +1390,7 @@ func (v *uint16StringMapValue) Get() interface{} {
 }
 
 func (v *uint16StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1449,7 +1449,7 @@ func (v *uint32StringMapValue) Get() interface{} {
 }
 
 func (v *uint32StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1508,7 +1508,7 @@ func (v *uint64StringMapValue) Get() interface{} {
 }
 
 func (v *uint64StringMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1666,7 +1666,7 @@ func (v *stringBoolMapValue) Get() interface{} {
 }
 
 func (v *stringBoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1730,7 +1730,7 @@ func (v *intBoolMapValue) Get() interface{} {
 }
 
 func (v *intBoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1794,7 +1794,7 @@ func (v *int8BoolMapValue) Get() interface{} {
 }
 
 func (v *int8BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1858,7 +1858,7 @@ func (v *int16BoolMapValue) Get() interface{} {
 }
 
 func (v *int16BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1922,7 +1922,7 @@ func (v *int32BoolMapValue) Get() interface{} {
 }
 
 func (v *int32BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -1986,7 +1986,7 @@ func (v *int64BoolMapValue) Get() interface{} {
 }
 
 func (v *int64BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2050,7 +2050,7 @@ func (v *uintBoolMapValue) Get() interface{} {
 }
 
 func (v *uintBoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2114,7 +2114,7 @@ func (v *uint8BoolMapValue) Get() interface{} {
 }
 
 func (v *uint8BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2178,7 +2178,7 @@ func (v *uint16BoolMapValue) Get() interface{} {
 }
 
 func (v *uint16BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2242,7 +2242,7 @@ func (v *uint32BoolMapValue) Get() interface{} {
 }
 
 func (v *uint32BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2306,7 +2306,7 @@ func (v *uint64BoolMapValue) Get() interface{} {
 }
 
 func (v *uint64BoolMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2464,7 +2464,7 @@ func (v *stringUintMapValue) Get() interface{} {
 }
 
 func (v *stringUintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2528,7 +2528,7 @@ func (v *intUintMapValue) Get() interface{} {
 }
 
 func (v *intUintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2592,7 +2592,7 @@ func (v *int8UintMapValue) Get() interface{} {
 }
 
 func (v *int8UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2656,7 +2656,7 @@ func (v *int16UintMapValue) Get() interface{} {
 }
 
 func (v *int16UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2720,7 +2720,7 @@ func (v *int32UintMapValue) Get() interface{} {
 }
 
 func (v *int32UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2784,7 +2784,7 @@ func (v *int64UintMapValue) Get() interface{} {
 }
 
 func (v *int64UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2848,7 +2848,7 @@ func (v *uintUintMapValue) Get() interface{} {
 }
 
 func (v *uintUintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2912,7 +2912,7 @@ func (v *uint8UintMapValue) Get() interface{} {
 }
 
 func (v *uint8UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -2976,7 +2976,7 @@ func (v *uint16UintMapValue) Get() interface{} {
 }
 
 func (v *uint16UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3040,7 +3040,7 @@ func (v *uint32UintMapValue) Get() interface{} {
 }
 
 func (v *uint32UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3104,7 +3104,7 @@ func (v *uint64UintMapValue) Get() interface{} {
 }
 
 func (v *uint64UintMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3262,7 +3262,7 @@ func (v *stringUint8MapValue) Get() interface{} {
 }
 
 func (v *stringUint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3326,7 +3326,7 @@ func (v *intUint8MapValue) Get() interface{} {
 }
 
 func (v *intUint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3390,7 +3390,7 @@ func (v *int8Uint8MapValue) Get() interface{} {
 }
 
 func (v *int8Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3454,7 +3454,7 @@ func (v *int16Uint8MapValue) Get() interface{} {
 }
 
 func (v *int16Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3518,7 +3518,7 @@ func (v *int32Uint8MapValue) Get() interface{} {
 }
 
 func (v *int32Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3582,7 +3582,7 @@ func (v *int64Uint8MapValue) Get() interface{} {
 }
 
 func (v *int64Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3646,7 +3646,7 @@ func (v *uintUint8MapValue) Get() interface{} {
 }
 
 func (v *uintUint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3710,7 +3710,7 @@ func (v *uint8Uint8MapValue) Get() interface{} {
 }
 
 func (v *uint8Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3774,7 +3774,7 @@ func (v *uint16Uint8MapValue) Get() interface{} {
 }
 
 func (v *uint16Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3838,7 +3838,7 @@ func (v *uint32Uint8MapValue) Get() interface{} {
 }
 
 func (v *uint32Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -3902,7 +3902,7 @@ func (v *uint64Uint8MapValue) Get() interface{} {
 }
 
 func (v *uint64Uint8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4060,7 +4060,7 @@ func (v *stringUint16MapValue) Get() interface{} {
 }
 
 func (v *stringUint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4124,7 +4124,7 @@ func (v *intUint16MapValue) Get() interface{} {
 }
 
 func (v *intUint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4188,7 +4188,7 @@ func (v *int8Uint16MapValue) Get() interface{} {
 }
 
 func (v *int8Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4252,7 +4252,7 @@ func (v *int16Uint16MapValue) Get() interface{} {
 }
 
 func (v *int16Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4316,7 +4316,7 @@ func (v *int32Uint16MapValue) Get() interface{} {
 }
 
 func (v *int32Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4380,7 +4380,7 @@ func (v *int64Uint16MapValue) Get() interface{} {
 }
 
 func (v *int64Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4444,7 +4444,7 @@ func (v *uintUint16MapValue) Get() interface{} {
 }
 
 func (v *uintUint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4508,7 +4508,7 @@ func (v *uint8Uint16MapValue) Get() interface{} {
 }
 
 func (v *uint8Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4572,7 +4572,7 @@ func (v *uint16Uint16MapValue) Get() interface{} {
 }
 
 func (v *uint16Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4636,7 +4636,7 @@ func (v *uint32Uint16MapValue) Get() interface{} {
 }
 
 func (v *uint32Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4700,7 +4700,7 @@ func (v *uint64Uint16MapValue) Get() interface{} {
 }
 
 func (v *uint64Uint16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4858,7 +4858,7 @@ func (v *stringUint32MapValue) Get() interface{} {
 }
 
 func (v *stringUint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4922,7 +4922,7 @@ func (v *intUint32MapValue) Get() interface{} {
 }
 
 func (v *intUint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -4986,7 +4986,7 @@ func (v *int8Uint32MapValue) Get() interface{} {
 }
 
 func (v *int8Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5050,7 +5050,7 @@ func (v *int16Uint32MapValue) Get() interface{} {
 }
 
 func (v *int16Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5114,7 +5114,7 @@ func (v *int32Uint32MapValue) Get() interface{} {
 }
 
 func (v *int32Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5178,7 +5178,7 @@ func (v *int64Uint32MapValue) Get() interface{} {
 }
 
 func (v *int64Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5242,7 +5242,7 @@ func (v *uintUint32MapValue) Get() interface{} {
 }
 
 func (v *uintUint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5306,7 +5306,7 @@ func (v *uint8Uint32MapValue) Get() interface{} {
 }
 
 func (v *uint8Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5370,7 +5370,7 @@ func (v *uint16Uint32MapValue) Get() interface{} {
 }
 
 func (v *uint16Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5434,7 +5434,7 @@ func (v *uint32Uint32MapValue) Get() interface{} {
 }
 
 func (v *uint32Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5498,7 +5498,7 @@ func (v *uint64Uint32MapValue) Get() interface{} {
 }
 
 func (v *uint64Uint32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5656,7 +5656,7 @@ func (v *stringUint64MapValue) Get() interface{} {
 }
 
 func (v *stringUint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5720,7 +5720,7 @@ func (v *intUint64MapValue) Get() interface{} {
 }
 
 func (v *intUint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5784,7 +5784,7 @@ func (v *int8Uint64MapValue) Get() interface{} {
 }
 
 func (v *int8Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5848,7 +5848,7 @@ func (v *int16Uint64MapValue) Get() interface{} {
 }
 
 func (v *int16Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5912,7 +5912,7 @@ func (v *int32Uint64MapValue) Get() interface{} {
 }
 
 func (v *int32Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -5976,7 +5976,7 @@ func (v *int64Uint64MapValue) Get() interface{} {
 }
 
 func (v *int64Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6040,7 +6040,7 @@ func (v *uintUint64MapValue) Get() interface{} {
 }
 
 func (v *uintUint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6104,7 +6104,7 @@ func (v *uint8Uint64MapValue) Get() interface{} {
 }
 
 func (v *uint8Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6168,7 +6168,7 @@ func (v *uint16Uint64MapValue) Get() interface{} {
 }
 
 func (v *uint16Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6232,7 +6232,7 @@ func (v *uint32Uint64MapValue) Get() interface{} {
 }
 
 func (v *uint32Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6296,7 +6296,7 @@ func (v *uint64Uint64MapValue) Get() interface{} {
 }
 
 func (v *uint64Uint64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6454,7 +6454,7 @@ func (v *stringIntMapValue) Get() interface{} {
 }
 
 func (v *stringIntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6518,7 +6518,7 @@ func (v *intIntMapValue) Get() interface{} {
 }
 
 func (v *intIntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6582,7 +6582,7 @@ func (v *int8IntMapValue) Get() interface{} {
 }
 
 func (v *int8IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6646,7 +6646,7 @@ func (v *int16IntMapValue) Get() interface{} {
 }
 
 func (v *int16IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6710,7 +6710,7 @@ func (v *int32IntMapValue) Get() interface{} {
 }
 
 func (v *int32IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6774,7 +6774,7 @@ func (v *int64IntMapValue) Get() interface{} {
 }
 
 func (v *int64IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6838,7 +6838,7 @@ func (v *uintIntMapValue) Get() interface{} {
 }
 
 func (v *uintIntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6902,7 +6902,7 @@ func (v *uint8IntMapValue) Get() interface{} {
 }
 
 func (v *uint8IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -6966,7 +6966,7 @@ func (v *uint16IntMapValue) Get() interface{} {
 }
 
 func (v *uint16IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7030,7 +7030,7 @@ func (v *uint32IntMapValue) Get() interface{} {
 }
 
 func (v *uint32IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7094,7 +7094,7 @@ func (v *uint64IntMapValue) Get() interface{} {
 }
 
 func (v *uint64IntMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7252,7 +7252,7 @@ func (v *stringInt8MapValue) Get() interface{} {
 }
 
 func (v *stringInt8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7316,7 +7316,7 @@ func (v *intInt8MapValue) Get() interface{} {
 }
 
 func (v *intInt8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7380,7 +7380,7 @@ func (v *int8Int8MapValue) Get() interface{} {
 }
 
 func (v *int8Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7444,7 +7444,7 @@ func (v *int16Int8MapValue) Get() interface{} {
 }
 
 func (v *int16Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7508,7 +7508,7 @@ func (v *int32Int8MapValue) Get() interface{} {
 }
 
 func (v *int32Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7572,7 +7572,7 @@ func (v *int64Int8MapValue) Get() interface{} {
 }
 
 func (v *int64Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7636,7 +7636,7 @@ func (v *uintInt8MapValue) Get() interface{} {
 }
 
 func (v *uintInt8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7700,7 +7700,7 @@ func (v *uint8Int8MapValue) Get() interface{} {
 }
 
 func (v *uint8Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7764,7 +7764,7 @@ func (v *uint16Int8MapValue) Get() interface{} {
 }
 
 func (v *uint16Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7828,7 +7828,7 @@ func (v *uint32Int8MapValue) Get() interface{} {
 }
 
 func (v *uint32Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -7892,7 +7892,7 @@ func (v *uint64Int8MapValue) Get() interface{} {
 }
 
 func (v *uint64Int8MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8050,7 +8050,7 @@ func (v *stringInt16MapValue) Get() interface{} {
 }
 
 func (v *stringInt16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8114,7 +8114,7 @@ func (v *intInt16MapValue) Get() interface{} {
 }
 
 func (v *intInt16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8178,7 +8178,7 @@ func (v *int8Int16MapValue) Get() interface{} {
 }
 
 func (v *int8Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8242,7 +8242,7 @@ func (v *int16Int16MapValue) Get() interface{} {
 }
 
 func (v *int16Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8306,7 +8306,7 @@ func (v *int32Int16MapValue) Get() interface{} {
 }
 
 func (v *int32Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8370,7 +8370,7 @@ func (v *int64Int16MapValue) Get() interface{} {
 }
 
 func (v *int64Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8434,7 +8434,7 @@ func (v *uintInt16MapValue) Get() interface{} {
 }
 
 func (v *uintInt16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8498,7 +8498,7 @@ func (v *uint8Int16MapValue) Get() interface{} {
 }
 
 func (v *uint8Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8562,7 +8562,7 @@ func (v *uint16Int16MapValue) Get() interface{} {
 }
 
 func (v *uint16Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8626,7 +8626,7 @@ func (v *uint32Int16MapValue) Get() interface{} {
 }
 
 func (v *uint32Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8690,7 +8690,7 @@ func (v *uint64Int16MapValue) Get() interface{} {
 }
 
 func (v *uint64Int16MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8848,7 +8848,7 @@ func (v *stringInt32MapValue) Get() interface{} {
 }
 
 func (v *stringInt32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8912,7 +8912,7 @@ func (v *intInt32MapValue) Get() interface{} {
 }
 
 func (v *intInt32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -8976,7 +8976,7 @@ func (v *int8Int32MapValue) Get() interface{} {
 }
 
 func (v *int8Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9040,7 +9040,7 @@ func (v *int16Int32MapValue) Get() interface{} {
 }
 
 func (v *int16Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9104,7 +9104,7 @@ func (v *int32Int32MapValue) Get() interface{} {
 }
 
 func (v *int32Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9168,7 +9168,7 @@ func (v *int64Int32MapValue) Get() interface{} {
 }
 
 func (v *int64Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9232,7 +9232,7 @@ func (v *uintInt32MapValue) Get() interface{} {
 }
 
 func (v *uintInt32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9296,7 +9296,7 @@ func (v *uint8Int32MapValue) Get() interface{} {
 }
 
 func (v *uint8Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9360,7 +9360,7 @@ func (v *uint16Int32MapValue) Get() interface{} {
 }
 
 func (v *uint16Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9424,7 +9424,7 @@ func (v *uint32Int32MapValue) Get() interface{} {
 }
 
 func (v *uint32Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9488,7 +9488,7 @@ func (v *uint64Int32MapValue) Get() interface{} {
 }
 
 func (v *uint64Int32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9646,7 +9646,7 @@ func (v *stringInt64MapValue) Get() interface{} {
 }
 
 func (v *stringInt64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9710,7 +9710,7 @@ func (v *intInt64MapValue) Get() interface{} {
 }
 
 func (v *intInt64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9774,7 +9774,7 @@ func (v *int8Int64MapValue) Get() interface{} {
 }
 
 func (v *int8Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9838,7 +9838,7 @@ func (v *int16Int64MapValue) Get() interface{} {
 }
 
 func (v *int16Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9902,7 +9902,7 @@ func (v *int32Int64MapValue) Get() interface{} {
 }
 
 func (v *int32Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -9966,7 +9966,7 @@ func (v *int64Int64MapValue) Get() interface{} {
 }
 
 func (v *int64Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10030,7 +10030,7 @@ func (v *uintInt64MapValue) Get() interface{} {
 }
 
 func (v *uintInt64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10094,7 +10094,7 @@ func (v *uint8Int64MapValue) Get() interface{} {
 }
 
 func (v *uint8Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10158,7 +10158,7 @@ func (v *uint16Int64MapValue) Get() interface{} {
 }
 
 func (v *uint16Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10222,7 +10222,7 @@ func (v *uint32Int64MapValue) Get() interface{} {
 }
 
 func (v *uint32Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10286,7 +10286,7 @@ func (v *uint64Int64MapValue) Get() interface{} {
 }
 
 func (v *uint64Int64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10444,7 +10444,7 @@ func (v *stringFloat64MapValue) Get() interface{} {
 }
 
 func (v *stringFloat64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10508,7 +10508,7 @@ func (v *intFloat64MapValue) Get() interface{} {
 }
 
 func (v *intFloat64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10572,7 +10572,7 @@ func (v *int8Float64MapValue) Get() interface{} {
 }
 
 func (v *int8Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10636,7 +10636,7 @@ func (v *int16Float64MapValue) Get() interface{} {
 }
 
 func (v *int16Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10700,7 +10700,7 @@ func (v *int32Float64MapValue) Get() interface{} {
 }
 
 func (v *int32Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10764,7 +10764,7 @@ func (v *int64Float64MapValue) Get() interface{} {
 }
 
 func (v *int64Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10828,7 +10828,7 @@ func (v *uintFloat64MapValue) Get() interface{} {
 }
 
 func (v *uintFloat64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10892,7 +10892,7 @@ func (v *uint8Float64MapValue) Get() interface{} {
 }
 
 func (v *uint8Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -10956,7 +10956,7 @@ func (v *uint16Float64MapValue) Get() interface{} {
 }
 
 func (v *uint16Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11020,7 +11020,7 @@ func (v *uint32Float64MapValue) Get() interface{} {
 }
 
 func (v *uint32Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11084,7 +11084,7 @@ func (v *uint64Float64MapValue) Get() interface{} {
 }
 
 func (v *uint64Float64MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11242,7 +11242,7 @@ func (v *stringFloat32MapValue) Get() interface{} {
 }
 
 func (v *stringFloat32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11306,7 +11306,7 @@ func (v *intFloat32MapValue) Get() interface{} {
 }
 
 func (v *intFloat32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11370,7 +11370,7 @@ func (v *int8Float32MapValue) Get() interface{} {
 }
 
 func (v *int8Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11434,7 +11434,7 @@ func (v *int16Float32MapValue) Get() interface{} {
 }
 
 func (v *int16Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11498,7 +11498,7 @@ func (v *int32Float32MapValue) Get() interface{} {
 }
 
 func (v *int32Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11562,7 +11562,7 @@ func (v *int64Float32MapValue) Get() interface{} {
 }
 
 func (v *int64Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11626,7 +11626,7 @@ func (v *uintFloat32MapValue) Get() interface{} {
 }
 
 func (v *uintFloat32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11690,7 +11690,7 @@ func (v *uint8Float32MapValue) Get() interface{} {
 }
 
 func (v *uint8Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11754,7 +11754,7 @@ func (v *uint16Float32MapValue) Get() interface{} {
 }
 
 func (v *uint16Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11818,7 +11818,7 @@ func (v *uint32Float32MapValue) Get() interface{} {
 }
 
 func (v *uint32Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -11882,7 +11882,7 @@ func (v *uint64Float32MapValue) Get() interface{} {
 }
 
 func (v *uint64Float32MapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12040,7 +12040,7 @@ func (v *stringDurationMapValue) Get() interface{} {
 }
 
 func (v *stringDurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12104,7 +12104,7 @@ func (v *intDurationMapValue) Get() interface{} {
 }
 
 func (v *intDurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12168,7 +12168,7 @@ func (v *int8DurationMapValue) Get() interface{} {
 }
 
 func (v *int8DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12232,7 +12232,7 @@ func (v *int16DurationMapValue) Get() interface{} {
 }
 
 func (v *int16DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12296,7 +12296,7 @@ func (v *int32DurationMapValue) Get() interface{} {
 }
 
 func (v *int32DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12360,7 +12360,7 @@ func (v *int64DurationMapValue) Get() interface{} {
 }
 
 func (v *int64DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12424,7 +12424,7 @@ func (v *uintDurationMapValue) Get() interface{} {
 }
 
 func (v *uintDurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12488,7 +12488,7 @@ func (v *uint8DurationMapValue) Get() interface{} {
 }
 
 func (v *uint8DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12552,7 +12552,7 @@ func (v *uint16DurationMapValue) Get() interface{} {
 }
 
 func (v *uint16DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12616,7 +12616,7 @@ func (v *uint32DurationMapValue) Get() interface{} {
 }
 
 func (v *uint32DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12680,7 +12680,7 @@ func (v *uint64DurationMapValue) Get() interface{} {
 }
 
 func (v *uint64DurationMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12838,7 +12838,7 @@ func (v *stringIPMapValue) Get() interface{} {
 }
 
 func (v *stringIPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12902,7 +12902,7 @@ func (v *intIPMapValue) Get() interface{} {
 }
 
 func (v *intIPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -12966,7 +12966,7 @@ func (v *int8IPMapValue) Get() interface{} {
 }
 
 func (v *int8IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13030,7 +13030,7 @@ func (v *int16IPMapValue) Get() interface{} {
 }
 
 func (v *int16IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13094,7 +13094,7 @@ func (v *int32IPMapValue) Get() interface{} {
 }
 
 func (v *int32IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13158,7 +13158,7 @@ func (v *int64IPMapValue) Get() interface{} {
 }
 
 func (v *int64IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13222,7 +13222,7 @@ func (v *uintIPMapValue) Get() interface{} {
 }
 
 func (v *uintIPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13286,7 +13286,7 @@ func (v *uint8IPMapValue) Get() interface{} {
 }
 
 func (v *uint8IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13350,7 +13350,7 @@ func (v *uint16IPMapValue) Get() interface{} {
 }
 
 func (v *uint16IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13414,7 +13414,7 @@ func (v *uint32IPMapValue) Get() interface{} {
 }
 
 func (v *uint32IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13478,7 +13478,7 @@ func (v *uint64IPMapValue) Get() interface{} {
 }
 
 func (v *uint64IPMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13636,7 +13636,7 @@ func (v *stringHexBytesMapValue) Get() interface{} {
 }
 
 func (v *stringHexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13700,7 +13700,7 @@ func (v *intHexBytesMapValue) Get() interface{} {
 }
 
 func (v *intHexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13764,7 +13764,7 @@ func (v *int8HexBytesMapValue) Get() interface{} {
 }
 
 func (v *int8HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13828,7 +13828,7 @@ func (v *int16HexBytesMapValue) Get() interface{} {
 }
 
 func (v *int16HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13892,7 +13892,7 @@ func (v *int32HexBytesMapValue) Get() interface{} {
 }
 
 func (v *int32HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -13956,7 +13956,7 @@ func (v *int64HexBytesMapValue) Get() interface{} {
 }
 
 func (v *int64HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14020,7 +14020,7 @@ func (v *uintHexBytesMapValue) Get() interface{} {
 }
 
 func (v *uintHexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14084,7 +14084,7 @@ func (v *uint8HexBytesMapValue) Get() interface{} {
 }
 
 func (v *uint8HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14148,7 +14148,7 @@ func (v *uint16HexBytesMapValue) Get() interface{} {
 }
 
 func (v *uint16HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14212,7 +14212,7 @@ func (v *uint32HexBytesMapValue) Get() interface{} {
 }
 
 func (v *uint32HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14276,7 +14276,7 @@ func (v *uint64HexBytesMapValue) Get() interface{} {
 }
 
 func (v *uint64HexBytesMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14434,7 +14434,7 @@ func (v *stringRegexpMapValue) Get() interface{} {
 }
 
 func (v *stringRegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14498,7 +14498,7 @@ func (v *intRegexpMapValue) Get() interface{} {
 }
 
 func (v *intRegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14562,7 +14562,7 @@ func (v *int8RegexpMapValue) Get() interface{} {
 }
 
 func (v *int8RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14626,7 +14626,7 @@ func (v *int16RegexpMapValue) Get() interface{} {
 }
 
 func (v *int16RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14690,7 +14690,7 @@ func (v *int32RegexpMapValue) Get() interface{} {
 }
 
 func (v *int32RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14754,7 +14754,7 @@ func (v *int64RegexpMapValue) Get() interface{} {
 }
 
 func (v *int64RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14818,7 +14818,7 @@ func (v *uintRegexpMapValue) Get() interface{} {
 }
 
 func (v *uintRegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14882,7 +14882,7 @@ func (v *uint8RegexpMapValue) Get() interface{} {
 }
 
 func (v *uint8RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -14946,7 +14946,7 @@ func (v *uint16RegexpMapValue) Get() interface{} {
 }
 
 func (v *uint16RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15010,7 +15010,7 @@ func (v *uint32RegexpMapValue) Get() interface{} {
 }
 
 func (v *uint32RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15074,7 +15074,7 @@ func (v *uint64RegexpMapValue) Get() interface{} {
 }
 
 func (v *uint64RegexpMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15232,7 +15232,7 @@ func (v *stringTCPAddrMapValue) Get() interface{} {
 }
 
 func (v *stringTCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15296,7 +15296,7 @@ func (v *intTCPAddrMapValue) Get() interface{} {
 }
 
 func (v *intTCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15360,7 +15360,7 @@ func (v *int8TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *int8TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15424,7 +15424,7 @@ func (v *int16TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *int16TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15488,7 +15488,7 @@ func (v *int32TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *int32TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15552,7 +15552,7 @@ func (v *int64TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *int64TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15616,7 +15616,7 @@ func (v *uintTCPAddrMapValue) Get() interface{} {
 }
 
 func (v *uintTCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15680,7 +15680,7 @@ func (v *uint8TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *uint8TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15744,7 +15744,7 @@ func (v *uint16TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *uint16TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15808,7 +15808,7 @@ func (v *uint32TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *uint32TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -15872,7 +15872,7 @@ func (v *uint64TCPAddrMapValue) Get() interface{} {
 }
 
 func (v *uint64TCPAddrMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16030,7 +16030,7 @@ func (v *stringIPNetMapValue) Get() interface{} {
 }
 
 func (v *stringIPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16094,7 +16094,7 @@ func (v *intIPNetMapValue) Get() interface{} {
 }
 
 func (v *intIPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16158,7 +16158,7 @@ func (v *int8IPNetMapValue) Get() interface{} {
 }
 
 func (v *int8IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16222,7 +16222,7 @@ func (v *int16IPNetMapValue) Get() interface{} {
 }
 
 func (v *int16IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16286,7 +16286,7 @@ func (v *int32IPNetMapValue) Get() interface{} {
 }
 
 func (v *int32IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16350,7 +16350,7 @@ func (v *int64IPNetMapValue) Get() interface{} {
 }
 
 func (v *int64IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16414,7 +16414,7 @@ func (v *uintIPNetMapValue) Get() interface{} {
 }
 
 func (v *uintIPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16478,7 +16478,7 @@ func (v *uint8IPNetMapValue) Get() interface{} {
 }
 
 func (v *uint8IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16542,7 +16542,7 @@ func (v *uint16IPNetMapValue) Get() interface{} {
 }
 
 func (v *uint16IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16606,7 +16606,7 @@ func (v *uint32IPNetMapValue) Get() interface{} {
 }
 
 func (v *uint32IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""
@@ -16670,7 +16670,7 @@ func (v *uint64IPNetMapValue) Get() interface{} {
 }
 
 func (v *uint64IPNetMapValue) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 		return fmt.Sprintf("%v", *v.value)
 	}
 	return ""

@@ -271,7 +271,7 @@ func (v *{{MapValueName $value .}}) Get() interface{} {
 }
 
 func (v *{{MapValueName $value .}}) String() string {
-	if v != nil && v.value != nil {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
 {{/* flag package create zero Value and compares it to actual Value */}}\nn
 		return fmt.Sprintf("%v", *v.value)
 	}
