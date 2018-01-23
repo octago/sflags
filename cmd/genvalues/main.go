@@ -29,7 +29,7 @@ import (
 {{$mapKeyTypes := .MapKeysTypes}}
 
 // MapAllowedKinds stores list of kinds allowed for map keys.
-var MapAllowedKinds = []reflect.Kind{
+var MapAllowedKinds = []reflect.Kind{ \nn
 {{range $mapKeyTypes}}
 	reflect.{{. | Title}},{{end}}
 }
@@ -63,7 +63,7 @@ func parseGeneratedPtrs(value interface{}) Value {
 func parseGeneratedMap(value interface{}) Value {
 	switch value.(type) {
 	{{range .Values}}{{ if not .NoMap }}\nn
-	{{ $value := . }}{{range $mapKeyTypes}}
+	{{ $value := . }}{{range $mapKeyTypes}}\nn
 	case *map[{{.}}]{{$value.Type}}:
 		return new{{MapValueName $value . | Title}}(value.(*map[{{.}}]{{$value.Type}}))
 	{{end}}{{end}}{{end}}\nn
