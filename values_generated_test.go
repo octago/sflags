@@ -43,6 +43,105 @@ func TestStringSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringStringMapValue_Zero(t *testing.T) {
+	nilValue := new(stringStringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringStringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntStringMapValue_Zero(t *testing.T) {
+	nilValue := new(intStringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intStringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8StringMapValue_Zero(t *testing.T) {
+	nilValue := new(int8StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16StringMapValue_Zero(t *testing.T) {
+	nilValue := new(int16StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32StringMapValue_Zero(t *testing.T) {
+	nilValue := new(int32StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64StringMapValue_Zero(t *testing.T) {
+	nilValue := new(int64StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintStringMapValue_Zero(t *testing.T) {
+	nilValue := new(uintStringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintStringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8StringMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16StringMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32StringMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64StringMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64StringMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestStringSliceValue(t *testing.T) {
 	t.Run("in: [val1,val2 val3,val4]", func(t *testing.T) {
 		var err error
@@ -130,6 +229,105 @@ func TestBoolSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*boolSliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringBoolMapValue_Zero(t *testing.T) {
+	nilValue := new(stringBoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringBoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntBoolMapValue_Zero(t *testing.T) {
+	nilValue := new(intBoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intBoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(int8BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(int16BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(int32BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(int64BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintBoolMapValue_Zero(t *testing.T) {
+	nilValue := new(uintBoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintBoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64BoolMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64BoolMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -225,6 +423,105 @@ func TestUintSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUintMapValue_Zero(t *testing.T) {
+	nilValue := new(stringUintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUintMapValue_Zero(t *testing.T) {
+	nilValue := new(intUintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8UintMapValue_Zero(t *testing.T) {
+	nilValue := new(int8UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16UintMapValue_Zero(t *testing.T) {
+	nilValue := new(int16UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32UintMapValue_Zero(t *testing.T) {
+	nilValue := new(int32UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64UintMapValue_Zero(t *testing.T) {
+	nilValue := new(int64UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUintMapValue_Zero(t *testing.T) {
+	nilValue := new(uintUintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8UintMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16UintMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32UintMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64UintMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64UintMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUintSliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -314,6 +611,105 @@ func TestUint8SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*uint8SliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringUint8MapValue_Zero(t *testing.T) {
+	nilValue := new(stringUint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint8MapValue_Zero(t *testing.T) {
+	nilValue := new(intUint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint8MapValue_Zero(t *testing.T) {
+	nilValue := new(uintUint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Uint8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -409,6 +805,105 @@ func TestUint16SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUint16MapValue_Zero(t *testing.T) {
+	nilValue := new(stringUint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint16MapValue_Zero(t *testing.T) {
+	nilValue := new(intUint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint16MapValue_Zero(t *testing.T) {
+	nilValue := new(uintUint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Uint16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUint16SliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -501,6 +996,105 @@ func TestUint32SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUint32MapValue_Zero(t *testing.T) {
+	nilValue := new(stringUint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint32MapValue_Zero(t *testing.T) {
+	nilValue := new(intUint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint32MapValue_Zero(t *testing.T) {
+	nilValue := new(uintUint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Uint32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUint32SliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -590,6 +1184,105 @@ func TestUint64SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*uint64SliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringUint64MapValue_Zero(t *testing.T) {
+	nilValue := new(stringUint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint64MapValue_Zero(t *testing.T) {
+	nilValue := new(intUint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint64MapValue_Zero(t *testing.T) {
+	nilValue := new(uintUint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Uint64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -725,6 +1418,105 @@ func TestIntSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringIntMapValue_Zero(t *testing.T) {
+	nilValue := new(stringIntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringIntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntIntMapValue_Zero(t *testing.T) {
+	nilValue := new(intIntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intIntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8IntMapValue_Zero(t *testing.T) {
+	nilValue := new(int8IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16IntMapValue_Zero(t *testing.T) {
+	nilValue := new(int16IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32IntMapValue_Zero(t *testing.T) {
+	nilValue := new(int32IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64IntMapValue_Zero(t *testing.T) {
+	nilValue := new(int64IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintIntMapValue_Zero(t *testing.T) {
+	nilValue := new(uintIntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintIntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8IntMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16IntMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32IntMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64IntMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64IntMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestIntSliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -824,6 +1616,105 @@ func TestInt8SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*int8SliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringInt8MapValue_Zero(t *testing.T) {
+	nilValue := new(stringInt8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt8MapValue_Zero(t *testing.T) {
+	nilValue := new(intInt8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt8MapValue_Zero(t *testing.T) {
+	nilValue := new(uintInt8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int8MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Int8MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -929,6 +1820,105 @@ func TestInt16SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringInt16MapValue_Zero(t *testing.T) {
+	nilValue := new(stringInt16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt16MapValue_Zero(t *testing.T) {
+	nilValue := new(intInt16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt16MapValue_Zero(t *testing.T) {
+	nilValue := new(uintInt16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int16MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Int16MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestInt16SliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -1028,6 +2018,105 @@ func TestInt32SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*int32SliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringInt32MapValue_Zero(t *testing.T) {
+	nilValue := new(stringInt32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt32MapValue_Zero(t *testing.T) {
+	nilValue := new(intInt32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt32MapValue_Zero(t *testing.T) {
+	nilValue := new(uintInt32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Int32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -1133,6 +2222,105 @@ func TestInt64SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringInt64MapValue_Zero(t *testing.T) {
+	nilValue := new(stringInt64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt64MapValue_Zero(t *testing.T) {
+	nilValue := new(intInt64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt64MapValue_Zero(t *testing.T) {
+	nilValue := new(uintInt64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Int64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestInt64SliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -1212,6 +2400,105 @@ func TestFloat64SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*float64SliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringFloat64MapValue_Zero(t *testing.T) {
+	nilValue := new(stringFloat64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringFloat64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntFloat64MapValue_Zero(t *testing.T) {
+	nilValue := new(intFloat64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intFloat64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintFloat64MapValue_Zero(t *testing.T) {
+	nilValue := new(uintFloat64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintFloat64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Float64MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Float64MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -1297,6 +2584,105 @@ func TestFloat32SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringFloat32MapValue_Zero(t *testing.T) {
+	nilValue := new(stringFloat32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringFloat32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntFloat32MapValue_Zero(t *testing.T) {
+	nilValue := new(intFloat32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intFloat32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(int8Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(int16Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(int32Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(int64Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintFloat32MapValue_Zero(t *testing.T) {
+	nilValue := new(uintFloat32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintFloat32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint8Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint16Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint32Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Float32MapValue_Zero(t *testing.T) {
+	nilValue := new(uint64Float32MapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestFloat32SliceValue(t *testing.T) {
 	t.Run("in: [10.2,20.99 3.4]", func(t *testing.T) {
 		var err error
@@ -1369,6 +2755,105 @@ func TestDurationSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringDurationMapValue_Zero(t *testing.T) {
+	nilValue := new(stringDurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringDurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntDurationMapValue_Zero(t *testing.T) {
+	nilValue := new(intDurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intDurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(int8DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(int16DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(int32DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(int64DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintDurationMapValue_Zero(t *testing.T) {
+	nilValue := new(uintDurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintDurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64DurationMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64DurationMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestDurationSliceValue(t *testing.T) {
 	t.Run("in: [10s,30m 1ms]", func(t *testing.T) {
 		var err error
@@ -1438,6 +2923,105 @@ func TestIPSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*ipSliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringIPMapValue_Zero(t *testing.T) {
+	nilValue := new(stringIPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringIPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntIPMapValue_Zero(t *testing.T) {
+	nilValue := new(intIPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intIPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8IPMapValue_Zero(t *testing.T) {
+	nilValue := new(int8IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16IPMapValue_Zero(t *testing.T) {
+	nilValue := new(int16IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32IPMapValue_Zero(t *testing.T) {
+	nilValue := new(int32IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64IPMapValue_Zero(t *testing.T) {
+	nilValue := new(int64IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintIPMapValue_Zero(t *testing.T) {
+	nilValue := new(uintIPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintIPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8IPMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16IPMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32IPMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64IPMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64IPMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -1533,6 +3117,105 @@ func TestHexBytesSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringHexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(stringHexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringHexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntHexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(intHexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intHexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(int8HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(int16HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(int32HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(int64HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintHexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(uintHexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintHexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64HexBytesMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64HexBytesMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestHexBytesSliceValue(t *testing.T) {
 	t.Run("in: [ff,aa,bb cc]", func(t *testing.T) {
 		var err error
@@ -1602,6 +3285,105 @@ func TestRegexpSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*regexpSliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringRegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(stringRegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringRegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntRegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(intRegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intRegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(int8RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(int16RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(int32RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(int64RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintRegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(uintRegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintRegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64RegexpMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64RegexpMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -1694,6 +3476,105 @@ func TestTCPAddrSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*tcpAddrSliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringTCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(stringTCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringTCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntTCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(intTCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intTCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(int8TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(int16TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(int32TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(int64TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintTCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(uintTCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintTCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64TCPAddrMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64TCPAddrMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64TCPAddrMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 
@@ -1806,6 +3687,105 @@ func TestIPNetSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*ipNetSliceValue)(nil)
 	assert.Equal(t, "[]", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestStringIPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(stringIPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringIPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntIPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(intIPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intIPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(int8IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(int16IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(int32IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(int64IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintIPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(uintIPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintIPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(uint8IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(uint16IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(uint32IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64IPNetMapValue_Zero(t *testing.T) {
+	nilValue := new(uint64IPNetMapValue)
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }
 

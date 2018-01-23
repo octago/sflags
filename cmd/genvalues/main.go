@@ -304,6 +304,8 @@ import (
 {{end}}\nn
 )
 
+{{$mapKeyTypes := .MapKeysTypes}}
+
 {{range .Values}}
 
 func Test{{.|Name}}Value_Zero(t *testing.T) {
@@ -356,6 +358,21 @@ func Test{{.|Name}}SliceValue_Zero(t *testing.T) {
 	assert.Equal(t, "[]", nilObj.String())
 	assert.Nil(t, nilObj.Get())
 }{{end}}
+
+
+{{ if not .NoMap }}
+{{ $value := . }}
+{{range $mapKeyTypes}}
+func Test{{MapValueName $value . | Title}}_Zero(t *testing.T) {
+	nilValue := new({{MapValueName $value .}})
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*{{MapValueName $value . }})(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+{{end}}
+{{end}}
 
 
 {{ if .SliceTests }}{{ $value := . }}
@@ -551,11 +568,13 @@ func main() {
 		defer w.Close()
 
 		err = t.Execute(w, struct {
-			Values  []value
-			Imports []string
+			Values       []value
+			Imports      []string
+			MapKeysTypes []string
 		}{
-			Values:  values,
-			Imports: imports,
+			Values:       values,
+			Imports:      imports,
+			MapKeysTypes: stringifyKinds(mapAllowedKinds),
 		})
 		fatalIfError(err)
 
