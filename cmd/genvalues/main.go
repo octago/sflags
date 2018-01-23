@@ -14,6 +14,7 @@ import (
 	"text/template"
 	"unicode"
 	"unicode/utf8"
+	"math/rand"
 )
 
 const (
@@ -306,6 +307,7 @@ import (
 
 {{$mapKeyTypes := .MapKeysTypes}}
 
+
 {{range .Values}}
 
 func Test{{.|Name}}Value_Zero(t *testing.T) {
@@ -364,7 +366,7 @@ func Test{{.|Name}}SliceValue_Zero(t *testing.T) {
 {{ $value := . }}
 {{range $mapKeyTypes}}
 func Test{{MapValueName $value . | Title}}_Zero(t *testing.T) {
-	nilValue := new({{MapValueName $value .}})
+	var nilValue {{MapValueName $value .}}
 	assert.Equal(t, "", nilValue.String())
 	assert.Nil(t, nilValue.Get())
 	nilObj := (*{{MapValueName $value . }})(nil)
@@ -399,6 +401,35 @@ func Test{{.|Name}}SliceValue(t *testing.T) {
 	{{end}}
 }{{end}}
 
+{{ if .MapTests }}
+{{ $value := . }}
+{{range $mapKeyTypes}}{{ $keyType := . }}
+func Test{{MapValueName $value $keyType | Title}}(t *testing.T) {
+	{{range $value.MapTests}}{{ $test := . }}\nn
+	t.Run("{{.}}", func(t *testing.T) {
+		var err error
+		a := make(map[{{$keyType}}]{{$value.Type}})
+		v := new{{MapValueName $value $keyType | Title}}(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		{{range .In}}\nn
+		err = v.Set("{{$keyType | KindTest}}{{.}}")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("{{$keyType | KindTest}}:{{.}}")
+		{{if $test.Err}}\nn
+		assert.EqualError(t, err, "{{$test.Err}}")
+		{{ else }}\nn
+		assert.Nil(t, err)
+		{{end}}\nn
+		{{end}}\nn
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[{{$keyType}}]{{$value.Type}}", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	{{end}}\nn
+}
+{{end}}
+{{end}}
 
 {{end}}
 
@@ -432,6 +463,15 @@ func (t *sliceTest) String() string {
 	return fmt.Sprintf("in: %v", t.In)
 }
 
+type mapTest struct {
+	In  []string
+	Err string
+}
+
+func (t *mapTest) String() string {
+	return fmt.Sprintf("in: %v", t.In)
+}
+
 type value struct {
 	Name          string      `json:"name"`
 	Kind          string      `json:"kind"`
@@ -444,9 +484,10 @@ type value struct {
 	Help          string      `json:"help"`
 	Import        []string    `json:"import"`
 	Tests         []test      `json:"tests"`
-	SliceTests    []sliceTest `json:"slice_tests"`
 	NoSlice       bool        `json:"no_slice"`
+	SliceTests    []sliceTest `json:"slice_tests"`
 	NoMap         bool        `json:"no_map"`
+	MapTests      []mapTest   `json:"map_tests"`
 }
 
 func fatalIfError(err error) {
@@ -513,6 +554,13 @@ func main() {
 			}
 
 			return value{}
+		},
+		"KindTest": func(kind string) interface{} {
+			if kind == "string" {
+				return randStr(5)
+			}
+
+			return rand.Intn(8)
 		},
 		"Name": valueName,
 		"Plural": func(v *value) string {
@@ -692,4 +740,14 @@ func split(src string) (entries []string) {
 		}
 	}
 	return
+}
+
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func randStr(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
 }
