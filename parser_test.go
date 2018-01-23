@@ -53,6 +53,7 @@ func TestParseStruct(t *testing.T) {
 		MapInt16Int8     map[int16]int8
 		MapStringInt64   map[string]int64
 		MapStringString  map[string]string
+		MapBoolString    map[bool]string
 	}{
 		StringValue:      "string",
 		ByteValue:        10,
@@ -434,6 +435,25 @@ func TestParseStruct_NilValue(t *testing.T) {
 	err = flags[2].Value.Set("aabbcc")
 	require.NoError(t, err)
 	assert.Equal(t, "aabbcc", cfg.Regexp.String())
+}
+
+func TestParseStruct_WithValidator(t *testing.T) {
+	var cfg simple
+
+	testErr := errors.New("validator test error")
+
+	validator := Validator(func(val string, field reflect.StructField, cfg interface{}) error {
+		return testErr
+	})
+
+	flags, err := ParseStruct(&cfg, validator)
+	require.NoError(t, err)
+	require.Equal(t, 1, len(flags))
+	assert.NotNil(t, cfg.Name)
+
+	err = flags[0].Value.Set("aabbcc")
+	require.Error(t, err)
+	assert.Equal(t, testErr, err)
 }
 
 func TestFlagDivider(t *testing.T) {
