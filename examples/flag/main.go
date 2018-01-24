@@ -21,7 +21,7 @@ type httpConfig struct {
 	SSL     bool
 	Timeout time.Duration
 	Addr    *net.TCPAddr
-	Methods map[string]int64
+	Methods map[string]int64 `desc:"HTTP Methods"`
 }
 
 type config struct {
