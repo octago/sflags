@@ -415,6 +415,10 @@ func Test{{MapValueName $value $keyType | Title}}(t *testing.T) {
 		{{range .In}}\nn
 		err = v.Set("{{$keyType | KindTest}}{{.}}")
 		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		{{if ne $keyType "string"}}\nn
+		err = v.Set(":{{.}}")
+		assert.NotNil(t, err)
+		{{end}}\nn
 		err = v.Set("{{$keyType | KindTest}}:{{.}}")
 		{{if $test.Err}}\nn
 		assert.EqualError(t, err, "{{$test.Err}}")
@@ -424,7 +428,11 @@ func Test{{MapValueName $value $keyType | Title}}(t *testing.T) {
 		{{end}}\nn
 		assert.Equal(t, a, v.Get())
 		assert.Equal(t, "map[{{$keyType}}]{{$value.Type}}", v.Type())
+		{{if $test.Err}}\nn
+		assert.Empty(t, v.String())
+		{{else}}\nn
 		assert.NotEmpty(t, v.String())
+		{{end}}\nn
 	})
 	{{end}}\nn
 }
@@ -433,6 +441,11 @@ func Test{{MapValueName $value $keyType | Title}}(t *testing.T) {
 
 {{end}}
 
+func TestParseGeneratedMap_NilDefault(t *testing.T) {
+	a := new(bool)
+	v := parseGeneratedMap(a)
+	assert.Nil(t, v)
+}
 
 	`
 )
