@@ -21,6 +21,7 @@ type httpConfig struct {
 	SSL     bool
 	Timeout time.Duration
 	Addr    *net.TCPAddr
+	Methods map[string]int64 `desc:"HTTP Methods"`
 }
 
 type config struct {
@@ -59,6 +60,8 @@ func main() {
 		"-http-addr", "google.com:8000",
 		"-regexp", "ddfd",
 		"-count", "-count",
+		"-http-methods", "post:15",
+		"-http-methods", "get:25",
 	})
 	if err != nil {
 		fmt.Printf("err: %v", err)

@@ -29,6 +29,8 @@ func TestParseStruct(t *testing.T) {
 		name6 string
 
 		Addr *net.TCPAddr
+
+		Map map[string]int
 	}{
 		Name:  "name_value",
 		Name2: "name2_value",
@@ -37,6 +39,7 @@ func TestParseStruct(t *testing.T) {
 			IP: net.ParseIP("127.0.0.1"),
 		},
 		name6: "name6_value",
+		Map:   map[string]int{"test": 15},
 	}
 	diffTypesCfg := &struct {
 		StringValue      string
@@ -46,6 +49,11 @@ func TestParseStruct(t *testing.T) {
 		CounterValue     Counter
 		RegexpValue      *regexp.Regexp
 		FuncValue        func() // will be ignored
+		MapInt8Bool      map[int8]bool
+		MapInt16Int8     map[int16]int8
+		MapStringInt64   map[string]int64
+		MapStringString  map[string]string
+		MapBoolString    map[bool]string
 	}{
 		StringValue:      "string",
 		ByteValue:        10,
@@ -53,6 +61,8 @@ func TestParseStruct(t *testing.T) {
 		BoolSliceValue:   []bool{},
 		CounterValue:     10,
 		RegexpValue:      &regexp.Regexp{},
+		MapStringInt64:   map[string]int64{"test": 888},
+		MapStringString:  map[string]string{"test": "test-val"},
 	}
 	nestedCfg := &struct {
 		Sub struct {
@@ -143,6 +153,12 @@ func TestParseStruct(t *testing.T) {
 					DefValue: "127.0.0.1:0",
 					Value:    newTCPAddrValue(simpleCfg.Addr),
 				},
+				{
+					Name:     "map",
+					EnvName:  "MAP",
+					DefValue: "map[test:15]",
+					Value:    newStringIntMapValue(&simpleCfg.Map),
+				},
 			},
 		},
 		{
@@ -183,6 +199,12 @@ func TestParseStruct(t *testing.T) {
 					EnvName:  "PP|ADDR",
 					DefValue: "127.0.0.1:0",
 					Value:    newTCPAddrValue(simpleCfg.Addr),
+				},
+				{
+					Name:     "map",
+					EnvName:  "PP|MAP",
+					DefValue: "map[test:15]",
+					Value:    newStringIntMapValue(&simpleCfg.Map),
 				},
 			},
 			expErr: nil,
@@ -232,6 +254,30 @@ func TestParseStruct(t *testing.T) {
 					DefValue: "",
 					Value:    newRegexpValue(&diffTypesCfg.RegexpValue),
 					Usage:    "",
+				},
+				{
+					Name:     "map-int8-bool",
+					EnvName:  "MAP_INT8_BOOL",
+					DefValue: "",
+					Value:    newInt8BoolMapValue(&diffTypesCfg.MapInt8Bool),
+				},
+				{
+					Name:     "map-int16-int8",
+					EnvName:  "MAP_INT16_INT8",
+					DefValue: "",
+					Value:    newInt16Int8MapValue(&diffTypesCfg.MapInt16Int8),
+				},
+				{
+					Name:     "map-string-int64",
+					EnvName:  "MAP_STRING_INT64",
+					DefValue: "map[test:888]",
+					Value:    newStringInt64MapValue(&diffTypesCfg.MapStringInt64),
+				},
+				{
+					Name:     "map-string-string",
+					EnvName:  "MAP_STRING_STRING",
+					DefValue: "map[test:test-val]",
+					Value:    newStringStringMapValue(&diffTypesCfg.MapStringString),
 				},
 			},
 		},
@@ -389,6 +435,25 @@ func TestParseStruct_NilValue(t *testing.T) {
 	err = flags[2].Value.Set("aabbcc")
 	require.NoError(t, err)
 	assert.Equal(t, "aabbcc", cfg.Regexp.String())
+}
+
+func TestParseStruct_WithValidator(t *testing.T) {
+	var cfg simple
+
+	testErr := errors.New("validator test error")
+
+	validator := Validator(func(val string, field reflect.StructField, cfg interface{}) error {
+		return testErr
+	})
+
+	flags, err := ParseStruct(&cfg, validator)
+	require.NoError(t, err)
+	require.Equal(t, 1, len(flags))
+	assert.NotNil(t, cfg.Name)
+
+	err = flags[0].Value.Set("aabbcc")
+	require.Error(t, err)
+	assert.Equal(t, testErr, err)
 }
 
 func TestFlagDivider(t *testing.T) {

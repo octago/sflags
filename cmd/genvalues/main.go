@@ -10,9 +10,11 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"reflect"
 	"text/template"
 	"unicode"
 	"unicode/utf8"
+	"math/rand"
 )
 
 const (
@@ -25,6 +27,13 @@ import (
 "{{.}}"{{end}}
 )
 
+{{$mapKeyTypes := .MapKeysTypes}}
+
+// MapAllowedKinds stores list of kinds allowed for map keys.
+var MapAllowedKinds = []reflect.Kind{ \nn
+{{range $mapKeyTypes}}
+	reflect.{{. | Title}},{{end}}
+}
 
 func parseGenerated(value interface{}) Value {
 	switch value.(type) {
@@ -47,6 +56,18 @@ func parseGeneratedPtrs(value interface{}) Value {
 	case *{{.Type}}:
 		return new{{.|Name}}Value(value.(*{{.Type}}))
 	{{end}}{{end}}\nn
+	default:
+		return nil
+	}
+}
+
+func parseGeneratedMap(value interface{}) Value {
+	switch value.(type) {
+	{{range .Values}}{{ if not .NoMap }}\nn
+	{{ $value := . }}{{range $mapKeyTypes}}\nn
+	case *map[{{.}}]{{$value.Type}}:
+		return new{{MapValueName $value . | Title}}(value.(*map[{{.}}]{{$value.Type}}))
+	{{end}}{{end}}{{end}}\nn
 	default:
 		return nil
 	}
@@ -174,6 +195,99 @@ func (v *{{.|SliceValueName}}) IsCumulative() bool {
 
 {{end}}
 
+{{ if not .NoMap }}
+{{ $value := . }}
+{{range $mapKeyTypes}}
+// -- {{ MapValueName $value . }}
+type {{ MapValueName $value . }} struct {
+	value *map[{{.}}]{{$value.Type}}
+}
+
+var _ RepeatableFlag = (*{{MapValueName $value .}})(nil)
+var _ Value = (*{{MapValueName $value .}})(nil)
+var _ Getter = (*{{MapValueName $value .}})(nil)
+
+
+func new{{MapValueName $value . | Title}}(m *map[{{.}}]{{$value.Type}}) *{{MapValueName $value .}}  {
+	return &{{MapValueName $value .}}{
+		value: m,
+	}
+}
+
+func (v *{{MapValueName $value .}}) Set(s string) error {
+	ss := strings.Split(s, ":")
+    if len(ss) < 2 {
+        return errors.New("invalid map flag syntax, use -map=key1:val1")
+    }
+
+	{{ $kindVal := KindValue . }}
+
+	s = ss[0]
+
+	{{if $kindVal.Parser }}\nn
+	parsedKey, err := {{$kindVal.Parser}}
+	if err != nil {
+        return err
+	}
+
+	{{if $kindVal.Convert}}\nn
+	key := ({{$kindVal.Type}})(parsedKey)
+	{{else}}\nn
+	key := parsedKey
+	{{end}}\nn
+
+	{{ else }}\nn
+	key := s
+	{{end}}\nn
+
+
+	s = ss[1]
+ 
+	{{if $value.Parser }}\nn
+	parsedVal, err := {{$value.Parser}}
+	if err != nil {
+        return err
+	}
+
+	{{if $value.Convert}}\nn
+	val := ({{$value.Type}})(parsedVal)
+	{{else}}\nn
+	val := parsedVal
+	{{end}}\nn
+
+	{{ else }}\nn
+	val := s
+	{{end}}\nn
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *{{MapValueName $value .}}) Get() interface{} {
+ 	if v != nil && v.value != nil {
+{{/* flag package create zero Value and compares it to actual Value */}}\nn
+ 		return *v.value
+ 	}
+	return nil
+}
+
+func (v *{{MapValueName $value .}}) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+{{/* flag package create zero Value and compares it to actual Value */}}\nn
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *{{MapValueName $value .}}) Type() string { return "map[{{.}}]{{$value.Type}}" }
+
+func (v *{{MapValueName $value .}}) IsCumulative() bool {
+	return true
+}
+{{end}}
+{{end}}
+
 {{end}}
 
 
@@ -190,6 +304,9 @@ import (
 "{{.}}"
 {{end}}\nn
 )
+
+{{$mapKeyTypes := .MapKeysTypes}}
+
 
 {{range .Values}}
 
@@ -245,6 +362,21 @@ func Test{{.|Name}}SliceValue_Zero(t *testing.T) {
 }{{end}}
 
 
+{{ if not .NoMap }}
+{{ $value := . }}
+{{range $mapKeyTypes}}
+func Test{{MapValueName $value . | Title}}_Zero(t *testing.T) {
+	var nilValue {{MapValueName $value .}}
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*{{MapValueName $value . }})(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+{{end}}
+{{end}}
+
+
 {{ if .SliceTests }}{{ $value := . }}
 func Test{{.|Name}}SliceValue(t *testing.T) {
 	{{range .SliceTests}}{{ $test := . }}\nn
@@ -269,12 +401,60 @@ func Test{{.|Name}}SliceValue(t *testing.T) {
 	{{end}}
 }{{end}}
 
+{{ if .MapTests }}
+{{ $value := . }}
+{{range $mapKeyTypes}}{{ $keyType := . }}
+func Test{{MapValueName $value $keyType | Title}}(t *testing.T) {
+	{{range $value.MapTests}}{{ $test := . }}\nn
+	t.Run("{{.}}", func(t *testing.T) {
+		var err error
+		a := make(map[{{$keyType}}]{{$value.Type}})
+		v := new{{MapValueName $value $keyType | Title}}(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		{{range .In}}\nn
+		err = v.Set("{{$keyType | KindTest}}{{.}}")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		{{if ne $keyType "string"}}\nn
+		err = v.Set(":{{.}}")
+		assert.NotNil(t, err)
+		{{end}}\nn
+		err = v.Set("{{$keyType | KindTest}}:{{.}}")
+		{{if $test.Err}}\nn
+		assert.EqualError(t, err, "{{$test.Err}}")
+		{{ else }}\nn
+		assert.Nil(t, err)
+		{{end}}\nn
+		{{end}}\nn
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[{{$keyType}}]{{$value.Type}}", v.Type())
+		{{if $test.Err}}\nn
+		assert.Empty(t, v.String())
+		{{else}}\nn
+		assert.NotEmpty(t, v.String())
+		{{end}}\nn
+	})
+	{{end}}\nn
+}
+{{end}}
+{{end}}
 
 {{end}}
 
+func TestParseGeneratedMap_NilDefault(t *testing.T) {
+	a := new(bool)
+	v := parseGeneratedMap(a)
+	assert.Nil(t, v)
+}
 
 	`
 )
+
+// MapAllowedKinds stores list of kinds allowed for map keys.
+var mapAllowedKinds = []reflect.Kind{
+	reflect.String, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
+	reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64,
+}
 
 type test struct {
 	In  string
@@ -296,6 +476,15 @@ func (t *sliceTest) String() string {
 	return fmt.Sprintf("in: %v", t.In)
 }
 
+type mapTest struct {
+	In  []string
+	Err string
+}
+
+func (t *mapTest) String() string {
+	return fmt.Sprintf("in: %v", t.In)
+}
+
 type value struct {
 	Name          string      `json:"name"`
 	Kind          string      `json:"kind"`
@@ -308,8 +497,10 @@ type value struct {
 	Help          string      `json:"help"`
 	Import        []string    `json:"import"`
 	Tests         []test      `json:"tests"`
-	SliceTests    []sliceTest `json:"slice_tests"`
 	NoSlice       bool        `json:"no_slice"`
+	SliceTests    []sliceTest `json:"slice_tests"`
+	NoMap         bool        `json:"no_map"`
+	MapTests      []mapTest   `json:"map_tests"`
 }
 
 func fatalIfError(err error) {
@@ -345,6 +536,7 @@ func main() {
 
 	baseT := template.New("genvalues").Funcs(template.FuncMap{
 		"Lower": strings.ToLower,
+		"Title": strings.Title,
 		"Format": func(v *value) string {
 			if v.Format != "" {
 				return v.Format
@@ -361,6 +553,27 @@ func main() {
 		"SliceValueName": func(v *value) string {
 			name := valueName(v)
 			return camelToLower(name) + "SliceValue"
+		},
+		"MapValueName": func(v *value, kind string) string {
+			name := valueName(v)
+
+			return kind + name + "MapValue"
+		},
+		"KindValue": func(kind string) value {
+			for _, value := range values {
+				if value.Type == kind {
+					return value
+				}
+			}
+
+			return value{}
+		},
+		"KindTest": func(kind string) interface{} {
+			if kind == "string" {
+				return randStr(5)
+			}
+
+			return rand.Intn(8)
 		},
 		"Name": valueName,
 		"Plural": func(v *value) string {
@@ -394,11 +607,13 @@ func main() {
 		defer w.Close()
 
 		err = t.Execute(w, struct {
-			Values  []value
-			Imports []string
+			Values       []value
+			Imports      []string
+			MapKeysTypes []string
 		}{
-			Values:  values,
-			Imports: imports,
+			Values:       values,
+			Imports:      imports,
+			MapKeysTypes: stringifyKinds(mapAllowedKinds),
 		})
 		fatalIfError(err)
 
@@ -414,17 +629,29 @@ func main() {
 		defer w.Close()
 
 		err = t.Execute(w, struct {
-			Values  []value
-			Imports []string
+			Values       []value
+			Imports      []string
+			MapKeysTypes []string
 		}{
-			Values:  values,
-			Imports: imports,
+			Values:       values,
+			Imports:      imports,
+			MapKeysTypes: stringifyKinds(mapAllowedKinds),
 		})
 		fatalIfError(err)
 
 		gofmt("values_generated_test.go")
 	}
 
+}
+
+func stringifyKinds(kinds []reflect.Kind) []string {
+	var l []string
+
+	for _, kind := range kinds {
+		l = append(l, kind.String())
+	}
+
+	return l
 }
 
 func gofmt(path string) {
@@ -526,4 +753,14 @@ func split(src string) (entries []string) {
 		}
 	}
 	return
+}
+
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func randStr(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
 }

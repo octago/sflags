@@ -4,13 +4,30 @@ package sflags
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"net"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
+
+// MapAllowedKinds stores list of kinds allowed for map keys.
+var MapAllowedKinds = []reflect.Kind{
+	reflect.String,
+	reflect.Int,
+	reflect.Int8,
+	reflect.Int16,
+	reflect.Int32,
+	reflect.Int64,
+	reflect.Uint,
+	reflect.Uint8,
+	reflect.Uint16,
+	reflect.Uint32,
+	reflect.Uint64,
+}
 
 func parseGenerated(value interface{}) Value {
 	switch value.(type) {
@@ -106,6 +123,431 @@ func parseGeneratedPtrs(value interface{}) Value {
 	}
 }
 
+func parseGeneratedMap(value interface{}) Value {
+	switch value.(type) {
+	case *map[string]string:
+		return newStringStringMapValue(value.(*map[string]string))
+	case *map[int]string:
+		return newIntStringMapValue(value.(*map[int]string))
+	case *map[int8]string:
+		return newInt8StringMapValue(value.(*map[int8]string))
+	case *map[int16]string:
+		return newInt16StringMapValue(value.(*map[int16]string))
+	case *map[int32]string:
+		return newInt32StringMapValue(value.(*map[int32]string))
+	case *map[int64]string:
+		return newInt64StringMapValue(value.(*map[int64]string))
+	case *map[uint]string:
+		return newUintStringMapValue(value.(*map[uint]string))
+	case *map[uint8]string:
+		return newUint8StringMapValue(value.(*map[uint8]string))
+	case *map[uint16]string:
+		return newUint16StringMapValue(value.(*map[uint16]string))
+	case *map[uint32]string:
+		return newUint32StringMapValue(value.(*map[uint32]string))
+	case *map[uint64]string:
+		return newUint64StringMapValue(value.(*map[uint64]string))
+	case *map[string]bool:
+		return newStringBoolMapValue(value.(*map[string]bool))
+	case *map[int]bool:
+		return newIntBoolMapValue(value.(*map[int]bool))
+	case *map[int8]bool:
+		return newInt8BoolMapValue(value.(*map[int8]bool))
+	case *map[int16]bool:
+		return newInt16BoolMapValue(value.(*map[int16]bool))
+	case *map[int32]bool:
+		return newInt32BoolMapValue(value.(*map[int32]bool))
+	case *map[int64]bool:
+		return newInt64BoolMapValue(value.(*map[int64]bool))
+	case *map[uint]bool:
+		return newUintBoolMapValue(value.(*map[uint]bool))
+	case *map[uint8]bool:
+		return newUint8BoolMapValue(value.(*map[uint8]bool))
+	case *map[uint16]bool:
+		return newUint16BoolMapValue(value.(*map[uint16]bool))
+	case *map[uint32]bool:
+		return newUint32BoolMapValue(value.(*map[uint32]bool))
+	case *map[uint64]bool:
+		return newUint64BoolMapValue(value.(*map[uint64]bool))
+	case *map[string]uint:
+		return newStringUintMapValue(value.(*map[string]uint))
+	case *map[int]uint:
+		return newIntUintMapValue(value.(*map[int]uint))
+	case *map[int8]uint:
+		return newInt8UintMapValue(value.(*map[int8]uint))
+	case *map[int16]uint:
+		return newInt16UintMapValue(value.(*map[int16]uint))
+	case *map[int32]uint:
+		return newInt32UintMapValue(value.(*map[int32]uint))
+	case *map[int64]uint:
+		return newInt64UintMapValue(value.(*map[int64]uint))
+	case *map[uint]uint:
+		return newUintUintMapValue(value.(*map[uint]uint))
+	case *map[uint8]uint:
+		return newUint8UintMapValue(value.(*map[uint8]uint))
+	case *map[uint16]uint:
+		return newUint16UintMapValue(value.(*map[uint16]uint))
+	case *map[uint32]uint:
+		return newUint32UintMapValue(value.(*map[uint32]uint))
+	case *map[uint64]uint:
+		return newUint64UintMapValue(value.(*map[uint64]uint))
+	case *map[string]uint8:
+		return newStringUint8MapValue(value.(*map[string]uint8))
+	case *map[int]uint8:
+		return newIntUint8MapValue(value.(*map[int]uint8))
+	case *map[int8]uint8:
+		return newInt8Uint8MapValue(value.(*map[int8]uint8))
+	case *map[int16]uint8:
+		return newInt16Uint8MapValue(value.(*map[int16]uint8))
+	case *map[int32]uint8:
+		return newInt32Uint8MapValue(value.(*map[int32]uint8))
+	case *map[int64]uint8:
+		return newInt64Uint8MapValue(value.(*map[int64]uint8))
+	case *map[uint]uint8:
+		return newUintUint8MapValue(value.(*map[uint]uint8))
+	case *map[uint8]uint8:
+		return newUint8Uint8MapValue(value.(*map[uint8]uint8))
+	case *map[uint16]uint8:
+		return newUint16Uint8MapValue(value.(*map[uint16]uint8))
+	case *map[uint32]uint8:
+		return newUint32Uint8MapValue(value.(*map[uint32]uint8))
+	case *map[uint64]uint8:
+		return newUint64Uint8MapValue(value.(*map[uint64]uint8))
+	case *map[string]uint16:
+		return newStringUint16MapValue(value.(*map[string]uint16))
+	case *map[int]uint16:
+		return newIntUint16MapValue(value.(*map[int]uint16))
+	case *map[int8]uint16:
+		return newInt8Uint16MapValue(value.(*map[int8]uint16))
+	case *map[int16]uint16:
+		return newInt16Uint16MapValue(value.(*map[int16]uint16))
+	case *map[int32]uint16:
+		return newInt32Uint16MapValue(value.(*map[int32]uint16))
+	case *map[int64]uint16:
+		return newInt64Uint16MapValue(value.(*map[int64]uint16))
+	case *map[uint]uint16:
+		return newUintUint16MapValue(value.(*map[uint]uint16))
+	case *map[uint8]uint16:
+		return newUint8Uint16MapValue(value.(*map[uint8]uint16))
+	case *map[uint16]uint16:
+		return newUint16Uint16MapValue(value.(*map[uint16]uint16))
+	case *map[uint32]uint16:
+		return newUint32Uint16MapValue(value.(*map[uint32]uint16))
+	case *map[uint64]uint16:
+		return newUint64Uint16MapValue(value.(*map[uint64]uint16))
+	case *map[string]uint32:
+		return newStringUint32MapValue(value.(*map[string]uint32))
+	case *map[int]uint32:
+		return newIntUint32MapValue(value.(*map[int]uint32))
+	case *map[int8]uint32:
+		return newInt8Uint32MapValue(value.(*map[int8]uint32))
+	case *map[int16]uint32:
+		return newInt16Uint32MapValue(value.(*map[int16]uint32))
+	case *map[int32]uint32:
+		return newInt32Uint32MapValue(value.(*map[int32]uint32))
+	case *map[int64]uint32:
+		return newInt64Uint32MapValue(value.(*map[int64]uint32))
+	case *map[uint]uint32:
+		return newUintUint32MapValue(value.(*map[uint]uint32))
+	case *map[uint8]uint32:
+		return newUint8Uint32MapValue(value.(*map[uint8]uint32))
+	case *map[uint16]uint32:
+		return newUint16Uint32MapValue(value.(*map[uint16]uint32))
+	case *map[uint32]uint32:
+		return newUint32Uint32MapValue(value.(*map[uint32]uint32))
+	case *map[uint64]uint32:
+		return newUint64Uint32MapValue(value.(*map[uint64]uint32))
+	case *map[string]uint64:
+		return newStringUint64MapValue(value.(*map[string]uint64))
+	case *map[int]uint64:
+		return newIntUint64MapValue(value.(*map[int]uint64))
+	case *map[int8]uint64:
+		return newInt8Uint64MapValue(value.(*map[int8]uint64))
+	case *map[int16]uint64:
+		return newInt16Uint64MapValue(value.(*map[int16]uint64))
+	case *map[int32]uint64:
+		return newInt32Uint64MapValue(value.(*map[int32]uint64))
+	case *map[int64]uint64:
+		return newInt64Uint64MapValue(value.(*map[int64]uint64))
+	case *map[uint]uint64:
+		return newUintUint64MapValue(value.(*map[uint]uint64))
+	case *map[uint8]uint64:
+		return newUint8Uint64MapValue(value.(*map[uint8]uint64))
+	case *map[uint16]uint64:
+		return newUint16Uint64MapValue(value.(*map[uint16]uint64))
+	case *map[uint32]uint64:
+		return newUint32Uint64MapValue(value.(*map[uint32]uint64))
+	case *map[uint64]uint64:
+		return newUint64Uint64MapValue(value.(*map[uint64]uint64))
+	case *map[string]int:
+		return newStringIntMapValue(value.(*map[string]int))
+	case *map[int]int:
+		return newIntIntMapValue(value.(*map[int]int))
+	case *map[int8]int:
+		return newInt8IntMapValue(value.(*map[int8]int))
+	case *map[int16]int:
+		return newInt16IntMapValue(value.(*map[int16]int))
+	case *map[int32]int:
+		return newInt32IntMapValue(value.(*map[int32]int))
+	case *map[int64]int:
+		return newInt64IntMapValue(value.(*map[int64]int))
+	case *map[uint]int:
+		return newUintIntMapValue(value.(*map[uint]int))
+	case *map[uint8]int:
+		return newUint8IntMapValue(value.(*map[uint8]int))
+	case *map[uint16]int:
+		return newUint16IntMapValue(value.(*map[uint16]int))
+	case *map[uint32]int:
+		return newUint32IntMapValue(value.(*map[uint32]int))
+	case *map[uint64]int:
+		return newUint64IntMapValue(value.(*map[uint64]int))
+	case *map[string]int8:
+		return newStringInt8MapValue(value.(*map[string]int8))
+	case *map[int]int8:
+		return newIntInt8MapValue(value.(*map[int]int8))
+	case *map[int8]int8:
+		return newInt8Int8MapValue(value.(*map[int8]int8))
+	case *map[int16]int8:
+		return newInt16Int8MapValue(value.(*map[int16]int8))
+	case *map[int32]int8:
+		return newInt32Int8MapValue(value.(*map[int32]int8))
+	case *map[int64]int8:
+		return newInt64Int8MapValue(value.(*map[int64]int8))
+	case *map[uint]int8:
+		return newUintInt8MapValue(value.(*map[uint]int8))
+	case *map[uint8]int8:
+		return newUint8Int8MapValue(value.(*map[uint8]int8))
+	case *map[uint16]int8:
+		return newUint16Int8MapValue(value.(*map[uint16]int8))
+	case *map[uint32]int8:
+		return newUint32Int8MapValue(value.(*map[uint32]int8))
+	case *map[uint64]int8:
+		return newUint64Int8MapValue(value.(*map[uint64]int8))
+	case *map[string]int16:
+		return newStringInt16MapValue(value.(*map[string]int16))
+	case *map[int]int16:
+		return newIntInt16MapValue(value.(*map[int]int16))
+	case *map[int8]int16:
+		return newInt8Int16MapValue(value.(*map[int8]int16))
+	case *map[int16]int16:
+		return newInt16Int16MapValue(value.(*map[int16]int16))
+	case *map[int32]int16:
+		return newInt32Int16MapValue(value.(*map[int32]int16))
+	case *map[int64]int16:
+		return newInt64Int16MapValue(value.(*map[int64]int16))
+	case *map[uint]int16:
+		return newUintInt16MapValue(value.(*map[uint]int16))
+	case *map[uint8]int16:
+		return newUint8Int16MapValue(value.(*map[uint8]int16))
+	case *map[uint16]int16:
+		return newUint16Int16MapValue(value.(*map[uint16]int16))
+	case *map[uint32]int16:
+		return newUint32Int16MapValue(value.(*map[uint32]int16))
+	case *map[uint64]int16:
+		return newUint64Int16MapValue(value.(*map[uint64]int16))
+	case *map[string]int32:
+		return newStringInt32MapValue(value.(*map[string]int32))
+	case *map[int]int32:
+		return newIntInt32MapValue(value.(*map[int]int32))
+	case *map[int8]int32:
+		return newInt8Int32MapValue(value.(*map[int8]int32))
+	case *map[int16]int32:
+		return newInt16Int32MapValue(value.(*map[int16]int32))
+	case *map[int32]int32:
+		return newInt32Int32MapValue(value.(*map[int32]int32))
+	case *map[int64]int32:
+		return newInt64Int32MapValue(value.(*map[int64]int32))
+	case *map[uint]int32:
+		return newUintInt32MapValue(value.(*map[uint]int32))
+	case *map[uint8]int32:
+		return newUint8Int32MapValue(value.(*map[uint8]int32))
+	case *map[uint16]int32:
+		return newUint16Int32MapValue(value.(*map[uint16]int32))
+	case *map[uint32]int32:
+		return newUint32Int32MapValue(value.(*map[uint32]int32))
+	case *map[uint64]int32:
+		return newUint64Int32MapValue(value.(*map[uint64]int32))
+	case *map[string]int64:
+		return newStringInt64MapValue(value.(*map[string]int64))
+	case *map[int]int64:
+		return newIntInt64MapValue(value.(*map[int]int64))
+	case *map[int8]int64:
+		return newInt8Int64MapValue(value.(*map[int8]int64))
+	case *map[int16]int64:
+		return newInt16Int64MapValue(value.(*map[int16]int64))
+	case *map[int32]int64:
+		return newInt32Int64MapValue(value.(*map[int32]int64))
+	case *map[int64]int64:
+		return newInt64Int64MapValue(value.(*map[int64]int64))
+	case *map[uint]int64:
+		return newUintInt64MapValue(value.(*map[uint]int64))
+	case *map[uint8]int64:
+		return newUint8Int64MapValue(value.(*map[uint8]int64))
+	case *map[uint16]int64:
+		return newUint16Int64MapValue(value.(*map[uint16]int64))
+	case *map[uint32]int64:
+		return newUint32Int64MapValue(value.(*map[uint32]int64))
+	case *map[uint64]int64:
+		return newUint64Int64MapValue(value.(*map[uint64]int64))
+	case *map[string]float64:
+		return newStringFloat64MapValue(value.(*map[string]float64))
+	case *map[int]float64:
+		return newIntFloat64MapValue(value.(*map[int]float64))
+	case *map[int8]float64:
+		return newInt8Float64MapValue(value.(*map[int8]float64))
+	case *map[int16]float64:
+		return newInt16Float64MapValue(value.(*map[int16]float64))
+	case *map[int32]float64:
+		return newInt32Float64MapValue(value.(*map[int32]float64))
+	case *map[int64]float64:
+		return newInt64Float64MapValue(value.(*map[int64]float64))
+	case *map[uint]float64:
+		return newUintFloat64MapValue(value.(*map[uint]float64))
+	case *map[uint8]float64:
+		return newUint8Float64MapValue(value.(*map[uint8]float64))
+	case *map[uint16]float64:
+		return newUint16Float64MapValue(value.(*map[uint16]float64))
+	case *map[uint32]float64:
+		return newUint32Float64MapValue(value.(*map[uint32]float64))
+	case *map[uint64]float64:
+		return newUint64Float64MapValue(value.(*map[uint64]float64))
+	case *map[string]float32:
+		return newStringFloat32MapValue(value.(*map[string]float32))
+	case *map[int]float32:
+		return newIntFloat32MapValue(value.(*map[int]float32))
+	case *map[int8]float32:
+		return newInt8Float32MapValue(value.(*map[int8]float32))
+	case *map[int16]float32:
+		return newInt16Float32MapValue(value.(*map[int16]float32))
+	case *map[int32]float32:
+		return newInt32Float32MapValue(value.(*map[int32]float32))
+	case *map[int64]float32:
+		return newInt64Float32MapValue(value.(*map[int64]float32))
+	case *map[uint]float32:
+		return newUintFloat32MapValue(value.(*map[uint]float32))
+	case *map[uint8]float32:
+		return newUint8Float32MapValue(value.(*map[uint8]float32))
+	case *map[uint16]float32:
+		return newUint16Float32MapValue(value.(*map[uint16]float32))
+	case *map[uint32]float32:
+		return newUint32Float32MapValue(value.(*map[uint32]float32))
+	case *map[uint64]float32:
+		return newUint64Float32MapValue(value.(*map[uint64]float32))
+	case *map[string]time.Duration:
+		return newStringDurationMapValue(value.(*map[string]time.Duration))
+	case *map[int]time.Duration:
+		return newIntDurationMapValue(value.(*map[int]time.Duration))
+	case *map[int8]time.Duration:
+		return newInt8DurationMapValue(value.(*map[int8]time.Duration))
+	case *map[int16]time.Duration:
+		return newInt16DurationMapValue(value.(*map[int16]time.Duration))
+	case *map[int32]time.Duration:
+		return newInt32DurationMapValue(value.(*map[int32]time.Duration))
+	case *map[int64]time.Duration:
+		return newInt64DurationMapValue(value.(*map[int64]time.Duration))
+	case *map[uint]time.Duration:
+		return newUintDurationMapValue(value.(*map[uint]time.Duration))
+	case *map[uint8]time.Duration:
+		return newUint8DurationMapValue(value.(*map[uint8]time.Duration))
+	case *map[uint16]time.Duration:
+		return newUint16DurationMapValue(value.(*map[uint16]time.Duration))
+	case *map[uint32]time.Duration:
+		return newUint32DurationMapValue(value.(*map[uint32]time.Duration))
+	case *map[uint64]time.Duration:
+		return newUint64DurationMapValue(value.(*map[uint64]time.Duration))
+	case *map[string]net.IP:
+		return newStringIPMapValue(value.(*map[string]net.IP))
+	case *map[int]net.IP:
+		return newIntIPMapValue(value.(*map[int]net.IP))
+	case *map[int8]net.IP:
+		return newInt8IPMapValue(value.(*map[int8]net.IP))
+	case *map[int16]net.IP:
+		return newInt16IPMapValue(value.(*map[int16]net.IP))
+	case *map[int32]net.IP:
+		return newInt32IPMapValue(value.(*map[int32]net.IP))
+	case *map[int64]net.IP:
+		return newInt64IPMapValue(value.(*map[int64]net.IP))
+	case *map[uint]net.IP:
+		return newUintIPMapValue(value.(*map[uint]net.IP))
+	case *map[uint8]net.IP:
+		return newUint8IPMapValue(value.(*map[uint8]net.IP))
+	case *map[uint16]net.IP:
+		return newUint16IPMapValue(value.(*map[uint16]net.IP))
+	case *map[uint32]net.IP:
+		return newUint32IPMapValue(value.(*map[uint32]net.IP))
+	case *map[uint64]net.IP:
+		return newUint64IPMapValue(value.(*map[uint64]net.IP))
+	case *map[string]HexBytes:
+		return newStringHexBytesMapValue(value.(*map[string]HexBytes))
+	case *map[int]HexBytes:
+		return newIntHexBytesMapValue(value.(*map[int]HexBytes))
+	case *map[int8]HexBytes:
+		return newInt8HexBytesMapValue(value.(*map[int8]HexBytes))
+	case *map[int16]HexBytes:
+		return newInt16HexBytesMapValue(value.(*map[int16]HexBytes))
+	case *map[int32]HexBytes:
+		return newInt32HexBytesMapValue(value.(*map[int32]HexBytes))
+	case *map[int64]HexBytes:
+		return newInt64HexBytesMapValue(value.(*map[int64]HexBytes))
+	case *map[uint]HexBytes:
+		return newUintHexBytesMapValue(value.(*map[uint]HexBytes))
+	case *map[uint8]HexBytes:
+		return newUint8HexBytesMapValue(value.(*map[uint8]HexBytes))
+	case *map[uint16]HexBytes:
+		return newUint16HexBytesMapValue(value.(*map[uint16]HexBytes))
+	case *map[uint32]HexBytes:
+		return newUint32HexBytesMapValue(value.(*map[uint32]HexBytes))
+	case *map[uint64]HexBytes:
+		return newUint64HexBytesMapValue(value.(*map[uint64]HexBytes))
+	case *map[string]*regexp.Regexp:
+		return newStringRegexpMapValue(value.(*map[string]*regexp.Regexp))
+	case *map[int]*regexp.Regexp:
+		return newIntRegexpMapValue(value.(*map[int]*regexp.Regexp))
+	case *map[int8]*regexp.Regexp:
+		return newInt8RegexpMapValue(value.(*map[int8]*regexp.Regexp))
+	case *map[int16]*regexp.Regexp:
+		return newInt16RegexpMapValue(value.(*map[int16]*regexp.Regexp))
+	case *map[int32]*regexp.Regexp:
+		return newInt32RegexpMapValue(value.(*map[int32]*regexp.Regexp))
+	case *map[int64]*regexp.Regexp:
+		return newInt64RegexpMapValue(value.(*map[int64]*regexp.Regexp))
+	case *map[uint]*regexp.Regexp:
+		return newUintRegexpMapValue(value.(*map[uint]*regexp.Regexp))
+	case *map[uint8]*regexp.Regexp:
+		return newUint8RegexpMapValue(value.(*map[uint8]*regexp.Regexp))
+	case *map[uint16]*regexp.Regexp:
+		return newUint16RegexpMapValue(value.(*map[uint16]*regexp.Regexp))
+	case *map[uint32]*regexp.Regexp:
+		return newUint32RegexpMapValue(value.(*map[uint32]*regexp.Regexp))
+	case *map[uint64]*regexp.Regexp:
+		return newUint64RegexpMapValue(value.(*map[uint64]*regexp.Regexp))
+	case *map[string]net.IPNet:
+		return newStringIPNetMapValue(value.(*map[string]net.IPNet))
+	case *map[int]net.IPNet:
+		return newIntIPNetMapValue(value.(*map[int]net.IPNet))
+	case *map[int8]net.IPNet:
+		return newInt8IPNetMapValue(value.(*map[int8]net.IPNet))
+	case *map[int16]net.IPNet:
+		return newInt16IPNetMapValue(value.(*map[int16]net.IPNet))
+	case *map[int32]net.IPNet:
+		return newInt32IPNetMapValue(value.(*map[int32]net.IPNet))
+	case *map[int64]net.IPNet:
+		return newInt64IPNetMapValue(value.(*map[int64]net.IPNet))
+	case *map[uint]net.IPNet:
+		return newUintIPNetMapValue(value.(*map[uint]net.IPNet))
+	case *map[uint8]net.IPNet:
+		return newUint8IPNetMapValue(value.(*map[uint8]net.IPNet))
+	case *map[uint16]net.IPNet:
+		return newUint16IPNetMapValue(value.(*map[uint16]net.IPNet))
+	case *map[uint32]net.IPNet:
+		return newUint32IPNetMapValue(value.(*map[uint32]net.IPNet))
+	case *map[uint64]net.IPNet:
+		return newUint64IPNetMapValue(value.(*map[uint64]net.IPNet))
+	default:
+		return nil
+	}
+}
+
 // -- string Value
 type stringValue struct {
 	value *string
@@ -189,6 +631,650 @@ func (v *stringSliceValue) String() string {
 func (v *stringSliceValue) Type() string { return "stringSlice" }
 
 func (v *stringSliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringStringMapValue
+type stringStringMapValue struct {
+	value *map[string]string
+}
+
+var _ RepeatableFlag = (*stringStringMapValue)(nil)
+var _ Value = (*stringStringMapValue)(nil)
+var _ Getter = (*stringStringMapValue)(nil)
+
+func newStringStringMapValue(m *map[string]string) *stringStringMapValue {
+	return &stringStringMapValue{
+		value: m,
+	}
+}
+
+func (v *stringStringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringStringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringStringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringStringMapValue) Type() string { return "map[string]string" }
+
+func (v *stringStringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intStringMapValue
+type intStringMapValue struct {
+	value *map[int]string
+}
+
+var _ RepeatableFlag = (*intStringMapValue)(nil)
+var _ Value = (*intStringMapValue)(nil)
+var _ Getter = (*intStringMapValue)(nil)
+
+func newIntStringMapValue(m *map[int]string) *intStringMapValue {
+	return &intStringMapValue{
+		value: m,
+	}
+}
+
+func (v *intStringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intStringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intStringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intStringMapValue) Type() string { return "map[int]string" }
+
+func (v *intStringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8StringMapValue
+type int8StringMapValue struct {
+	value *map[int8]string
+}
+
+var _ RepeatableFlag = (*int8StringMapValue)(nil)
+var _ Value = (*int8StringMapValue)(nil)
+var _ Getter = (*int8StringMapValue)(nil)
+
+func newInt8StringMapValue(m *map[int8]string) *int8StringMapValue {
+	return &int8StringMapValue{
+		value: m,
+	}
+}
+
+func (v *int8StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8StringMapValue) Type() string { return "map[int8]string" }
+
+func (v *int8StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16StringMapValue
+type int16StringMapValue struct {
+	value *map[int16]string
+}
+
+var _ RepeatableFlag = (*int16StringMapValue)(nil)
+var _ Value = (*int16StringMapValue)(nil)
+var _ Getter = (*int16StringMapValue)(nil)
+
+func newInt16StringMapValue(m *map[int16]string) *int16StringMapValue {
+	return &int16StringMapValue{
+		value: m,
+	}
+}
+
+func (v *int16StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16StringMapValue) Type() string { return "map[int16]string" }
+
+func (v *int16StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32StringMapValue
+type int32StringMapValue struct {
+	value *map[int32]string
+}
+
+var _ RepeatableFlag = (*int32StringMapValue)(nil)
+var _ Value = (*int32StringMapValue)(nil)
+var _ Getter = (*int32StringMapValue)(nil)
+
+func newInt32StringMapValue(m *map[int32]string) *int32StringMapValue {
+	return &int32StringMapValue{
+		value: m,
+	}
+}
+
+func (v *int32StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32StringMapValue) Type() string { return "map[int32]string" }
+
+func (v *int32StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64StringMapValue
+type int64StringMapValue struct {
+	value *map[int64]string
+}
+
+var _ RepeatableFlag = (*int64StringMapValue)(nil)
+var _ Value = (*int64StringMapValue)(nil)
+var _ Getter = (*int64StringMapValue)(nil)
+
+func newInt64StringMapValue(m *map[int64]string) *int64StringMapValue {
+	return &int64StringMapValue{
+		value: m,
+	}
+}
+
+func (v *int64StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64StringMapValue) Type() string { return "map[int64]string" }
+
+func (v *int64StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintStringMapValue
+type uintStringMapValue struct {
+	value *map[uint]string
+}
+
+var _ RepeatableFlag = (*uintStringMapValue)(nil)
+var _ Value = (*uintStringMapValue)(nil)
+var _ Getter = (*uintStringMapValue)(nil)
+
+func newUintStringMapValue(m *map[uint]string) *uintStringMapValue {
+	return &uintStringMapValue{
+		value: m,
+	}
+}
+
+func (v *uintStringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintStringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintStringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintStringMapValue) Type() string { return "map[uint]string" }
+
+func (v *uintStringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8StringMapValue
+type uint8StringMapValue struct {
+	value *map[uint8]string
+}
+
+var _ RepeatableFlag = (*uint8StringMapValue)(nil)
+var _ Value = (*uint8StringMapValue)(nil)
+var _ Getter = (*uint8StringMapValue)(nil)
+
+func newUint8StringMapValue(m *map[uint8]string) *uint8StringMapValue {
+	return &uint8StringMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8StringMapValue) Type() string { return "map[uint8]string" }
+
+func (v *uint8StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16StringMapValue
+type uint16StringMapValue struct {
+	value *map[uint16]string
+}
+
+var _ RepeatableFlag = (*uint16StringMapValue)(nil)
+var _ Value = (*uint16StringMapValue)(nil)
+var _ Getter = (*uint16StringMapValue)(nil)
+
+func newUint16StringMapValue(m *map[uint16]string) *uint16StringMapValue {
+	return &uint16StringMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16StringMapValue) Type() string { return "map[uint16]string" }
+
+func (v *uint16StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32StringMapValue
+type uint32StringMapValue struct {
+	value *map[uint32]string
+}
+
+var _ RepeatableFlag = (*uint32StringMapValue)(nil)
+var _ Value = (*uint32StringMapValue)(nil)
+var _ Getter = (*uint32StringMapValue)(nil)
+
+func newUint32StringMapValue(m *map[uint32]string) *uint32StringMapValue {
+	return &uint32StringMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32StringMapValue) Type() string { return "map[uint32]string" }
+
+func (v *uint32StringMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64StringMapValue
+type uint64StringMapValue struct {
+	value *map[uint64]string
+}
+
+var _ RepeatableFlag = (*uint64StringMapValue)(nil)
+var _ Value = (*uint64StringMapValue)(nil)
+var _ Getter = (*uint64StringMapValue)(nil)
+
+func newUint64StringMapValue(m *map[uint64]string) *uint64StringMapValue {
+	return &uint64StringMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64StringMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	val := s
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64StringMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64StringMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64StringMapValue) Type() string { return "map[uint64]string" }
+
+func (v *uint64StringMapValue) IsCumulative() bool {
 	return true
 }
 
@@ -291,6 +1377,705 @@ func (v *boolSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringBoolMapValue
+type stringBoolMapValue struct {
+	value *map[string]bool
+}
+
+var _ RepeatableFlag = (*stringBoolMapValue)(nil)
+var _ Value = (*stringBoolMapValue)(nil)
+var _ Getter = (*stringBoolMapValue)(nil)
+
+func newStringBoolMapValue(m *map[string]bool) *stringBoolMapValue {
+	return &stringBoolMapValue{
+		value: m,
+	}
+}
+
+func (v *stringBoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringBoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringBoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringBoolMapValue) Type() string { return "map[string]bool" }
+
+func (v *stringBoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intBoolMapValue
+type intBoolMapValue struct {
+	value *map[int]bool
+}
+
+var _ RepeatableFlag = (*intBoolMapValue)(nil)
+var _ Value = (*intBoolMapValue)(nil)
+var _ Getter = (*intBoolMapValue)(nil)
+
+func newIntBoolMapValue(m *map[int]bool) *intBoolMapValue {
+	return &intBoolMapValue{
+		value: m,
+	}
+}
+
+func (v *intBoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intBoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intBoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intBoolMapValue) Type() string { return "map[int]bool" }
+
+func (v *intBoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8BoolMapValue
+type int8BoolMapValue struct {
+	value *map[int8]bool
+}
+
+var _ RepeatableFlag = (*int8BoolMapValue)(nil)
+var _ Value = (*int8BoolMapValue)(nil)
+var _ Getter = (*int8BoolMapValue)(nil)
+
+func newInt8BoolMapValue(m *map[int8]bool) *int8BoolMapValue {
+	return &int8BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *int8BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8BoolMapValue) Type() string { return "map[int8]bool" }
+
+func (v *int8BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16BoolMapValue
+type int16BoolMapValue struct {
+	value *map[int16]bool
+}
+
+var _ RepeatableFlag = (*int16BoolMapValue)(nil)
+var _ Value = (*int16BoolMapValue)(nil)
+var _ Getter = (*int16BoolMapValue)(nil)
+
+func newInt16BoolMapValue(m *map[int16]bool) *int16BoolMapValue {
+	return &int16BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *int16BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16BoolMapValue) Type() string { return "map[int16]bool" }
+
+func (v *int16BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32BoolMapValue
+type int32BoolMapValue struct {
+	value *map[int32]bool
+}
+
+var _ RepeatableFlag = (*int32BoolMapValue)(nil)
+var _ Value = (*int32BoolMapValue)(nil)
+var _ Getter = (*int32BoolMapValue)(nil)
+
+func newInt32BoolMapValue(m *map[int32]bool) *int32BoolMapValue {
+	return &int32BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *int32BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32BoolMapValue) Type() string { return "map[int32]bool" }
+
+func (v *int32BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64BoolMapValue
+type int64BoolMapValue struct {
+	value *map[int64]bool
+}
+
+var _ RepeatableFlag = (*int64BoolMapValue)(nil)
+var _ Value = (*int64BoolMapValue)(nil)
+var _ Getter = (*int64BoolMapValue)(nil)
+
+func newInt64BoolMapValue(m *map[int64]bool) *int64BoolMapValue {
+	return &int64BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *int64BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64BoolMapValue) Type() string { return "map[int64]bool" }
+
+func (v *int64BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintBoolMapValue
+type uintBoolMapValue struct {
+	value *map[uint]bool
+}
+
+var _ RepeatableFlag = (*uintBoolMapValue)(nil)
+var _ Value = (*uintBoolMapValue)(nil)
+var _ Getter = (*uintBoolMapValue)(nil)
+
+func newUintBoolMapValue(m *map[uint]bool) *uintBoolMapValue {
+	return &uintBoolMapValue{
+		value: m,
+	}
+}
+
+func (v *uintBoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintBoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintBoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintBoolMapValue) Type() string { return "map[uint]bool" }
+
+func (v *uintBoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8BoolMapValue
+type uint8BoolMapValue struct {
+	value *map[uint8]bool
+}
+
+var _ RepeatableFlag = (*uint8BoolMapValue)(nil)
+var _ Value = (*uint8BoolMapValue)(nil)
+var _ Getter = (*uint8BoolMapValue)(nil)
+
+func newUint8BoolMapValue(m *map[uint8]bool) *uint8BoolMapValue {
+	return &uint8BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8BoolMapValue) Type() string { return "map[uint8]bool" }
+
+func (v *uint8BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16BoolMapValue
+type uint16BoolMapValue struct {
+	value *map[uint16]bool
+}
+
+var _ RepeatableFlag = (*uint16BoolMapValue)(nil)
+var _ Value = (*uint16BoolMapValue)(nil)
+var _ Getter = (*uint16BoolMapValue)(nil)
+
+func newUint16BoolMapValue(m *map[uint16]bool) *uint16BoolMapValue {
+	return &uint16BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16BoolMapValue) Type() string { return "map[uint16]bool" }
+
+func (v *uint16BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32BoolMapValue
+type uint32BoolMapValue struct {
+	value *map[uint32]bool
+}
+
+var _ RepeatableFlag = (*uint32BoolMapValue)(nil)
+var _ Value = (*uint32BoolMapValue)(nil)
+var _ Getter = (*uint32BoolMapValue)(nil)
+
+func newUint32BoolMapValue(m *map[uint32]bool) *uint32BoolMapValue {
+	return &uint32BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32BoolMapValue) Type() string { return "map[uint32]bool" }
+
+func (v *uint32BoolMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64BoolMapValue
+type uint64BoolMapValue struct {
+	value *map[uint64]bool
+}
+
+var _ RepeatableFlag = (*uint64BoolMapValue)(nil)
+var _ Value = (*uint64BoolMapValue)(nil)
+var _ Getter = (*uint64BoolMapValue)(nil)
+
+func newUint64BoolMapValue(m *map[uint64]bool) *uint64BoolMapValue {
+	return &uint64BoolMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64BoolMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64BoolMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64BoolMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64BoolMapValue) Type() string { return "map[uint64]bool" }
+
+func (v *uint64BoolMapValue) IsCumulative() bool {
+	return true
+}
+
 // -- uint Value
 type uintValue struct {
 	value *uint
@@ -387,6 +2172,705 @@ func (v *uintSliceValue) String() string {
 func (v *uintSliceValue) Type() string { return "uintSlice" }
 
 func (v *uintSliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringUintMapValue
+type stringUintMapValue struct {
+	value *map[string]uint
+}
+
+var _ RepeatableFlag = (*stringUintMapValue)(nil)
+var _ Value = (*stringUintMapValue)(nil)
+var _ Getter = (*stringUintMapValue)(nil)
+
+func newStringUintMapValue(m *map[string]uint) *stringUintMapValue {
+	return &stringUintMapValue{
+		value: m,
+	}
+}
+
+func (v *stringUintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringUintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringUintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringUintMapValue) Type() string { return "map[string]uint" }
+
+func (v *stringUintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intUintMapValue
+type intUintMapValue struct {
+	value *map[int]uint
+}
+
+var _ RepeatableFlag = (*intUintMapValue)(nil)
+var _ Value = (*intUintMapValue)(nil)
+var _ Getter = (*intUintMapValue)(nil)
+
+func newIntUintMapValue(m *map[int]uint) *intUintMapValue {
+	return &intUintMapValue{
+		value: m,
+	}
+}
+
+func (v *intUintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intUintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intUintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intUintMapValue) Type() string { return "map[int]uint" }
+
+func (v *intUintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8UintMapValue
+type int8UintMapValue struct {
+	value *map[int8]uint
+}
+
+var _ RepeatableFlag = (*int8UintMapValue)(nil)
+var _ Value = (*int8UintMapValue)(nil)
+var _ Getter = (*int8UintMapValue)(nil)
+
+func newInt8UintMapValue(m *map[int8]uint) *int8UintMapValue {
+	return &int8UintMapValue{
+		value: m,
+	}
+}
+
+func (v *int8UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8UintMapValue) Type() string { return "map[int8]uint" }
+
+func (v *int8UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16UintMapValue
+type int16UintMapValue struct {
+	value *map[int16]uint
+}
+
+var _ RepeatableFlag = (*int16UintMapValue)(nil)
+var _ Value = (*int16UintMapValue)(nil)
+var _ Getter = (*int16UintMapValue)(nil)
+
+func newInt16UintMapValue(m *map[int16]uint) *int16UintMapValue {
+	return &int16UintMapValue{
+		value: m,
+	}
+}
+
+func (v *int16UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16UintMapValue) Type() string { return "map[int16]uint" }
+
+func (v *int16UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32UintMapValue
+type int32UintMapValue struct {
+	value *map[int32]uint
+}
+
+var _ RepeatableFlag = (*int32UintMapValue)(nil)
+var _ Value = (*int32UintMapValue)(nil)
+var _ Getter = (*int32UintMapValue)(nil)
+
+func newInt32UintMapValue(m *map[int32]uint) *int32UintMapValue {
+	return &int32UintMapValue{
+		value: m,
+	}
+}
+
+func (v *int32UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32UintMapValue) Type() string { return "map[int32]uint" }
+
+func (v *int32UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64UintMapValue
+type int64UintMapValue struct {
+	value *map[int64]uint
+}
+
+var _ RepeatableFlag = (*int64UintMapValue)(nil)
+var _ Value = (*int64UintMapValue)(nil)
+var _ Getter = (*int64UintMapValue)(nil)
+
+func newInt64UintMapValue(m *map[int64]uint) *int64UintMapValue {
+	return &int64UintMapValue{
+		value: m,
+	}
+}
+
+func (v *int64UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64UintMapValue) Type() string { return "map[int64]uint" }
+
+func (v *int64UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintUintMapValue
+type uintUintMapValue struct {
+	value *map[uint]uint
+}
+
+var _ RepeatableFlag = (*uintUintMapValue)(nil)
+var _ Value = (*uintUintMapValue)(nil)
+var _ Getter = (*uintUintMapValue)(nil)
+
+func newUintUintMapValue(m *map[uint]uint) *uintUintMapValue {
+	return &uintUintMapValue{
+		value: m,
+	}
+}
+
+func (v *uintUintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintUintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintUintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintUintMapValue) Type() string { return "map[uint]uint" }
+
+func (v *uintUintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8UintMapValue
+type uint8UintMapValue struct {
+	value *map[uint8]uint
+}
+
+var _ RepeatableFlag = (*uint8UintMapValue)(nil)
+var _ Value = (*uint8UintMapValue)(nil)
+var _ Getter = (*uint8UintMapValue)(nil)
+
+func newUint8UintMapValue(m *map[uint8]uint) *uint8UintMapValue {
+	return &uint8UintMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8UintMapValue) Type() string { return "map[uint8]uint" }
+
+func (v *uint8UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16UintMapValue
+type uint16UintMapValue struct {
+	value *map[uint16]uint
+}
+
+var _ RepeatableFlag = (*uint16UintMapValue)(nil)
+var _ Value = (*uint16UintMapValue)(nil)
+var _ Getter = (*uint16UintMapValue)(nil)
+
+func newUint16UintMapValue(m *map[uint16]uint) *uint16UintMapValue {
+	return &uint16UintMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16UintMapValue) Type() string { return "map[uint16]uint" }
+
+func (v *uint16UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32UintMapValue
+type uint32UintMapValue struct {
+	value *map[uint32]uint
+}
+
+var _ RepeatableFlag = (*uint32UintMapValue)(nil)
+var _ Value = (*uint32UintMapValue)(nil)
+var _ Getter = (*uint32UintMapValue)(nil)
+
+func newUint32UintMapValue(m *map[uint32]uint) *uint32UintMapValue {
+	return &uint32UintMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32UintMapValue) Type() string { return "map[uint32]uint" }
+
+func (v *uint32UintMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64UintMapValue
+type uint64UintMapValue struct {
+	value *map[uint64]uint
+}
+
+var _ RepeatableFlag = (*uint64UintMapValue)(nil)
+var _ Value = (*uint64UintMapValue)(nil)
+var _ Getter = (*uint64UintMapValue)(nil)
+
+func newUint64UintMapValue(m *map[uint64]uint) *uint64UintMapValue {
+	return &uint64UintMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64UintMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (uint)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64UintMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64UintMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64UintMapValue) Type() string { return "map[uint64]uint" }
+
+func (v *uint64UintMapValue) IsCumulative() bool {
 	return true
 }
 
@@ -489,6 +2973,705 @@ func (v *uint8SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringUint8MapValue
+type stringUint8MapValue struct {
+	value *map[string]uint8
+}
+
+var _ RepeatableFlag = (*stringUint8MapValue)(nil)
+var _ Value = (*stringUint8MapValue)(nil)
+var _ Getter = (*stringUint8MapValue)(nil)
+
+func newStringUint8MapValue(m *map[string]uint8) *stringUint8MapValue {
+	return &stringUint8MapValue{
+		value: m,
+	}
+}
+
+func (v *stringUint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringUint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringUint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringUint8MapValue) Type() string { return "map[string]uint8" }
+
+func (v *stringUint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intUint8MapValue
+type intUint8MapValue struct {
+	value *map[int]uint8
+}
+
+var _ RepeatableFlag = (*intUint8MapValue)(nil)
+var _ Value = (*intUint8MapValue)(nil)
+var _ Getter = (*intUint8MapValue)(nil)
+
+func newIntUint8MapValue(m *map[int]uint8) *intUint8MapValue {
+	return &intUint8MapValue{
+		value: m,
+	}
+}
+
+func (v *intUint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intUint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intUint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intUint8MapValue) Type() string { return "map[int]uint8" }
+
+func (v *intUint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Uint8MapValue
+type int8Uint8MapValue struct {
+	value *map[int8]uint8
+}
+
+var _ RepeatableFlag = (*int8Uint8MapValue)(nil)
+var _ Value = (*int8Uint8MapValue)(nil)
+var _ Getter = (*int8Uint8MapValue)(nil)
+
+func newInt8Uint8MapValue(m *map[int8]uint8) *int8Uint8MapValue {
+	return &int8Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Uint8MapValue) Type() string { return "map[int8]uint8" }
+
+func (v *int8Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Uint8MapValue
+type int16Uint8MapValue struct {
+	value *map[int16]uint8
+}
+
+var _ RepeatableFlag = (*int16Uint8MapValue)(nil)
+var _ Value = (*int16Uint8MapValue)(nil)
+var _ Getter = (*int16Uint8MapValue)(nil)
+
+func newInt16Uint8MapValue(m *map[int16]uint8) *int16Uint8MapValue {
+	return &int16Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Uint8MapValue) Type() string { return "map[int16]uint8" }
+
+func (v *int16Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Uint8MapValue
+type int32Uint8MapValue struct {
+	value *map[int32]uint8
+}
+
+var _ RepeatableFlag = (*int32Uint8MapValue)(nil)
+var _ Value = (*int32Uint8MapValue)(nil)
+var _ Getter = (*int32Uint8MapValue)(nil)
+
+func newInt32Uint8MapValue(m *map[int32]uint8) *int32Uint8MapValue {
+	return &int32Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Uint8MapValue) Type() string { return "map[int32]uint8" }
+
+func (v *int32Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Uint8MapValue
+type int64Uint8MapValue struct {
+	value *map[int64]uint8
+}
+
+var _ RepeatableFlag = (*int64Uint8MapValue)(nil)
+var _ Value = (*int64Uint8MapValue)(nil)
+var _ Getter = (*int64Uint8MapValue)(nil)
+
+func newInt64Uint8MapValue(m *map[int64]uint8) *int64Uint8MapValue {
+	return &int64Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Uint8MapValue) Type() string { return "map[int64]uint8" }
+
+func (v *int64Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintUint8MapValue
+type uintUint8MapValue struct {
+	value *map[uint]uint8
+}
+
+var _ RepeatableFlag = (*uintUint8MapValue)(nil)
+var _ Value = (*uintUint8MapValue)(nil)
+var _ Getter = (*uintUint8MapValue)(nil)
+
+func newUintUint8MapValue(m *map[uint]uint8) *uintUint8MapValue {
+	return &uintUint8MapValue{
+		value: m,
+	}
+}
+
+func (v *uintUint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintUint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintUint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintUint8MapValue) Type() string { return "map[uint]uint8" }
+
+func (v *uintUint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Uint8MapValue
+type uint8Uint8MapValue struct {
+	value *map[uint8]uint8
+}
+
+var _ RepeatableFlag = (*uint8Uint8MapValue)(nil)
+var _ Value = (*uint8Uint8MapValue)(nil)
+var _ Getter = (*uint8Uint8MapValue)(nil)
+
+func newUint8Uint8MapValue(m *map[uint8]uint8) *uint8Uint8MapValue {
+	return &uint8Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Uint8MapValue) Type() string { return "map[uint8]uint8" }
+
+func (v *uint8Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Uint8MapValue
+type uint16Uint8MapValue struct {
+	value *map[uint16]uint8
+}
+
+var _ RepeatableFlag = (*uint16Uint8MapValue)(nil)
+var _ Value = (*uint16Uint8MapValue)(nil)
+var _ Getter = (*uint16Uint8MapValue)(nil)
+
+func newUint16Uint8MapValue(m *map[uint16]uint8) *uint16Uint8MapValue {
+	return &uint16Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Uint8MapValue) Type() string { return "map[uint16]uint8" }
+
+func (v *uint16Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Uint8MapValue
+type uint32Uint8MapValue struct {
+	value *map[uint32]uint8
+}
+
+var _ RepeatableFlag = (*uint32Uint8MapValue)(nil)
+var _ Value = (*uint32Uint8MapValue)(nil)
+var _ Getter = (*uint32Uint8MapValue)(nil)
+
+func newUint32Uint8MapValue(m *map[uint32]uint8) *uint32Uint8MapValue {
+	return &uint32Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Uint8MapValue) Type() string { return "map[uint32]uint8" }
+
+func (v *uint32Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Uint8MapValue
+type uint64Uint8MapValue struct {
+	value *map[uint64]uint8
+}
+
+var _ RepeatableFlag = (*uint64Uint8MapValue)(nil)
+var _ Value = (*uint64Uint8MapValue)(nil)
+var _ Getter = (*uint64Uint8MapValue)(nil)
+
+func newUint64Uint8MapValue(m *map[uint64]uint8) *uint64Uint8MapValue {
+	return &uint64Uint8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Uint8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (uint8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Uint8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Uint8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Uint8MapValue) Type() string { return "map[uint64]uint8" }
+
+func (v *uint64Uint8MapValue) IsCumulative() bool {
+	return true
+}
+
 // -- uint16 Value
 type uint16Value struct {
 	value *uint16
@@ -585,6 +3768,705 @@ func (v *uint16SliceValue) String() string {
 func (v *uint16SliceValue) Type() string { return "uint16Slice" }
 
 func (v *uint16SliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringUint16MapValue
+type stringUint16MapValue struct {
+	value *map[string]uint16
+}
+
+var _ RepeatableFlag = (*stringUint16MapValue)(nil)
+var _ Value = (*stringUint16MapValue)(nil)
+var _ Getter = (*stringUint16MapValue)(nil)
+
+func newStringUint16MapValue(m *map[string]uint16) *stringUint16MapValue {
+	return &stringUint16MapValue{
+		value: m,
+	}
+}
+
+func (v *stringUint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringUint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringUint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringUint16MapValue) Type() string { return "map[string]uint16" }
+
+func (v *stringUint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intUint16MapValue
+type intUint16MapValue struct {
+	value *map[int]uint16
+}
+
+var _ RepeatableFlag = (*intUint16MapValue)(nil)
+var _ Value = (*intUint16MapValue)(nil)
+var _ Getter = (*intUint16MapValue)(nil)
+
+func newIntUint16MapValue(m *map[int]uint16) *intUint16MapValue {
+	return &intUint16MapValue{
+		value: m,
+	}
+}
+
+func (v *intUint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intUint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intUint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intUint16MapValue) Type() string { return "map[int]uint16" }
+
+func (v *intUint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Uint16MapValue
+type int8Uint16MapValue struct {
+	value *map[int8]uint16
+}
+
+var _ RepeatableFlag = (*int8Uint16MapValue)(nil)
+var _ Value = (*int8Uint16MapValue)(nil)
+var _ Getter = (*int8Uint16MapValue)(nil)
+
+func newInt8Uint16MapValue(m *map[int8]uint16) *int8Uint16MapValue {
+	return &int8Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Uint16MapValue) Type() string { return "map[int8]uint16" }
+
+func (v *int8Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Uint16MapValue
+type int16Uint16MapValue struct {
+	value *map[int16]uint16
+}
+
+var _ RepeatableFlag = (*int16Uint16MapValue)(nil)
+var _ Value = (*int16Uint16MapValue)(nil)
+var _ Getter = (*int16Uint16MapValue)(nil)
+
+func newInt16Uint16MapValue(m *map[int16]uint16) *int16Uint16MapValue {
+	return &int16Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Uint16MapValue) Type() string { return "map[int16]uint16" }
+
+func (v *int16Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Uint16MapValue
+type int32Uint16MapValue struct {
+	value *map[int32]uint16
+}
+
+var _ RepeatableFlag = (*int32Uint16MapValue)(nil)
+var _ Value = (*int32Uint16MapValue)(nil)
+var _ Getter = (*int32Uint16MapValue)(nil)
+
+func newInt32Uint16MapValue(m *map[int32]uint16) *int32Uint16MapValue {
+	return &int32Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Uint16MapValue) Type() string { return "map[int32]uint16" }
+
+func (v *int32Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Uint16MapValue
+type int64Uint16MapValue struct {
+	value *map[int64]uint16
+}
+
+var _ RepeatableFlag = (*int64Uint16MapValue)(nil)
+var _ Value = (*int64Uint16MapValue)(nil)
+var _ Getter = (*int64Uint16MapValue)(nil)
+
+func newInt64Uint16MapValue(m *map[int64]uint16) *int64Uint16MapValue {
+	return &int64Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Uint16MapValue) Type() string { return "map[int64]uint16" }
+
+func (v *int64Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintUint16MapValue
+type uintUint16MapValue struct {
+	value *map[uint]uint16
+}
+
+var _ RepeatableFlag = (*uintUint16MapValue)(nil)
+var _ Value = (*uintUint16MapValue)(nil)
+var _ Getter = (*uintUint16MapValue)(nil)
+
+func newUintUint16MapValue(m *map[uint]uint16) *uintUint16MapValue {
+	return &uintUint16MapValue{
+		value: m,
+	}
+}
+
+func (v *uintUint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintUint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintUint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintUint16MapValue) Type() string { return "map[uint]uint16" }
+
+func (v *uintUint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Uint16MapValue
+type uint8Uint16MapValue struct {
+	value *map[uint8]uint16
+}
+
+var _ RepeatableFlag = (*uint8Uint16MapValue)(nil)
+var _ Value = (*uint8Uint16MapValue)(nil)
+var _ Getter = (*uint8Uint16MapValue)(nil)
+
+func newUint8Uint16MapValue(m *map[uint8]uint16) *uint8Uint16MapValue {
+	return &uint8Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Uint16MapValue) Type() string { return "map[uint8]uint16" }
+
+func (v *uint8Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Uint16MapValue
+type uint16Uint16MapValue struct {
+	value *map[uint16]uint16
+}
+
+var _ RepeatableFlag = (*uint16Uint16MapValue)(nil)
+var _ Value = (*uint16Uint16MapValue)(nil)
+var _ Getter = (*uint16Uint16MapValue)(nil)
+
+func newUint16Uint16MapValue(m *map[uint16]uint16) *uint16Uint16MapValue {
+	return &uint16Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Uint16MapValue) Type() string { return "map[uint16]uint16" }
+
+func (v *uint16Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Uint16MapValue
+type uint32Uint16MapValue struct {
+	value *map[uint32]uint16
+}
+
+var _ RepeatableFlag = (*uint32Uint16MapValue)(nil)
+var _ Value = (*uint32Uint16MapValue)(nil)
+var _ Getter = (*uint32Uint16MapValue)(nil)
+
+func newUint32Uint16MapValue(m *map[uint32]uint16) *uint32Uint16MapValue {
+	return &uint32Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Uint16MapValue) Type() string { return "map[uint32]uint16" }
+
+func (v *uint32Uint16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Uint16MapValue
+type uint64Uint16MapValue struct {
+	value *map[uint64]uint16
+}
+
+var _ RepeatableFlag = (*uint64Uint16MapValue)(nil)
+var _ Value = (*uint64Uint16MapValue)(nil)
+var _ Getter = (*uint64Uint16MapValue)(nil)
+
+func newUint64Uint16MapValue(m *map[uint64]uint16) *uint64Uint16MapValue {
+	return &uint64Uint16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Uint16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (uint16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Uint16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Uint16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Uint16MapValue) Type() string { return "map[uint64]uint16" }
+
+func (v *uint64Uint16MapValue) IsCumulative() bool {
 	return true
 }
 
@@ -687,6 +4569,705 @@ func (v *uint32SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringUint32MapValue
+type stringUint32MapValue struct {
+	value *map[string]uint32
+}
+
+var _ RepeatableFlag = (*stringUint32MapValue)(nil)
+var _ Value = (*stringUint32MapValue)(nil)
+var _ Getter = (*stringUint32MapValue)(nil)
+
+func newStringUint32MapValue(m *map[string]uint32) *stringUint32MapValue {
+	return &stringUint32MapValue{
+		value: m,
+	}
+}
+
+func (v *stringUint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringUint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringUint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringUint32MapValue) Type() string { return "map[string]uint32" }
+
+func (v *stringUint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intUint32MapValue
+type intUint32MapValue struct {
+	value *map[int]uint32
+}
+
+var _ RepeatableFlag = (*intUint32MapValue)(nil)
+var _ Value = (*intUint32MapValue)(nil)
+var _ Getter = (*intUint32MapValue)(nil)
+
+func newIntUint32MapValue(m *map[int]uint32) *intUint32MapValue {
+	return &intUint32MapValue{
+		value: m,
+	}
+}
+
+func (v *intUint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intUint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intUint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intUint32MapValue) Type() string { return "map[int]uint32" }
+
+func (v *intUint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Uint32MapValue
+type int8Uint32MapValue struct {
+	value *map[int8]uint32
+}
+
+var _ RepeatableFlag = (*int8Uint32MapValue)(nil)
+var _ Value = (*int8Uint32MapValue)(nil)
+var _ Getter = (*int8Uint32MapValue)(nil)
+
+func newInt8Uint32MapValue(m *map[int8]uint32) *int8Uint32MapValue {
+	return &int8Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Uint32MapValue) Type() string { return "map[int8]uint32" }
+
+func (v *int8Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Uint32MapValue
+type int16Uint32MapValue struct {
+	value *map[int16]uint32
+}
+
+var _ RepeatableFlag = (*int16Uint32MapValue)(nil)
+var _ Value = (*int16Uint32MapValue)(nil)
+var _ Getter = (*int16Uint32MapValue)(nil)
+
+func newInt16Uint32MapValue(m *map[int16]uint32) *int16Uint32MapValue {
+	return &int16Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Uint32MapValue) Type() string { return "map[int16]uint32" }
+
+func (v *int16Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Uint32MapValue
+type int32Uint32MapValue struct {
+	value *map[int32]uint32
+}
+
+var _ RepeatableFlag = (*int32Uint32MapValue)(nil)
+var _ Value = (*int32Uint32MapValue)(nil)
+var _ Getter = (*int32Uint32MapValue)(nil)
+
+func newInt32Uint32MapValue(m *map[int32]uint32) *int32Uint32MapValue {
+	return &int32Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Uint32MapValue) Type() string { return "map[int32]uint32" }
+
+func (v *int32Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Uint32MapValue
+type int64Uint32MapValue struct {
+	value *map[int64]uint32
+}
+
+var _ RepeatableFlag = (*int64Uint32MapValue)(nil)
+var _ Value = (*int64Uint32MapValue)(nil)
+var _ Getter = (*int64Uint32MapValue)(nil)
+
+func newInt64Uint32MapValue(m *map[int64]uint32) *int64Uint32MapValue {
+	return &int64Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Uint32MapValue) Type() string { return "map[int64]uint32" }
+
+func (v *int64Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintUint32MapValue
+type uintUint32MapValue struct {
+	value *map[uint]uint32
+}
+
+var _ RepeatableFlag = (*uintUint32MapValue)(nil)
+var _ Value = (*uintUint32MapValue)(nil)
+var _ Getter = (*uintUint32MapValue)(nil)
+
+func newUintUint32MapValue(m *map[uint]uint32) *uintUint32MapValue {
+	return &uintUint32MapValue{
+		value: m,
+	}
+}
+
+func (v *uintUint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintUint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintUint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintUint32MapValue) Type() string { return "map[uint]uint32" }
+
+func (v *uintUint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Uint32MapValue
+type uint8Uint32MapValue struct {
+	value *map[uint8]uint32
+}
+
+var _ RepeatableFlag = (*uint8Uint32MapValue)(nil)
+var _ Value = (*uint8Uint32MapValue)(nil)
+var _ Getter = (*uint8Uint32MapValue)(nil)
+
+func newUint8Uint32MapValue(m *map[uint8]uint32) *uint8Uint32MapValue {
+	return &uint8Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Uint32MapValue) Type() string { return "map[uint8]uint32" }
+
+func (v *uint8Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Uint32MapValue
+type uint16Uint32MapValue struct {
+	value *map[uint16]uint32
+}
+
+var _ RepeatableFlag = (*uint16Uint32MapValue)(nil)
+var _ Value = (*uint16Uint32MapValue)(nil)
+var _ Getter = (*uint16Uint32MapValue)(nil)
+
+func newUint16Uint32MapValue(m *map[uint16]uint32) *uint16Uint32MapValue {
+	return &uint16Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Uint32MapValue) Type() string { return "map[uint16]uint32" }
+
+func (v *uint16Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Uint32MapValue
+type uint32Uint32MapValue struct {
+	value *map[uint32]uint32
+}
+
+var _ RepeatableFlag = (*uint32Uint32MapValue)(nil)
+var _ Value = (*uint32Uint32MapValue)(nil)
+var _ Getter = (*uint32Uint32MapValue)(nil)
+
+func newUint32Uint32MapValue(m *map[uint32]uint32) *uint32Uint32MapValue {
+	return &uint32Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Uint32MapValue) Type() string { return "map[uint32]uint32" }
+
+func (v *uint32Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Uint32MapValue
+type uint64Uint32MapValue struct {
+	value *map[uint64]uint32
+}
+
+var _ RepeatableFlag = (*uint64Uint32MapValue)(nil)
+var _ Value = (*uint64Uint32MapValue)(nil)
+var _ Getter = (*uint64Uint32MapValue)(nil)
+
+func newUint64Uint32MapValue(m *map[uint64]uint32) *uint64Uint32MapValue {
+	return &uint64Uint32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Uint32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (uint32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Uint32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Uint32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Uint32MapValue) Type() string { return "map[uint64]uint32" }
+
+func (v *uint64Uint32MapValue) IsCumulative() bool {
+	return true
+}
+
 // -- uint64 Value
 type uint64Value struct {
 	value *uint64
@@ -783,6 +5364,705 @@ func (v *uint64SliceValue) String() string {
 func (v *uint64SliceValue) Type() string { return "uint64Slice" }
 
 func (v *uint64SliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringUint64MapValue
+type stringUint64MapValue struct {
+	value *map[string]uint64
+}
+
+var _ RepeatableFlag = (*stringUint64MapValue)(nil)
+var _ Value = (*stringUint64MapValue)(nil)
+var _ Getter = (*stringUint64MapValue)(nil)
+
+func newStringUint64MapValue(m *map[string]uint64) *stringUint64MapValue {
+	return &stringUint64MapValue{
+		value: m,
+	}
+}
+
+func (v *stringUint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringUint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringUint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringUint64MapValue) Type() string { return "map[string]uint64" }
+
+func (v *stringUint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intUint64MapValue
+type intUint64MapValue struct {
+	value *map[int]uint64
+}
+
+var _ RepeatableFlag = (*intUint64MapValue)(nil)
+var _ Value = (*intUint64MapValue)(nil)
+var _ Getter = (*intUint64MapValue)(nil)
+
+func newIntUint64MapValue(m *map[int]uint64) *intUint64MapValue {
+	return &intUint64MapValue{
+		value: m,
+	}
+}
+
+func (v *intUint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intUint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intUint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intUint64MapValue) Type() string { return "map[int]uint64" }
+
+func (v *intUint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Uint64MapValue
+type int8Uint64MapValue struct {
+	value *map[int8]uint64
+}
+
+var _ RepeatableFlag = (*int8Uint64MapValue)(nil)
+var _ Value = (*int8Uint64MapValue)(nil)
+var _ Getter = (*int8Uint64MapValue)(nil)
+
+func newInt8Uint64MapValue(m *map[int8]uint64) *int8Uint64MapValue {
+	return &int8Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Uint64MapValue) Type() string { return "map[int8]uint64" }
+
+func (v *int8Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Uint64MapValue
+type int16Uint64MapValue struct {
+	value *map[int16]uint64
+}
+
+var _ RepeatableFlag = (*int16Uint64MapValue)(nil)
+var _ Value = (*int16Uint64MapValue)(nil)
+var _ Getter = (*int16Uint64MapValue)(nil)
+
+func newInt16Uint64MapValue(m *map[int16]uint64) *int16Uint64MapValue {
+	return &int16Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Uint64MapValue) Type() string { return "map[int16]uint64" }
+
+func (v *int16Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Uint64MapValue
+type int32Uint64MapValue struct {
+	value *map[int32]uint64
+}
+
+var _ RepeatableFlag = (*int32Uint64MapValue)(nil)
+var _ Value = (*int32Uint64MapValue)(nil)
+var _ Getter = (*int32Uint64MapValue)(nil)
+
+func newInt32Uint64MapValue(m *map[int32]uint64) *int32Uint64MapValue {
+	return &int32Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Uint64MapValue) Type() string { return "map[int32]uint64" }
+
+func (v *int32Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Uint64MapValue
+type int64Uint64MapValue struct {
+	value *map[int64]uint64
+}
+
+var _ RepeatableFlag = (*int64Uint64MapValue)(nil)
+var _ Value = (*int64Uint64MapValue)(nil)
+var _ Getter = (*int64Uint64MapValue)(nil)
+
+func newInt64Uint64MapValue(m *map[int64]uint64) *int64Uint64MapValue {
+	return &int64Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Uint64MapValue) Type() string { return "map[int64]uint64" }
+
+func (v *int64Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintUint64MapValue
+type uintUint64MapValue struct {
+	value *map[uint]uint64
+}
+
+var _ RepeatableFlag = (*uintUint64MapValue)(nil)
+var _ Value = (*uintUint64MapValue)(nil)
+var _ Getter = (*uintUint64MapValue)(nil)
+
+func newUintUint64MapValue(m *map[uint]uint64) *uintUint64MapValue {
+	return &uintUint64MapValue{
+		value: m,
+	}
+}
+
+func (v *uintUint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintUint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintUint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintUint64MapValue) Type() string { return "map[uint]uint64" }
+
+func (v *uintUint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Uint64MapValue
+type uint8Uint64MapValue struct {
+	value *map[uint8]uint64
+}
+
+var _ RepeatableFlag = (*uint8Uint64MapValue)(nil)
+var _ Value = (*uint8Uint64MapValue)(nil)
+var _ Getter = (*uint8Uint64MapValue)(nil)
+
+func newUint8Uint64MapValue(m *map[uint8]uint64) *uint8Uint64MapValue {
+	return &uint8Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Uint64MapValue) Type() string { return "map[uint8]uint64" }
+
+func (v *uint8Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Uint64MapValue
+type uint16Uint64MapValue struct {
+	value *map[uint16]uint64
+}
+
+var _ RepeatableFlag = (*uint16Uint64MapValue)(nil)
+var _ Value = (*uint16Uint64MapValue)(nil)
+var _ Getter = (*uint16Uint64MapValue)(nil)
+
+func newUint16Uint64MapValue(m *map[uint16]uint64) *uint16Uint64MapValue {
+	return &uint16Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Uint64MapValue) Type() string { return "map[uint16]uint64" }
+
+func (v *uint16Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Uint64MapValue
+type uint32Uint64MapValue struct {
+	value *map[uint32]uint64
+}
+
+var _ RepeatableFlag = (*uint32Uint64MapValue)(nil)
+var _ Value = (*uint32Uint64MapValue)(nil)
+var _ Getter = (*uint32Uint64MapValue)(nil)
+
+func newUint32Uint64MapValue(m *map[uint32]uint64) *uint32Uint64MapValue {
+	return &uint32Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Uint64MapValue) Type() string { return "map[uint32]uint64" }
+
+func (v *uint32Uint64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Uint64MapValue
+type uint64Uint64MapValue struct {
+	value *map[uint64]uint64
+}
+
+var _ RepeatableFlag = (*uint64Uint64MapValue)(nil)
+var _ Value = (*uint64Uint64MapValue)(nil)
+var _ Getter = (*uint64Uint64MapValue)(nil)
+
+func newUint64Uint64MapValue(m *map[uint64]uint64) *uint64Uint64MapValue {
+	return &uint64Uint64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Uint64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Uint64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Uint64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Uint64MapValue) Type() string { return "map[uint64]uint64" }
+
+func (v *uint64Uint64MapValue) IsCumulative() bool {
 	return true
 }
 
@@ -885,6 +6165,705 @@ func (v *intSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringIntMapValue
+type stringIntMapValue struct {
+	value *map[string]int
+}
+
+var _ RepeatableFlag = (*stringIntMapValue)(nil)
+var _ Value = (*stringIntMapValue)(nil)
+var _ Getter = (*stringIntMapValue)(nil)
+
+func newStringIntMapValue(m *map[string]int) *stringIntMapValue {
+	return &stringIntMapValue{
+		value: m,
+	}
+}
+
+func (v *stringIntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringIntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringIntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringIntMapValue) Type() string { return "map[string]int" }
+
+func (v *stringIntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intIntMapValue
+type intIntMapValue struct {
+	value *map[int]int
+}
+
+var _ RepeatableFlag = (*intIntMapValue)(nil)
+var _ Value = (*intIntMapValue)(nil)
+var _ Getter = (*intIntMapValue)(nil)
+
+func newIntIntMapValue(m *map[int]int) *intIntMapValue {
+	return &intIntMapValue{
+		value: m,
+	}
+}
+
+func (v *intIntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intIntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intIntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intIntMapValue) Type() string { return "map[int]int" }
+
+func (v *intIntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8IntMapValue
+type int8IntMapValue struct {
+	value *map[int8]int
+}
+
+var _ RepeatableFlag = (*int8IntMapValue)(nil)
+var _ Value = (*int8IntMapValue)(nil)
+var _ Getter = (*int8IntMapValue)(nil)
+
+func newInt8IntMapValue(m *map[int8]int) *int8IntMapValue {
+	return &int8IntMapValue{
+		value: m,
+	}
+}
+
+func (v *int8IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8IntMapValue) Type() string { return "map[int8]int" }
+
+func (v *int8IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16IntMapValue
+type int16IntMapValue struct {
+	value *map[int16]int
+}
+
+var _ RepeatableFlag = (*int16IntMapValue)(nil)
+var _ Value = (*int16IntMapValue)(nil)
+var _ Getter = (*int16IntMapValue)(nil)
+
+func newInt16IntMapValue(m *map[int16]int) *int16IntMapValue {
+	return &int16IntMapValue{
+		value: m,
+	}
+}
+
+func (v *int16IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16IntMapValue) Type() string { return "map[int16]int" }
+
+func (v *int16IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32IntMapValue
+type int32IntMapValue struct {
+	value *map[int32]int
+}
+
+var _ RepeatableFlag = (*int32IntMapValue)(nil)
+var _ Value = (*int32IntMapValue)(nil)
+var _ Getter = (*int32IntMapValue)(nil)
+
+func newInt32IntMapValue(m *map[int32]int) *int32IntMapValue {
+	return &int32IntMapValue{
+		value: m,
+	}
+}
+
+func (v *int32IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32IntMapValue) Type() string { return "map[int32]int" }
+
+func (v *int32IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64IntMapValue
+type int64IntMapValue struct {
+	value *map[int64]int
+}
+
+var _ RepeatableFlag = (*int64IntMapValue)(nil)
+var _ Value = (*int64IntMapValue)(nil)
+var _ Getter = (*int64IntMapValue)(nil)
+
+func newInt64IntMapValue(m *map[int64]int) *int64IntMapValue {
+	return &int64IntMapValue{
+		value: m,
+	}
+}
+
+func (v *int64IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64IntMapValue) Type() string { return "map[int64]int" }
+
+func (v *int64IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintIntMapValue
+type uintIntMapValue struct {
+	value *map[uint]int
+}
+
+var _ RepeatableFlag = (*uintIntMapValue)(nil)
+var _ Value = (*uintIntMapValue)(nil)
+var _ Getter = (*uintIntMapValue)(nil)
+
+func newUintIntMapValue(m *map[uint]int) *uintIntMapValue {
+	return &uintIntMapValue{
+		value: m,
+	}
+}
+
+func (v *uintIntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintIntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintIntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintIntMapValue) Type() string { return "map[uint]int" }
+
+func (v *uintIntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8IntMapValue
+type uint8IntMapValue struct {
+	value *map[uint8]int
+}
+
+var _ RepeatableFlag = (*uint8IntMapValue)(nil)
+var _ Value = (*uint8IntMapValue)(nil)
+var _ Getter = (*uint8IntMapValue)(nil)
+
+func newUint8IntMapValue(m *map[uint8]int) *uint8IntMapValue {
+	return &uint8IntMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8IntMapValue) Type() string { return "map[uint8]int" }
+
+func (v *uint8IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16IntMapValue
+type uint16IntMapValue struct {
+	value *map[uint16]int
+}
+
+var _ RepeatableFlag = (*uint16IntMapValue)(nil)
+var _ Value = (*uint16IntMapValue)(nil)
+var _ Getter = (*uint16IntMapValue)(nil)
+
+func newUint16IntMapValue(m *map[uint16]int) *uint16IntMapValue {
+	return &uint16IntMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16IntMapValue) Type() string { return "map[uint16]int" }
+
+func (v *uint16IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32IntMapValue
+type uint32IntMapValue struct {
+	value *map[uint32]int
+}
+
+var _ RepeatableFlag = (*uint32IntMapValue)(nil)
+var _ Value = (*uint32IntMapValue)(nil)
+var _ Getter = (*uint32IntMapValue)(nil)
+
+func newUint32IntMapValue(m *map[uint32]int) *uint32IntMapValue {
+	return &uint32IntMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32IntMapValue) Type() string { return "map[uint32]int" }
+
+func (v *uint32IntMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64IntMapValue
+type uint64IntMapValue struct {
+	value *map[uint64]int
+}
+
+var _ RepeatableFlag = (*uint64IntMapValue)(nil)
+var _ Value = (*uint64IntMapValue)(nil)
+var _ Getter = (*uint64IntMapValue)(nil)
+
+func newUint64IntMapValue(m *map[uint64]int) *uint64IntMapValue {
+	return &uint64IntMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64IntMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := (int)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64IntMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64IntMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64IntMapValue) Type() string { return "map[uint64]int" }
+
+func (v *uint64IntMapValue) IsCumulative() bool {
+	return true
+}
+
 // -- int8 Value
 type int8Value struct {
 	value *int8
@@ -981,6 +6960,705 @@ func (v *int8SliceValue) String() string {
 func (v *int8SliceValue) Type() string { return "int8Slice" }
 
 func (v *int8SliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringInt8MapValue
+type stringInt8MapValue struct {
+	value *map[string]int8
+}
+
+var _ RepeatableFlag = (*stringInt8MapValue)(nil)
+var _ Value = (*stringInt8MapValue)(nil)
+var _ Getter = (*stringInt8MapValue)(nil)
+
+func newStringInt8MapValue(m *map[string]int8) *stringInt8MapValue {
+	return &stringInt8MapValue{
+		value: m,
+	}
+}
+
+func (v *stringInt8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringInt8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringInt8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringInt8MapValue) Type() string { return "map[string]int8" }
+
+func (v *stringInt8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intInt8MapValue
+type intInt8MapValue struct {
+	value *map[int]int8
+}
+
+var _ RepeatableFlag = (*intInt8MapValue)(nil)
+var _ Value = (*intInt8MapValue)(nil)
+var _ Getter = (*intInt8MapValue)(nil)
+
+func newIntInt8MapValue(m *map[int]int8) *intInt8MapValue {
+	return &intInt8MapValue{
+		value: m,
+	}
+}
+
+func (v *intInt8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intInt8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intInt8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intInt8MapValue) Type() string { return "map[int]int8" }
+
+func (v *intInt8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Int8MapValue
+type int8Int8MapValue struct {
+	value *map[int8]int8
+}
+
+var _ RepeatableFlag = (*int8Int8MapValue)(nil)
+var _ Value = (*int8Int8MapValue)(nil)
+var _ Getter = (*int8Int8MapValue)(nil)
+
+func newInt8Int8MapValue(m *map[int8]int8) *int8Int8MapValue {
+	return &int8Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Int8MapValue) Type() string { return "map[int8]int8" }
+
+func (v *int8Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Int8MapValue
+type int16Int8MapValue struct {
+	value *map[int16]int8
+}
+
+var _ RepeatableFlag = (*int16Int8MapValue)(nil)
+var _ Value = (*int16Int8MapValue)(nil)
+var _ Getter = (*int16Int8MapValue)(nil)
+
+func newInt16Int8MapValue(m *map[int16]int8) *int16Int8MapValue {
+	return &int16Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Int8MapValue) Type() string { return "map[int16]int8" }
+
+func (v *int16Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Int8MapValue
+type int32Int8MapValue struct {
+	value *map[int32]int8
+}
+
+var _ RepeatableFlag = (*int32Int8MapValue)(nil)
+var _ Value = (*int32Int8MapValue)(nil)
+var _ Getter = (*int32Int8MapValue)(nil)
+
+func newInt32Int8MapValue(m *map[int32]int8) *int32Int8MapValue {
+	return &int32Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Int8MapValue) Type() string { return "map[int32]int8" }
+
+func (v *int32Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Int8MapValue
+type int64Int8MapValue struct {
+	value *map[int64]int8
+}
+
+var _ RepeatableFlag = (*int64Int8MapValue)(nil)
+var _ Value = (*int64Int8MapValue)(nil)
+var _ Getter = (*int64Int8MapValue)(nil)
+
+func newInt64Int8MapValue(m *map[int64]int8) *int64Int8MapValue {
+	return &int64Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Int8MapValue) Type() string { return "map[int64]int8" }
+
+func (v *int64Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintInt8MapValue
+type uintInt8MapValue struct {
+	value *map[uint]int8
+}
+
+var _ RepeatableFlag = (*uintInt8MapValue)(nil)
+var _ Value = (*uintInt8MapValue)(nil)
+var _ Getter = (*uintInt8MapValue)(nil)
+
+func newUintInt8MapValue(m *map[uint]int8) *uintInt8MapValue {
+	return &uintInt8MapValue{
+		value: m,
+	}
+}
+
+func (v *uintInt8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintInt8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintInt8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintInt8MapValue) Type() string { return "map[uint]int8" }
+
+func (v *uintInt8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Int8MapValue
+type uint8Int8MapValue struct {
+	value *map[uint8]int8
+}
+
+var _ RepeatableFlag = (*uint8Int8MapValue)(nil)
+var _ Value = (*uint8Int8MapValue)(nil)
+var _ Getter = (*uint8Int8MapValue)(nil)
+
+func newUint8Int8MapValue(m *map[uint8]int8) *uint8Int8MapValue {
+	return &uint8Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Int8MapValue) Type() string { return "map[uint8]int8" }
+
+func (v *uint8Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Int8MapValue
+type uint16Int8MapValue struct {
+	value *map[uint16]int8
+}
+
+var _ RepeatableFlag = (*uint16Int8MapValue)(nil)
+var _ Value = (*uint16Int8MapValue)(nil)
+var _ Getter = (*uint16Int8MapValue)(nil)
+
+func newUint16Int8MapValue(m *map[uint16]int8) *uint16Int8MapValue {
+	return &uint16Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Int8MapValue) Type() string { return "map[uint16]int8" }
+
+func (v *uint16Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Int8MapValue
+type uint32Int8MapValue struct {
+	value *map[uint32]int8
+}
+
+var _ RepeatableFlag = (*uint32Int8MapValue)(nil)
+var _ Value = (*uint32Int8MapValue)(nil)
+var _ Getter = (*uint32Int8MapValue)(nil)
+
+func newUint32Int8MapValue(m *map[uint32]int8) *uint32Int8MapValue {
+	return &uint32Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Int8MapValue) Type() string { return "map[uint32]int8" }
+
+func (v *uint32Int8MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Int8MapValue
+type uint64Int8MapValue struct {
+	value *map[uint64]int8
+}
+
+var _ RepeatableFlag = (*uint64Int8MapValue)(nil)
+var _ Value = (*uint64Int8MapValue)(nil)
+var _ Getter = (*uint64Int8MapValue)(nil)
+
+func newUint64Int8MapValue(m *map[uint64]int8) *uint64Int8MapValue {
+	return &uint64Int8MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Int8MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	val := (int8)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Int8MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Int8MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Int8MapValue) Type() string { return "map[uint64]int8" }
+
+func (v *uint64Int8MapValue) IsCumulative() bool {
 	return true
 }
 
@@ -1083,6 +7761,705 @@ func (v *int16SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringInt16MapValue
+type stringInt16MapValue struct {
+	value *map[string]int16
+}
+
+var _ RepeatableFlag = (*stringInt16MapValue)(nil)
+var _ Value = (*stringInt16MapValue)(nil)
+var _ Getter = (*stringInt16MapValue)(nil)
+
+func newStringInt16MapValue(m *map[string]int16) *stringInt16MapValue {
+	return &stringInt16MapValue{
+		value: m,
+	}
+}
+
+func (v *stringInt16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringInt16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringInt16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringInt16MapValue) Type() string { return "map[string]int16" }
+
+func (v *stringInt16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intInt16MapValue
+type intInt16MapValue struct {
+	value *map[int]int16
+}
+
+var _ RepeatableFlag = (*intInt16MapValue)(nil)
+var _ Value = (*intInt16MapValue)(nil)
+var _ Getter = (*intInt16MapValue)(nil)
+
+func newIntInt16MapValue(m *map[int]int16) *intInt16MapValue {
+	return &intInt16MapValue{
+		value: m,
+	}
+}
+
+func (v *intInt16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intInt16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intInt16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intInt16MapValue) Type() string { return "map[int]int16" }
+
+func (v *intInt16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Int16MapValue
+type int8Int16MapValue struct {
+	value *map[int8]int16
+}
+
+var _ RepeatableFlag = (*int8Int16MapValue)(nil)
+var _ Value = (*int8Int16MapValue)(nil)
+var _ Getter = (*int8Int16MapValue)(nil)
+
+func newInt8Int16MapValue(m *map[int8]int16) *int8Int16MapValue {
+	return &int8Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Int16MapValue) Type() string { return "map[int8]int16" }
+
+func (v *int8Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Int16MapValue
+type int16Int16MapValue struct {
+	value *map[int16]int16
+}
+
+var _ RepeatableFlag = (*int16Int16MapValue)(nil)
+var _ Value = (*int16Int16MapValue)(nil)
+var _ Getter = (*int16Int16MapValue)(nil)
+
+func newInt16Int16MapValue(m *map[int16]int16) *int16Int16MapValue {
+	return &int16Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Int16MapValue) Type() string { return "map[int16]int16" }
+
+func (v *int16Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Int16MapValue
+type int32Int16MapValue struct {
+	value *map[int32]int16
+}
+
+var _ RepeatableFlag = (*int32Int16MapValue)(nil)
+var _ Value = (*int32Int16MapValue)(nil)
+var _ Getter = (*int32Int16MapValue)(nil)
+
+func newInt32Int16MapValue(m *map[int32]int16) *int32Int16MapValue {
+	return &int32Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Int16MapValue) Type() string { return "map[int32]int16" }
+
+func (v *int32Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Int16MapValue
+type int64Int16MapValue struct {
+	value *map[int64]int16
+}
+
+var _ RepeatableFlag = (*int64Int16MapValue)(nil)
+var _ Value = (*int64Int16MapValue)(nil)
+var _ Getter = (*int64Int16MapValue)(nil)
+
+func newInt64Int16MapValue(m *map[int64]int16) *int64Int16MapValue {
+	return &int64Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Int16MapValue) Type() string { return "map[int64]int16" }
+
+func (v *int64Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintInt16MapValue
+type uintInt16MapValue struct {
+	value *map[uint]int16
+}
+
+var _ RepeatableFlag = (*uintInt16MapValue)(nil)
+var _ Value = (*uintInt16MapValue)(nil)
+var _ Getter = (*uintInt16MapValue)(nil)
+
+func newUintInt16MapValue(m *map[uint]int16) *uintInt16MapValue {
+	return &uintInt16MapValue{
+		value: m,
+	}
+}
+
+func (v *uintInt16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintInt16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintInt16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintInt16MapValue) Type() string { return "map[uint]int16" }
+
+func (v *uintInt16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Int16MapValue
+type uint8Int16MapValue struct {
+	value *map[uint8]int16
+}
+
+var _ RepeatableFlag = (*uint8Int16MapValue)(nil)
+var _ Value = (*uint8Int16MapValue)(nil)
+var _ Getter = (*uint8Int16MapValue)(nil)
+
+func newUint8Int16MapValue(m *map[uint8]int16) *uint8Int16MapValue {
+	return &uint8Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Int16MapValue) Type() string { return "map[uint8]int16" }
+
+func (v *uint8Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Int16MapValue
+type uint16Int16MapValue struct {
+	value *map[uint16]int16
+}
+
+var _ RepeatableFlag = (*uint16Int16MapValue)(nil)
+var _ Value = (*uint16Int16MapValue)(nil)
+var _ Getter = (*uint16Int16MapValue)(nil)
+
+func newUint16Int16MapValue(m *map[uint16]int16) *uint16Int16MapValue {
+	return &uint16Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Int16MapValue) Type() string { return "map[uint16]int16" }
+
+func (v *uint16Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Int16MapValue
+type uint32Int16MapValue struct {
+	value *map[uint32]int16
+}
+
+var _ RepeatableFlag = (*uint32Int16MapValue)(nil)
+var _ Value = (*uint32Int16MapValue)(nil)
+var _ Getter = (*uint32Int16MapValue)(nil)
+
+func newUint32Int16MapValue(m *map[uint32]int16) *uint32Int16MapValue {
+	return &uint32Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Int16MapValue) Type() string { return "map[uint32]int16" }
+
+func (v *uint32Int16MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Int16MapValue
+type uint64Int16MapValue struct {
+	value *map[uint64]int16
+}
+
+var _ RepeatableFlag = (*uint64Int16MapValue)(nil)
+var _ Value = (*uint64Int16MapValue)(nil)
+var _ Getter = (*uint64Int16MapValue)(nil)
+
+func newUint64Int16MapValue(m *map[uint64]int16) *uint64Int16MapValue {
+	return &uint64Int16MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Int16MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	val := (int16)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Int16MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Int16MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Int16MapValue) Type() string { return "map[uint64]int16" }
+
+func (v *uint64Int16MapValue) IsCumulative() bool {
+	return true
+}
+
 // -- int32 Value
 type int32Value struct {
 	value *int32
@@ -1179,6 +8556,705 @@ func (v *int32SliceValue) String() string {
 func (v *int32SliceValue) Type() string { return "int32Slice" }
 
 func (v *int32SliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringInt32MapValue
+type stringInt32MapValue struct {
+	value *map[string]int32
+}
+
+var _ RepeatableFlag = (*stringInt32MapValue)(nil)
+var _ Value = (*stringInt32MapValue)(nil)
+var _ Getter = (*stringInt32MapValue)(nil)
+
+func newStringInt32MapValue(m *map[string]int32) *stringInt32MapValue {
+	return &stringInt32MapValue{
+		value: m,
+	}
+}
+
+func (v *stringInt32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringInt32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringInt32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringInt32MapValue) Type() string { return "map[string]int32" }
+
+func (v *stringInt32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intInt32MapValue
+type intInt32MapValue struct {
+	value *map[int]int32
+}
+
+var _ RepeatableFlag = (*intInt32MapValue)(nil)
+var _ Value = (*intInt32MapValue)(nil)
+var _ Getter = (*intInt32MapValue)(nil)
+
+func newIntInt32MapValue(m *map[int]int32) *intInt32MapValue {
+	return &intInt32MapValue{
+		value: m,
+	}
+}
+
+func (v *intInt32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intInt32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intInt32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intInt32MapValue) Type() string { return "map[int]int32" }
+
+func (v *intInt32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Int32MapValue
+type int8Int32MapValue struct {
+	value *map[int8]int32
+}
+
+var _ RepeatableFlag = (*int8Int32MapValue)(nil)
+var _ Value = (*int8Int32MapValue)(nil)
+var _ Getter = (*int8Int32MapValue)(nil)
+
+func newInt8Int32MapValue(m *map[int8]int32) *int8Int32MapValue {
+	return &int8Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Int32MapValue) Type() string { return "map[int8]int32" }
+
+func (v *int8Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Int32MapValue
+type int16Int32MapValue struct {
+	value *map[int16]int32
+}
+
+var _ RepeatableFlag = (*int16Int32MapValue)(nil)
+var _ Value = (*int16Int32MapValue)(nil)
+var _ Getter = (*int16Int32MapValue)(nil)
+
+func newInt16Int32MapValue(m *map[int16]int32) *int16Int32MapValue {
+	return &int16Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Int32MapValue) Type() string { return "map[int16]int32" }
+
+func (v *int16Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Int32MapValue
+type int32Int32MapValue struct {
+	value *map[int32]int32
+}
+
+var _ RepeatableFlag = (*int32Int32MapValue)(nil)
+var _ Value = (*int32Int32MapValue)(nil)
+var _ Getter = (*int32Int32MapValue)(nil)
+
+func newInt32Int32MapValue(m *map[int32]int32) *int32Int32MapValue {
+	return &int32Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Int32MapValue) Type() string { return "map[int32]int32" }
+
+func (v *int32Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Int32MapValue
+type int64Int32MapValue struct {
+	value *map[int64]int32
+}
+
+var _ RepeatableFlag = (*int64Int32MapValue)(nil)
+var _ Value = (*int64Int32MapValue)(nil)
+var _ Getter = (*int64Int32MapValue)(nil)
+
+func newInt64Int32MapValue(m *map[int64]int32) *int64Int32MapValue {
+	return &int64Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Int32MapValue) Type() string { return "map[int64]int32" }
+
+func (v *int64Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintInt32MapValue
+type uintInt32MapValue struct {
+	value *map[uint]int32
+}
+
+var _ RepeatableFlag = (*uintInt32MapValue)(nil)
+var _ Value = (*uintInt32MapValue)(nil)
+var _ Getter = (*uintInt32MapValue)(nil)
+
+func newUintInt32MapValue(m *map[uint]int32) *uintInt32MapValue {
+	return &uintInt32MapValue{
+		value: m,
+	}
+}
+
+func (v *uintInt32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintInt32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintInt32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintInt32MapValue) Type() string { return "map[uint]int32" }
+
+func (v *uintInt32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Int32MapValue
+type uint8Int32MapValue struct {
+	value *map[uint8]int32
+}
+
+var _ RepeatableFlag = (*uint8Int32MapValue)(nil)
+var _ Value = (*uint8Int32MapValue)(nil)
+var _ Getter = (*uint8Int32MapValue)(nil)
+
+func newUint8Int32MapValue(m *map[uint8]int32) *uint8Int32MapValue {
+	return &uint8Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Int32MapValue) Type() string { return "map[uint8]int32" }
+
+func (v *uint8Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Int32MapValue
+type uint16Int32MapValue struct {
+	value *map[uint16]int32
+}
+
+var _ RepeatableFlag = (*uint16Int32MapValue)(nil)
+var _ Value = (*uint16Int32MapValue)(nil)
+var _ Getter = (*uint16Int32MapValue)(nil)
+
+func newUint16Int32MapValue(m *map[uint16]int32) *uint16Int32MapValue {
+	return &uint16Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Int32MapValue) Type() string { return "map[uint16]int32" }
+
+func (v *uint16Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Int32MapValue
+type uint32Int32MapValue struct {
+	value *map[uint32]int32
+}
+
+var _ RepeatableFlag = (*uint32Int32MapValue)(nil)
+var _ Value = (*uint32Int32MapValue)(nil)
+var _ Getter = (*uint32Int32MapValue)(nil)
+
+func newUint32Int32MapValue(m *map[uint32]int32) *uint32Int32MapValue {
+	return &uint32Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Int32MapValue) Type() string { return "map[uint32]int32" }
+
+func (v *uint32Int32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Int32MapValue
+type uint64Int32MapValue struct {
+	value *map[uint64]int32
+}
+
+var _ RepeatableFlag = (*uint64Int32MapValue)(nil)
+var _ Value = (*uint64Int32MapValue)(nil)
+var _ Getter = (*uint64Int32MapValue)(nil)
+
+func newUint64Int32MapValue(m *map[uint64]int32) *uint64Int32MapValue {
+	return &uint64Int32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Int32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (int32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Int32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Int32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Int32MapValue) Type() string { return "map[uint64]int32" }
+
+func (v *uint64Int32MapValue) IsCumulative() bool {
 	return true
 }
 
@@ -1281,6 +9357,705 @@ func (v *int64SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringInt64MapValue
+type stringInt64MapValue struct {
+	value *map[string]int64
+}
+
+var _ RepeatableFlag = (*stringInt64MapValue)(nil)
+var _ Value = (*stringInt64MapValue)(nil)
+var _ Getter = (*stringInt64MapValue)(nil)
+
+func newStringInt64MapValue(m *map[string]int64) *stringInt64MapValue {
+	return &stringInt64MapValue{
+		value: m,
+	}
+}
+
+func (v *stringInt64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringInt64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringInt64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringInt64MapValue) Type() string { return "map[string]int64" }
+
+func (v *stringInt64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intInt64MapValue
+type intInt64MapValue struct {
+	value *map[int]int64
+}
+
+var _ RepeatableFlag = (*intInt64MapValue)(nil)
+var _ Value = (*intInt64MapValue)(nil)
+var _ Getter = (*intInt64MapValue)(nil)
+
+func newIntInt64MapValue(m *map[int]int64) *intInt64MapValue {
+	return &intInt64MapValue{
+		value: m,
+	}
+}
+
+func (v *intInt64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intInt64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intInt64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intInt64MapValue) Type() string { return "map[int]int64" }
+
+func (v *intInt64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Int64MapValue
+type int8Int64MapValue struct {
+	value *map[int8]int64
+}
+
+var _ RepeatableFlag = (*int8Int64MapValue)(nil)
+var _ Value = (*int8Int64MapValue)(nil)
+var _ Getter = (*int8Int64MapValue)(nil)
+
+func newInt8Int64MapValue(m *map[int8]int64) *int8Int64MapValue {
+	return &int8Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Int64MapValue) Type() string { return "map[int8]int64" }
+
+func (v *int8Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Int64MapValue
+type int16Int64MapValue struct {
+	value *map[int16]int64
+}
+
+var _ RepeatableFlag = (*int16Int64MapValue)(nil)
+var _ Value = (*int16Int64MapValue)(nil)
+var _ Getter = (*int16Int64MapValue)(nil)
+
+func newInt16Int64MapValue(m *map[int16]int64) *int16Int64MapValue {
+	return &int16Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Int64MapValue) Type() string { return "map[int16]int64" }
+
+func (v *int16Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Int64MapValue
+type int32Int64MapValue struct {
+	value *map[int32]int64
+}
+
+var _ RepeatableFlag = (*int32Int64MapValue)(nil)
+var _ Value = (*int32Int64MapValue)(nil)
+var _ Getter = (*int32Int64MapValue)(nil)
+
+func newInt32Int64MapValue(m *map[int32]int64) *int32Int64MapValue {
+	return &int32Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Int64MapValue) Type() string { return "map[int32]int64" }
+
+func (v *int32Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Int64MapValue
+type int64Int64MapValue struct {
+	value *map[int64]int64
+}
+
+var _ RepeatableFlag = (*int64Int64MapValue)(nil)
+var _ Value = (*int64Int64MapValue)(nil)
+var _ Getter = (*int64Int64MapValue)(nil)
+
+func newInt64Int64MapValue(m *map[int64]int64) *int64Int64MapValue {
+	return &int64Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Int64MapValue) Type() string { return "map[int64]int64" }
+
+func (v *int64Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintInt64MapValue
+type uintInt64MapValue struct {
+	value *map[uint]int64
+}
+
+var _ RepeatableFlag = (*uintInt64MapValue)(nil)
+var _ Value = (*uintInt64MapValue)(nil)
+var _ Getter = (*uintInt64MapValue)(nil)
+
+func newUintInt64MapValue(m *map[uint]int64) *uintInt64MapValue {
+	return &uintInt64MapValue{
+		value: m,
+	}
+}
+
+func (v *uintInt64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintInt64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintInt64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintInt64MapValue) Type() string { return "map[uint]int64" }
+
+func (v *uintInt64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Int64MapValue
+type uint8Int64MapValue struct {
+	value *map[uint8]int64
+}
+
+var _ RepeatableFlag = (*uint8Int64MapValue)(nil)
+var _ Value = (*uint8Int64MapValue)(nil)
+var _ Getter = (*uint8Int64MapValue)(nil)
+
+func newUint8Int64MapValue(m *map[uint8]int64) *uint8Int64MapValue {
+	return &uint8Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Int64MapValue) Type() string { return "map[uint8]int64" }
+
+func (v *uint8Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Int64MapValue
+type uint16Int64MapValue struct {
+	value *map[uint16]int64
+}
+
+var _ RepeatableFlag = (*uint16Int64MapValue)(nil)
+var _ Value = (*uint16Int64MapValue)(nil)
+var _ Getter = (*uint16Int64MapValue)(nil)
+
+func newUint16Int64MapValue(m *map[uint16]int64) *uint16Int64MapValue {
+	return &uint16Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Int64MapValue) Type() string { return "map[uint16]int64" }
+
+func (v *uint16Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Int64MapValue
+type uint32Int64MapValue struct {
+	value *map[uint32]int64
+}
+
+var _ RepeatableFlag = (*uint32Int64MapValue)(nil)
+var _ Value = (*uint32Int64MapValue)(nil)
+var _ Getter = (*uint32Int64MapValue)(nil)
+
+func newUint32Int64MapValue(m *map[uint32]int64) *uint32Int64MapValue {
+	return &uint32Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Int64MapValue) Type() string { return "map[uint32]int64" }
+
+func (v *uint32Int64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Int64MapValue
+type uint64Int64MapValue struct {
+	value *map[uint64]int64
+}
+
+var _ RepeatableFlag = (*uint64Int64MapValue)(nil)
+var _ Value = (*uint64Int64MapValue)(nil)
+var _ Getter = (*uint64Int64MapValue)(nil)
+
+func newUint64Int64MapValue(m *map[uint64]int64) *uint64Int64MapValue {
+	return &uint64Int64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Int64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Int64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Int64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Int64MapValue) Type() string { return "map[uint64]int64" }
+
+func (v *uint64Int64MapValue) IsCumulative() bool {
+	return true
+}
+
 // -- float64 Value
 type float64Value struct {
 	value *float64
@@ -1377,6 +10152,705 @@ func (v *float64SliceValue) String() string {
 func (v *float64SliceValue) Type() string { return "float64Slice" }
 
 func (v *float64SliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringFloat64MapValue
+type stringFloat64MapValue struct {
+	value *map[string]float64
+}
+
+var _ RepeatableFlag = (*stringFloat64MapValue)(nil)
+var _ Value = (*stringFloat64MapValue)(nil)
+var _ Getter = (*stringFloat64MapValue)(nil)
+
+func newStringFloat64MapValue(m *map[string]float64) *stringFloat64MapValue {
+	return &stringFloat64MapValue{
+		value: m,
+	}
+}
+
+func (v *stringFloat64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringFloat64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringFloat64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringFloat64MapValue) Type() string { return "map[string]float64" }
+
+func (v *stringFloat64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intFloat64MapValue
+type intFloat64MapValue struct {
+	value *map[int]float64
+}
+
+var _ RepeatableFlag = (*intFloat64MapValue)(nil)
+var _ Value = (*intFloat64MapValue)(nil)
+var _ Getter = (*intFloat64MapValue)(nil)
+
+func newIntFloat64MapValue(m *map[int]float64) *intFloat64MapValue {
+	return &intFloat64MapValue{
+		value: m,
+	}
+}
+
+func (v *intFloat64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intFloat64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intFloat64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intFloat64MapValue) Type() string { return "map[int]float64" }
+
+func (v *intFloat64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Float64MapValue
+type int8Float64MapValue struct {
+	value *map[int8]float64
+}
+
+var _ RepeatableFlag = (*int8Float64MapValue)(nil)
+var _ Value = (*int8Float64MapValue)(nil)
+var _ Getter = (*int8Float64MapValue)(nil)
+
+func newInt8Float64MapValue(m *map[int8]float64) *int8Float64MapValue {
+	return &int8Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Float64MapValue) Type() string { return "map[int8]float64" }
+
+func (v *int8Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Float64MapValue
+type int16Float64MapValue struct {
+	value *map[int16]float64
+}
+
+var _ RepeatableFlag = (*int16Float64MapValue)(nil)
+var _ Value = (*int16Float64MapValue)(nil)
+var _ Getter = (*int16Float64MapValue)(nil)
+
+func newInt16Float64MapValue(m *map[int16]float64) *int16Float64MapValue {
+	return &int16Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Float64MapValue) Type() string { return "map[int16]float64" }
+
+func (v *int16Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Float64MapValue
+type int32Float64MapValue struct {
+	value *map[int32]float64
+}
+
+var _ RepeatableFlag = (*int32Float64MapValue)(nil)
+var _ Value = (*int32Float64MapValue)(nil)
+var _ Getter = (*int32Float64MapValue)(nil)
+
+func newInt32Float64MapValue(m *map[int32]float64) *int32Float64MapValue {
+	return &int32Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Float64MapValue) Type() string { return "map[int32]float64" }
+
+func (v *int32Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Float64MapValue
+type int64Float64MapValue struct {
+	value *map[int64]float64
+}
+
+var _ RepeatableFlag = (*int64Float64MapValue)(nil)
+var _ Value = (*int64Float64MapValue)(nil)
+var _ Getter = (*int64Float64MapValue)(nil)
+
+func newInt64Float64MapValue(m *map[int64]float64) *int64Float64MapValue {
+	return &int64Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Float64MapValue) Type() string { return "map[int64]float64" }
+
+func (v *int64Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintFloat64MapValue
+type uintFloat64MapValue struct {
+	value *map[uint]float64
+}
+
+var _ RepeatableFlag = (*uintFloat64MapValue)(nil)
+var _ Value = (*uintFloat64MapValue)(nil)
+var _ Getter = (*uintFloat64MapValue)(nil)
+
+func newUintFloat64MapValue(m *map[uint]float64) *uintFloat64MapValue {
+	return &uintFloat64MapValue{
+		value: m,
+	}
+}
+
+func (v *uintFloat64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintFloat64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintFloat64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintFloat64MapValue) Type() string { return "map[uint]float64" }
+
+func (v *uintFloat64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Float64MapValue
+type uint8Float64MapValue struct {
+	value *map[uint8]float64
+}
+
+var _ RepeatableFlag = (*uint8Float64MapValue)(nil)
+var _ Value = (*uint8Float64MapValue)(nil)
+var _ Getter = (*uint8Float64MapValue)(nil)
+
+func newUint8Float64MapValue(m *map[uint8]float64) *uint8Float64MapValue {
+	return &uint8Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Float64MapValue) Type() string { return "map[uint8]float64" }
+
+func (v *uint8Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Float64MapValue
+type uint16Float64MapValue struct {
+	value *map[uint16]float64
+}
+
+var _ RepeatableFlag = (*uint16Float64MapValue)(nil)
+var _ Value = (*uint16Float64MapValue)(nil)
+var _ Getter = (*uint16Float64MapValue)(nil)
+
+func newUint16Float64MapValue(m *map[uint16]float64) *uint16Float64MapValue {
+	return &uint16Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Float64MapValue) Type() string { return "map[uint16]float64" }
+
+func (v *uint16Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Float64MapValue
+type uint32Float64MapValue struct {
+	value *map[uint32]float64
+}
+
+var _ RepeatableFlag = (*uint32Float64MapValue)(nil)
+var _ Value = (*uint32Float64MapValue)(nil)
+var _ Getter = (*uint32Float64MapValue)(nil)
+
+func newUint32Float64MapValue(m *map[uint32]float64) *uint32Float64MapValue {
+	return &uint32Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Float64MapValue) Type() string { return "map[uint32]float64" }
+
+func (v *uint32Float64MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Float64MapValue
+type uint64Float64MapValue struct {
+	value *map[uint64]float64
+}
+
+var _ RepeatableFlag = (*uint64Float64MapValue)(nil)
+var _ Value = (*uint64Float64MapValue)(nil)
+var _ Getter = (*uint64Float64MapValue)(nil)
+
+func newUint64Float64MapValue(m *map[uint64]float64) *uint64Float64MapValue {
+	return &uint64Float64MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Float64MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Float64MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Float64MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Float64MapValue) Type() string { return "map[uint64]float64" }
+
+func (v *uint64Float64MapValue) IsCumulative() bool {
 	return true
 }
 
@@ -1479,6 +10953,705 @@ func (v *float32SliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringFloat32MapValue
+type stringFloat32MapValue struct {
+	value *map[string]float32
+}
+
+var _ RepeatableFlag = (*stringFloat32MapValue)(nil)
+var _ Value = (*stringFloat32MapValue)(nil)
+var _ Getter = (*stringFloat32MapValue)(nil)
+
+func newStringFloat32MapValue(m *map[string]float32) *stringFloat32MapValue {
+	return &stringFloat32MapValue{
+		value: m,
+	}
+}
+
+func (v *stringFloat32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringFloat32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringFloat32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringFloat32MapValue) Type() string { return "map[string]float32" }
+
+func (v *stringFloat32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intFloat32MapValue
+type intFloat32MapValue struct {
+	value *map[int]float32
+}
+
+var _ RepeatableFlag = (*intFloat32MapValue)(nil)
+var _ Value = (*intFloat32MapValue)(nil)
+var _ Getter = (*intFloat32MapValue)(nil)
+
+func newIntFloat32MapValue(m *map[int]float32) *intFloat32MapValue {
+	return &intFloat32MapValue{
+		value: m,
+	}
+}
+
+func (v *intFloat32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intFloat32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intFloat32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intFloat32MapValue) Type() string { return "map[int]float32" }
+
+func (v *intFloat32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8Float32MapValue
+type int8Float32MapValue struct {
+	value *map[int8]float32
+}
+
+var _ RepeatableFlag = (*int8Float32MapValue)(nil)
+var _ Value = (*int8Float32MapValue)(nil)
+var _ Getter = (*int8Float32MapValue)(nil)
+
+func newInt8Float32MapValue(m *map[int8]float32) *int8Float32MapValue {
+	return &int8Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *int8Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8Float32MapValue) Type() string { return "map[int8]float32" }
+
+func (v *int8Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16Float32MapValue
+type int16Float32MapValue struct {
+	value *map[int16]float32
+}
+
+var _ RepeatableFlag = (*int16Float32MapValue)(nil)
+var _ Value = (*int16Float32MapValue)(nil)
+var _ Getter = (*int16Float32MapValue)(nil)
+
+func newInt16Float32MapValue(m *map[int16]float32) *int16Float32MapValue {
+	return &int16Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *int16Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16Float32MapValue) Type() string { return "map[int16]float32" }
+
+func (v *int16Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32Float32MapValue
+type int32Float32MapValue struct {
+	value *map[int32]float32
+}
+
+var _ RepeatableFlag = (*int32Float32MapValue)(nil)
+var _ Value = (*int32Float32MapValue)(nil)
+var _ Getter = (*int32Float32MapValue)(nil)
+
+func newInt32Float32MapValue(m *map[int32]float32) *int32Float32MapValue {
+	return &int32Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *int32Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32Float32MapValue) Type() string { return "map[int32]float32" }
+
+func (v *int32Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64Float32MapValue
+type int64Float32MapValue struct {
+	value *map[int64]float32
+}
+
+var _ RepeatableFlag = (*int64Float32MapValue)(nil)
+var _ Value = (*int64Float32MapValue)(nil)
+var _ Getter = (*int64Float32MapValue)(nil)
+
+func newInt64Float32MapValue(m *map[int64]float32) *int64Float32MapValue {
+	return &int64Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *int64Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64Float32MapValue) Type() string { return "map[int64]float32" }
+
+func (v *int64Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintFloat32MapValue
+type uintFloat32MapValue struct {
+	value *map[uint]float32
+}
+
+var _ RepeatableFlag = (*uintFloat32MapValue)(nil)
+var _ Value = (*uintFloat32MapValue)(nil)
+var _ Getter = (*uintFloat32MapValue)(nil)
+
+func newUintFloat32MapValue(m *map[uint]float32) *uintFloat32MapValue {
+	return &uintFloat32MapValue{
+		value: m,
+	}
+}
+
+func (v *uintFloat32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintFloat32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintFloat32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintFloat32MapValue) Type() string { return "map[uint]float32" }
+
+func (v *uintFloat32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8Float32MapValue
+type uint8Float32MapValue struct {
+	value *map[uint8]float32
+}
+
+var _ RepeatableFlag = (*uint8Float32MapValue)(nil)
+var _ Value = (*uint8Float32MapValue)(nil)
+var _ Getter = (*uint8Float32MapValue)(nil)
+
+func newUint8Float32MapValue(m *map[uint8]float32) *uint8Float32MapValue {
+	return &uint8Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint8Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8Float32MapValue) Type() string { return "map[uint8]float32" }
+
+func (v *uint8Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16Float32MapValue
+type uint16Float32MapValue struct {
+	value *map[uint16]float32
+}
+
+var _ RepeatableFlag = (*uint16Float32MapValue)(nil)
+var _ Value = (*uint16Float32MapValue)(nil)
+var _ Getter = (*uint16Float32MapValue)(nil)
+
+func newUint16Float32MapValue(m *map[uint16]float32) *uint16Float32MapValue {
+	return &uint16Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint16Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16Float32MapValue) Type() string { return "map[uint16]float32" }
+
+func (v *uint16Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32Float32MapValue
+type uint32Float32MapValue struct {
+	value *map[uint32]float32
+}
+
+var _ RepeatableFlag = (*uint32Float32MapValue)(nil)
+var _ Value = (*uint32Float32MapValue)(nil)
+var _ Getter = (*uint32Float32MapValue)(nil)
+
+func newUint32Float32MapValue(m *map[uint32]float32) *uint32Float32MapValue {
+	return &uint32Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint32Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32Float32MapValue) Type() string { return "map[uint32]float32" }
+
+func (v *uint32Float32MapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64Float32MapValue
+type uint64Float32MapValue struct {
+	value *map[uint64]float32
+}
+
+var _ RepeatableFlag = (*uint64Float32MapValue)(nil)
+var _ Value = (*uint64Float32MapValue)(nil)
+var _ Getter = (*uint64Float32MapValue)(nil)
+
+func newUint64Float32MapValue(m *map[uint64]float32) *uint64Float32MapValue {
+	return &uint64Float32MapValue{
+		value: m,
+	}
+}
+
+func (v *uint64Float32MapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := strconv.ParseFloat(s, 32)
+	if err != nil {
+		return err
+	}
+
+	val := (float32)(parsedVal)
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64Float32MapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64Float32MapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64Float32MapValue) Type() string { return "map[uint64]float32" }
+
+func (v *uint64Float32MapValue) IsCumulative() bool {
+	return true
+}
+
 // -- time.Duration Value
 type durationValue struct {
 	value *time.Duration
@@ -1575,6 +11748,705 @@ func (v *durationSliceValue) String() string {
 func (v *durationSliceValue) Type() string { return "durationSlice" }
 
 func (v *durationSliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringDurationMapValue
+type stringDurationMapValue struct {
+	value *map[string]time.Duration
+}
+
+var _ RepeatableFlag = (*stringDurationMapValue)(nil)
+var _ Value = (*stringDurationMapValue)(nil)
+var _ Getter = (*stringDurationMapValue)(nil)
+
+func newStringDurationMapValue(m *map[string]time.Duration) *stringDurationMapValue {
+	return &stringDurationMapValue{
+		value: m,
+	}
+}
+
+func (v *stringDurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringDurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringDurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringDurationMapValue) Type() string { return "map[string]time.Duration" }
+
+func (v *stringDurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intDurationMapValue
+type intDurationMapValue struct {
+	value *map[int]time.Duration
+}
+
+var _ RepeatableFlag = (*intDurationMapValue)(nil)
+var _ Value = (*intDurationMapValue)(nil)
+var _ Getter = (*intDurationMapValue)(nil)
+
+func newIntDurationMapValue(m *map[int]time.Duration) *intDurationMapValue {
+	return &intDurationMapValue{
+		value: m,
+	}
+}
+
+func (v *intDurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intDurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intDurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intDurationMapValue) Type() string { return "map[int]time.Duration" }
+
+func (v *intDurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8DurationMapValue
+type int8DurationMapValue struct {
+	value *map[int8]time.Duration
+}
+
+var _ RepeatableFlag = (*int8DurationMapValue)(nil)
+var _ Value = (*int8DurationMapValue)(nil)
+var _ Getter = (*int8DurationMapValue)(nil)
+
+func newInt8DurationMapValue(m *map[int8]time.Duration) *int8DurationMapValue {
+	return &int8DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *int8DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8DurationMapValue) Type() string { return "map[int8]time.Duration" }
+
+func (v *int8DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16DurationMapValue
+type int16DurationMapValue struct {
+	value *map[int16]time.Duration
+}
+
+var _ RepeatableFlag = (*int16DurationMapValue)(nil)
+var _ Value = (*int16DurationMapValue)(nil)
+var _ Getter = (*int16DurationMapValue)(nil)
+
+func newInt16DurationMapValue(m *map[int16]time.Duration) *int16DurationMapValue {
+	return &int16DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *int16DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16DurationMapValue) Type() string { return "map[int16]time.Duration" }
+
+func (v *int16DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32DurationMapValue
+type int32DurationMapValue struct {
+	value *map[int32]time.Duration
+}
+
+var _ RepeatableFlag = (*int32DurationMapValue)(nil)
+var _ Value = (*int32DurationMapValue)(nil)
+var _ Getter = (*int32DurationMapValue)(nil)
+
+func newInt32DurationMapValue(m *map[int32]time.Duration) *int32DurationMapValue {
+	return &int32DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *int32DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32DurationMapValue) Type() string { return "map[int32]time.Duration" }
+
+func (v *int32DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64DurationMapValue
+type int64DurationMapValue struct {
+	value *map[int64]time.Duration
+}
+
+var _ RepeatableFlag = (*int64DurationMapValue)(nil)
+var _ Value = (*int64DurationMapValue)(nil)
+var _ Getter = (*int64DurationMapValue)(nil)
+
+func newInt64DurationMapValue(m *map[int64]time.Duration) *int64DurationMapValue {
+	return &int64DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *int64DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64DurationMapValue) Type() string { return "map[int64]time.Duration" }
+
+func (v *int64DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintDurationMapValue
+type uintDurationMapValue struct {
+	value *map[uint]time.Duration
+}
+
+var _ RepeatableFlag = (*uintDurationMapValue)(nil)
+var _ Value = (*uintDurationMapValue)(nil)
+var _ Getter = (*uintDurationMapValue)(nil)
+
+func newUintDurationMapValue(m *map[uint]time.Duration) *uintDurationMapValue {
+	return &uintDurationMapValue{
+		value: m,
+	}
+}
+
+func (v *uintDurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintDurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintDurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintDurationMapValue) Type() string { return "map[uint]time.Duration" }
+
+func (v *uintDurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8DurationMapValue
+type uint8DurationMapValue struct {
+	value *map[uint8]time.Duration
+}
+
+var _ RepeatableFlag = (*uint8DurationMapValue)(nil)
+var _ Value = (*uint8DurationMapValue)(nil)
+var _ Getter = (*uint8DurationMapValue)(nil)
+
+func newUint8DurationMapValue(m *map[uint8]time.Duration) *uint8DurationMapValue {
+	return &uint8DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8DurationMapValue) Type() string { return "map[uint8]time.Duration" }
+
+func (v *uint8DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16DurationMapValue
+type uint16DurationMapValue struct {
+	value *map[uint16]time.Duration
+}
+
+var _ RepeatableFlag = (*uint16DurationMapValue)(nil)
+var _ Value = (*uint16DurationMapValue)(nil)
+var _ Getter = (*uint16DurationMapValue)(nil)
+
+func newUint16DurationMapValue(m *map[uint16]time.Duration) *uint16DurationMapValue {
+	return &uint16DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16DurationMapValue) Type() string { return "map[uint16]time.Duration" }
+
+func (v *uint16DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32DurationMapValue
+type uint32DurationMapValue struct {
+	value *map[uint32]time.Duration
+}
+
+var _ RepeatableFlag = (*uint32DurationMapValue)(nil)
+var _ Value = (*uint32DurationMapValue)(nil)
+var _ Getter = (*uint32DurationMapValue)(nil)
+
+func newUint32DurationMapValue(m *map[uint32]time.Duration) *uint32DurationMapValue {
+	return &uint32DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32DurationMapValue) Type() string { return "map[uint32]time.Duration" }
+
+func (v *uint32DurationMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64DurationMapValue
+type uint64DurationMapValue struct {
+	value *map[uint64]time.Duration
+}
+
+var _ RepeatableFlag = (*uint64DurationMapValue)(nil)
+var _ Value = (*uint64DurationMapValue)(nil)
+var _ Getter = (*uint64DurationMapValue)(nil)
+
+func newUint64DurationMapValue(m *map[uint64]time.Duration) *uint64DurationMapValue {
+	return &uint64DurationMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64DurationMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := time.ParseDuration(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64DurationMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64DurationMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64DurationMapValue) Type() string { return "map[uint64]time.Duration" }
+
+func (v *uint64DurationMapValue) IsCumulative() bool {
 	return true
 }
 
@@ -1677,6 +12549,705 @@ func (v *ipSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringIPMapValue
+type stringIPMapValue struct {
+	value *map[string]net.IP
+}
+
+var _ RepeatableFlag = (*stringIPMapValue)(nil)
+var _ Value = (*stringIPMapValue)(nil)
+var _ Getter = (*stringIPMapValue)(nil)
+
+func newStringIPMapValue(m *map[string]net.IP) *stringIPMapValue {
+	return &stringIPMapValue{
+		value: m,
+	}
+}
+
+func (v *stringIPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringIPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringIPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringIPMapValue) Type() string { return "map[string]net.IP" }
+
+func (v *stringIPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intIPMapValue
+type intIPMapValue struct {
+	value *map[int]net.IP
+}
+
+var _ RepeatableFlag = (*intIPMapValue)(nil)
+var _ Value = (*intIPMapValue)(nil)
+var _ Getter = (*intIPMapValue)(nil)
+
+func newIntIPMapValue(m *map[int]net.IP) *intIPMapValue {
+	return &intIPMapValue{
+		value: m,
+	}
+}
+
+func (v *intIPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intIPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intIPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intIPMapValue) Type() string { return "map[int]net.IP" }
+
+func (v *intIPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8IPMapValue
+type int8IPMapValue struct {
+	value *map[int8]net.IP
+}
+
+var _ RepeatableFlag = (*int8IPMapValue)(nil)
+var _ Value = (*int8IPMapValue)(nil)
+var _ Getter = (*int8IPMapValue)(nil)
+
+func newInt8IPMapValue(m *map[int8]net.IP) *int8IPMapValue {
+	return &int8IPMapValue{
+		value: m,
+	}
+}
+
+func (v *int8IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8IPMapValue) Type() string { return "map[int8]net.IP" }
+
+func (v *int8IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16IPMapValue
+type int16IPMapValue struct {
+	value *map[int16]net.IP
+}
+
+var _ RepeatableFlag = (*int16IPMapValue)(nil)
+var _ Value = (*int16IPMapValue)(nil)
+var _ Getter = (*int16IPMapValue)(nil)
+
+func newInt16IPMapValue(m *map[int16]net.IP) *int16IPMapValue {
+	return &int16IPMapValue{
+		value: m,
+	}
+}
+
+func (v *int16IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16IPMapValue) Type() string { return "map[int16]net.IP" }
+
+func (v *int16IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32IPMapValue
+type int32IPMapValue struct {
+	value *map[int32]net.IP
+}
+
+var _ RepeatableFlag = (*int32IPMapValue)(nil)
+var _ Value = (*int32IPMapValue)(nil)
+var _ Getter = (*int32IPMapValue)(nil)
+
+func newInt32IPMapValue(m *map[int32]net.IP) *int32IPMapValue {
+	return &int32IPMapValue{
+		value: m,
+	}
+}
+
+func (v *int32IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32IPMapValue) Type() string { return "map[int32]net.IP" }
+
+func (v *int32IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64IPMapValue
+type int64IPMapValue struct {
+	value *map[int64]net.IP
+}
+
+var _ RepeatableFlag = (*int64IPMapValue)(nil)
+var _ Value = (*int64IPMapValue)(nil)
+var _ Getter = (*int64IPMapValue)(nil)
+
+func newInt64IPMapValue(m *map[int64]net.IP) *int64IPMapValue {
+	return &int64IPMapValue{
+		value: m,
+	}
+}
+
+func (v *int64IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64IPMapValue) Type() string { return "map[int64]net.IP" }
+
+func (v *int64IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintIPMapValue
+type uintIPMapValue struct {
+	value *map[uint]net.IP
+}
+
+var _ RepeatableFlag = (*uintIPMapValue)(nil)
+var _ Value = (*uintIPMapValue)(nil)
+var _ Getter = (*uintIPMapValue)(nil)
+
+func newUintIPMapValue(m *map[uint]net.IP) *uintIPMapValue {
+	return &uintIPMapValue{
+		value: m,
+	}
+}
+
+func (v *uintIPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintIPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintIPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintIPMapValue) Type() string { return "map[uint]net.IP" }
+
+func (v *uintIPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8IPMapValue
+type uint8IPMapValue struct {
+	value *map[uint8]net.IP
+}
+
+var _ RepeatableFlag = (*uint8IPMapValue)(nil)
+var _ Value = (*uint8IPMapValue)(nil)
+var _ Getter = (*uint8IPMapValue)(nil)
+
+func newUint8IPMapValue(m *map[uint8]net.IP) *uint8IPMapValue {
+	return &uint8IPMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8IPMapValue) Type() string { return "map[uint8]net.IP" }
+
+func (v *uint8IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16IPMapValue
+type uint16IPMapValue struct {
+	value *map[uint16]net.IP
+}
+
+var _ RepeatableFlag = (*uint16IPMapValue)(nil)
+var _ Value = (*uint16IPMapValue)(nil)
+var _ Getter = (*uint16IPMapValue)(nil)
+
+func newUint16IPMapValue(m *map[uint16]net.IP) *uint16IPMapValue {
+	return &uint16IPMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16IPMapValue) Type() string { return "map[uint16]net.IP" }
+
+func (v *uint16IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32IPMapValue
+type uint32IPMapValue struct {
+	value *map[uint32]net.IP
+}
+
+var _ RepeatableFlag = (*uint32IPMapValue)(nil)
+var _ Value = (*uint32IPMapValue)(nil)
+var _ Getter = (*uint32IPMapValue)(nil)
+
+func newUint32IPMapValue(m *map[uint32]net.IP) *uint32IPMapValue {
+	return &uint32IPMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32IPMapValue) Type() string { return "map[uint32]net.IP" }
+
+func (v *uint32IPMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64IPMapValue
+type uint64IPMapValue struct {
+	value *map[uint64]net.IP
+}
+
+var _ RepeatableFlag = (*uint64IPMapValue)(nil)
+var _ Value = (*uint64IPMapValue)(nil)
+var _ Getter = (*uint64IPMapValue)(nil)
+
+func newUint64IPMapValue(m *map[uint64]net.IP) *uint64IPMapValue {
+	return &uint64IPMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64IPMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := parseIP(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64IPMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64IPMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64IPMapValue) Type() string { return "map[uint64]net.IP" }
+
+func (v *uint64IPMapValue) IsCumulative() bool {
+	return true
+}
+
 // -- HexBytes Value
 type hexBytesValue struct {
 	value *HexBytes
@@ -1776,6 +13347,705 @@ func (v *hexBytesSliceValue) IsCumulative() bool {
 	return true
 }
 
+// -- stringHexBytesMapValue
+type stringHexBytesMapValue struct {
+	value *map[string]HexBytes
+}
+
+var _ RepeatableFlag = (*stringHexBytesMapValue)(nil)
+var _ Value = (*stringHexBytesMapValue)(nil)
+var _ Getter = (*stringHexBytesMapValue)(nil)
+
+func newStringHexBytesMapValue(m *map[string]HexBytes) *stringHexBytesMapValue {
+	return &stringHexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *stringHexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringHexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringHexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringHexBytesMapValue) Type() string { return "map[string]HexBytes" }
+
+func (v *stringHexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intHexBytesMapValue
+type intHexBytesMapValue struct {
+	value *map[int]HexBytes
+}
+
+var _ RepeatableFlag = (*intHexBytesMapValue)(nil)
+var _ Value = (*intHexBytesMapValue)(nil)
+var _ Getter = (*intHexBytesMapValue)(nil)
+
+func newIntHexBytesMapValue(m *map[int]HexBytes) *intHexBytesMapValue {
+	return &intHexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *intHexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intHexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intHexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intHexBytesMapValue) Type() string { return "map[int]HexBytes" }
+
+func (v *intHexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8HexBytesMapValue
+type int8HexBytesMapValue struct {
+	value *map[int8]HexBytes
+}
+
+var _ RepeatableFlag = (*int8HexBytesMapValue)(nil)
+var _ Value = (*int8HexBytesMapValue)(nil)
+var _ Getter = (*int8HexBytesMapValue)(nil)
+
+func newInt8HexBytesMapValue(m *map[int8]HexBytes) *int8HexBytesMapValue {
+	return &int8HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *int8HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8HexBytesMapValue) Type() string { return "map[int8]HexBytes" }
+
+func (v *int8HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16HexBytesMapValue
+type int16HexBytesMapValue struct {
+	value *map[int16]HexBytes
+}
+
+var _ RepeatableFlag = (*int16HexBytesMapValue)(nil)
+var _ Value = (*int16HexBytesMapValue)(nil)
+var _ Getter = (*int16HexBytesMapValue)(nil)
+
+func newInt16HexBytesMapValue(m *map[int16]HexBytes) *int16HexBytesMapValue {
+	return &int16HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *int16HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16HexBytesMapValue) Type() string { return "map[int16]HexBytes" }
+
+func (v *int16HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32HexBytesMapValue
+type int32HexBytesMapValue struct {
+	value *map[int32]HexBytes
+}
+
+var _ RepeatableFlag = (*int32HexBytesMapValue)(nil)
+var _ Value = (*int32HexBytesMapValue)(nil)
+var _ Getter = (*int32HexBytesMapValue)(nil)
+
+func newInt32HexBytesMapValue(m *map[int32]HexBytes) *int32HexBytesMapValue {
+	return &int32HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *int32HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32HexBytesMapValue) Type() string { return "map[int32]HexBytes" }
+
+func (v *int32HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64HexBytesMapValue
+type int64HexBytesMapValue struct {
+	value *map[int64]HexBytes
+}
+
+var _ RepeatableFlag = (*int64HexBytesMapValue)(nil)
+var _ Value = (*int64HexBytesMapValue)(nil)
+var _ Getter = (*int64HexBytesMapValue)(nil)
+
+func newInt64HexBytesMapValue(m *map[int64]HexBytes) *int64HexBytesMapValue {
+	return &int64HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *int64HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64HexBytesMapValue) Type() string { return "map[int64]HexBytes" }
+
+func (v *int64HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintHexBytesMapValue
+type uintHexBytesMapValue struct {
+	value *map[uint]HexBytes
+}
+
+var _ RepeatableFlag = (*uintHexBytesMapValue)(nil)
+var _ Value = (*uintHexBytesMapValue)(nil)
+var _ Getter = (*uintHexBytesMapValue)(nil)
+
+func newUintHexBytesMapValue(m *map[uint]HexBytes) *uintHexBytesMapValue {
+	return &uintHexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *uintHexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintHexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintHexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintHexBytesMapValue) Type() string { return "map[uint]HexBytes" }
+
+func (v *uintHexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8HexBytesMapValue
+type uint8HexBytesMapValue struct {
+	value *map[uint8]HexBytes
+}
+
+var _ RepeatableFlag = (*uint8HexBytesMapValue)(nil)
+var _ Value = (*uint8HexBytesMapValue)(nil)
+var _ Getter = (*uint8HexBytesMapValue)(nil)
+
+func newUint8HexBytesMapValue(m *map[uint8]HexBytes) *uint8HexBytesMapValue {
+	return &uint8HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8HexBytesMapValue) Type() string { return "map[uint8]HexBytes" }
+
+func (v *uint8HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16HexBytesMapValue
+type uint16HexBytesMapValue struct {
+	value *map[uint16]HexBytes
+}
+
+var _ RepeatableFlag = (*uint16HexBytesMapValue)(nil)
+var _ Value = (*uint16HexBytesMapValue)(nil)
+var _ Getter = (*uint16HexBytesMapValue)(nil)
+
+func newUint16HexBytesMapValue(m *map[uint16]HexBytes) *uint16HexBytesMapValue {
+	return &uint16HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16HexBytesMapValue) Type() string { return "map[uint16]HexBytes" }
+
+func (v *uint16HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32HexBytesMapValue
+type uint32HexBytesMapValue struct {
+	value *map[uint32]HexBytes
+}
+
+var _ RepeatableFlag = (*uint32HexBytesMapValue)(nil)
+var _ Value = (*uint32HexBytesMapValue)(nil)
+var _ Getter = (*uint32HexBytesMapValue)(nil)
+
+func newUint32HexBytesMapValue(m *map[uint32]HexBytes) *uint32HexBytesMapValue {
+	return &uint32HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32HexBytesMapValue) Type() string { return "map[uint32]HexBytes" }
+
+func (v *uint32HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64HexBytesMapValue
+type uint64HexBytesMapValue struct {
+	value *map[uint64]HexBytes
+}
+
+var _ RepeatableFlag = (*uint64HexBytesMapValue)(nil)
+var _ Value = (*uint64HexBytesMapValue)(nil)
+var _ Getter = (*uint64HexBytesMapValue)(nil)
+
+func newUint64HexBytesMapValue(m *map[uint64]HexBytes) *uint64HexBytesMapValue {
+	return &uint64HexBytesMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64HexBytesMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := hex.DecodeString(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64HexBytesMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64HexBytesMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64HexBytesMapValue) Type() string { return "map[uint64]HexBytes" }
+
+func (v *uint64HexBytesMapValue) IsCumulative() bool {
+	return true
+}
+
 // -- *regexp.Regexp Value
 type regexpValue struct {
 	value **regexp.Regexp
@@ -1872,6 +14142,705 @@ func (v *regexpSliceValue) String() string {
 func (v *regexpSliceValue) Type() string { return "regexpSlice" }
 
 func (v *regexpSliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringRegexpMapValue
+type stringRegexpMapValue struct {
+	value *map[string]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*stringRegexpMapValue)(nil)
+var _ Value = (*stringRegexpMapValue)(nil)
+var _ Getter = (*stringRegexpMapValue)(nil)
+
+func newStringRegexpMapValue(m *map[string]*regexp.Regexp) *stringRegexpMapValue {
+	return &stringRegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *stringRegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringRegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringRegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringRegexpMapValue) Type() string { return "map[string]*regexp.Regexp" }
+
+func (v *stringRegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intRegexpMapValue
+type intRegexpMapValue struct {
+	value *map[int]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*intRegexpMapValue)(nil)
+var _ Value = (*intRegexpMapValue)(nil)
+var _ Getter = (*intRegexpMapValue)(nil)
+
+func newIntRegexpMapValue(m *map[int]*regexp.Regexp) *intRegexpMapValue {
+	return &intRegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *intRegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intRegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intRegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intRegexpMapValue) Type() string { return "map[int]*regexp.Regexp" }
+
+func (v *intRegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8RegexpMapValue
+type int8RegexpMapValue struct {
+	value *map[int8]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*int8RegexpMapValue)(nil)
+var _ Value = (*int8RegexpMapValue)(nil)
+var _ Getter = (*int8RegexpMapValue)(nil)
+
+func newInt8RegexpMapValue(m *map[int8]*regexp.Regexp) *int8RegexpMapValue {
+	return &int8RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *int8RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8RegexpMapValue) Type() string { return "map[int8]*regexp.Regexp" }
+
+func (v *int8RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16RegexpMapValue
+type int16RegexpMapValue struct {
+	value *map[int16]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*int16RegexpMapValue)(nil)
+var _ Value = (*int16RegexpMapValue)(nil)
+var _ Getter = (*int16RegexpMapValue)(nil)
+
+func newInt16RegexpMapValue(m *map[int16]*regexp.Regexp) *int16RegexpMapValue {
+	return &int16RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *int16RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16RegexpMapValue) Type() string { return "map[int16]*regexp.Regexp" }
+
+func (v *int16RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32RegexpMapValue
+type int32RegexpMapValue struct {
+	value *map[int32]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*int32RegexpMapValue)(nil)
+var _ Value = (*int32RegexpMapValue)(nil)
+var _ Getter = (*int32RegexpMapValue)(nil)
+
+func newInt32RegexpMapValue(m *map[int32]*regexp.Regexp) *int32RegexpMapValue {
+	return &int32RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *int32RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32RegexpMapValue) Type() string { return "map[int32]*regexp.Regexp" }
+
+func (v *int32RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64RegexpMapValue
+type int64RegexpMapValue struct {
+	value *map[int64]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*int64RegexpMapValue)(nil)
+var _ Value = (*int64RegexpMapValue)(nil)
+var _ Getter = (*int64RegexpMapValue)(nil)
+
+func newInt64RegexpMapValue(m *map[int64]*regexp.Regexp) *int64RegexpMapValue {
+	return &int64RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *int64RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64RegexpMapValue) Type() string { return "map[int64]*regexp.Regexp" }
+
+func (v *int64RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintRegexpMapValue
+type uintRegexpMapValue struct {
+	value *map[uint]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*uintRegexpMapValue)(nil)
+var _ Value = (*uintRegexpMapValue)(nil)
+var _ Getter = (*uintRegexpMapValue)(nil)
+
+func newUintRegexpMapValue(m *map[uint]*regexp.Regexp) *uintRegexpMapValue {
+	return &uintRegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *uintRegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintRegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintRegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintRegexpMapValue) Type() string { return "map[uint]*regexp.Regexp" }
+
+func (v *uintRegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8RegexpMapValue
+type uint8RegexpMapValue struct {
+	value *map[uint8]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*uint8RegexpMapValue)(nil)
+var _ Value = (*uint8RegexpMapValue)(nil)
+var _ Getter = (*uint8RegexpMapValue)(nil)
+
+func newUint8RegexpMapValue(m *map[uint8]*regexp.Regexp) *uint8RegexpMapValue {
+	return &uint8RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8RegexpMapValue) Type() string { return "map[uint8]*regexp.Regexp" }
+
+func (v *uint8RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16RegexpMapValue
+type uint16RegexpMapValue struct {
+	value *map[uint16]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*uint16RegexpMapValue)(nil)
+var _ Value = (*uint16RegexpMapValue)(nil)
+var _ Getter = (*uint16RegexpMapValue)(nil)
+
+func newUint16RegexpMapValue(m *map[uint16]*regexp.Regexp) *uint16RegexpMapValue {
+	return &uint16RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16RegexpMapValue) Type() string { return "map[uint16]*regexp.Regexp" }
+
+func (v *uint16RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32RegexpMapValue
+type uint32RegexpMapValue struct {
+	value *map[uint32]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*uint32RegexpMapValue)(nil)
+var _ Value = (*uint32RegexpMapValue)(nil)
+var _ Getter = (*uint32RegexpMapValue)(nil)
+
+func newUint32RegexpMapValue(m *map[uint32]*regexp.Regexp) *uint32RegexpMapValue {
+	return &uint32RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32RegexpMapValue) Type() string { return "map[uint32]*regexp.Regexp" }
+
+func (v *uint32RegexpMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64RegexpMapValue
+type uint64RegexpMapValue struct {
+	value *map[uint64]*regexp.Regexp
+}
+
+var _ RepeatableFlag = (*uint64RegexpMapValue)(nil)
+var _ Value = (*uint64RegexpMapValue)(nil)
+var _ Getter = (*uint64RegexpMapValue)(nil)
+
+func newUint64RegexpMapValue(m *map[uint64]*regexp.Regexp) *uint64RegexpMapValue {
+	return &uint64RegexpMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64RegexpMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := regexp.Compile(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64RegexpMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64RegexpMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64RegexpMapValue) Type() string { return "map[uint64]*regexp.Regexp" }
+
+func (v *uint64RegexpMapValue) IsCumulative() bool {
 	return true
 }
 
@@ -2070,5 +15039,704 @@ func (v *ipNetSliceValue) String() string {
 func (v *ipNetSliceValue) Type() string { return "ipNetSlice" }
 
 func (v *ipNetSliceValue) IsCumulative() bool {
+	return true
+}
+
+// -- stringIPNetMapValue
+type stringIPNetMapValue struct {
+	value *map[string]net.IPNet
+}
+
+var _ RepeatableFlag = (*stringIPNetMapValue)(nil)
+var _ Value = (*stringIPNetMapValue)(nil)
+var _ Getter = (*stringIPNetMapValue)(nil)
+
+func newStringIPNetMapValue(m *map[string]net.IPNet) *stringIPNetMapValue {
+	return &stringIPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *stringIPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	key := s
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *stringIPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *stringIPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *stringIPNetMapValue) Type() string { return "map[string]net.IPNet" }
+
+func (v *stringIPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- intIPNetMapValue
+type intIPNetMapValue struct {
+	value *map[int]net.IPNet
+}
+
+var _ RepeatableFlag = (*intIPNetMapValue)(nil)
+var _ Value = (*intIPNetMapValue)(nil)
+var _ Getter = (*intIPNetMapValue)(nil)
+
+func newIntIPNetMapValue(m *map[int]net.IPNet) *intIPNetMapValue {
+	return &intIPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *intIPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (int)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *intIPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *intIPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *intIPNetMapValue) Type() string { return "map[int]net.IPNet" }
+
+func (v *intIPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int8IPNetMapValue
+type int8IPNetMapValue struct {
+	value *map[int8]net.IPNet
+}
+
+var _ RepeatableFlag = (*int8IPNetMapValue)(nil)
+var _ Value = (*int8IPNetMapValue)(nil)
+var _ Getter = (*int8IPNetMapValue)(nil)
+
+func newInt8IPNetMapValue(m *map[int8]net.IPNet) *int8IPNetMapValue {
+	return &int8IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *int8IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (int8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int8IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int8IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int8IPNetMapValue) Type() string { return "map[int8]net.IPNet" }
+
+func (v *int8IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int16IPNetMapValue
+type int16IPNetMapValue struct {
+	value *map[int16]net.IPNet
+}
+
+var _ RepeatableFlag = (*int16IPNetMapValue)(nil)
+var _ Value = (*int16IPNetMapValue)(nil)
+var _ Getter = (*int16IPNetMapValue)(nil)
+
+func newInt16IPNetMapValue(m *map[int16]net.IPNet) *int16IPNetMapValue {
+	return &int16IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *int16IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (int16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int16IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int16IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int16IPNetMapValue) Type() string { return "map[int16]net.IPNet" }
+
+func (v *int16IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int32IPNetMapValue
+type int32IPNetMapValue struct {
+	value *map[int32]net.IPNet
+}
+
+var _ RepeatableFlag = (*int32IPNetMapValue)(nil)
+var _ Value = (*int32IPNetMapValue)(nil)
+var _ Getter = (*int32IPNetMapValue)(nil)
+
+func newInt32IPNetMapValue(m *map[int32]net.IPNet) *int32IPNetMapValue {
+	return &int32IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *int32IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (int32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int32IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int32IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int32IPNetMapValue) Type() string { return "map[int32]net.IPNet" }
+
+func (v *int32IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- int64IPNetMapValue
+type int64IPNetMapValue struct {
+	value *map[int64]net.IPNet
+}
+
+var _ RepeatableFlag = (*int64IPNetMapValue)(nil)
+var _ Value = (*int64IPNetMapValue)(nil)
+var _ Getter = (*int64IPNetMapValue)(nil)
+
+func newInt64IPNetMapValue(m *map[int64]net.IPNet) *int64IPNetMapValue {
+	return &int64IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *int64IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseInt(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *int64IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *int64IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *int64IPNetMapValue) Type() string { return "map[int64]net.IPNet" }
+
+func (v *int64IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uintIPNetMapValue
+type uintIPNetMapValue struct {
+	value *map[uint]net.IPNet
+}
+
+var _ RepeatableFlag = (*uintIPNetMapValue)(nil)
+var _ Value = (*uintIPNetMapValue)(nil)
+var _ Getter = (*uintIPNetMapValue)(nil)
+
+func newUintIPNetMapValue(m *map[uint]net.IPNet) *uintIPNetMapValue {
+	return &uintIPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *uintIPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := (uint)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uintIPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uintIPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uintIPNetMapValue) Type() string { return "map[uint]net.IPNet" }
+
+func (v *uintIPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint8IPNetMapValue
+type uint8IPNetMapValue struct {
+	value *map[uint8]net.IPNet
+}
+
+var _ RepeatableFlag = (*uint8IPNetMapValue)(nil)
+var _ Value = (*uint8IPNetMapValue)(nil)
+var _ Getter = (*uint8IPNetMapValue)(nil)
+
+func newUint8IPNetMapValue(m *map[uint8]net.IPNet) *uint8IPNetMapValue {
+	return &uint8IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *uint8IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 8)
+	if err != nil {
+		return err
+	}
+
+	key := (uint8)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint8IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint8IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint8IPNetMapValue) Type() string { return "map[uint8]net.IPNet" }
+
+func (v *uint8IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint16IPNetMapValue
+type uint16IPNetMapValue struct {
+	value *map[uint16]net.IPNet
+}
+
+var _ RepeatableFlag = (*uint16IPNetMapValue)(nil)
+var _ Value = (*uint16IPNetMapValue)(nil)
+var _ Getter = (*uint16IPNetMapValue)(nil)
+
+func newUint16IPNetMapValue(m *map[uint16]net.IPNet) *uint16IPNetMapValue {
+	return &uint16IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *uint16IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 16)
+	if err != nil {
+		return err
+	}
+
+	key := (uint16)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint16IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint16IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint16IPNetMapValue) Type() string { return "map[uint16]net.IPNet" }
+
+func (v *uint16IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint32IPNetMapValue
+type uint32IPNetMapValue struct {
+	value *map[uint32]net.IPNet
+}
+
+var _ RepeatableFlag = (*uint32IPNetMapValue)(nil)
+var _ Value = (*uint32IPNetMapValue)(nil)
+var _ Getter = (*uint32IPNetMapValue)(nil)
+
+func newUint32IPNetMapValue(m *map[uint32]net.IPNet) *uint32IPNetMapValue {
+	return &uint32IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *uint32IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 32)
+	if err != nil {
+		return err
+	}
+
+	key := (uint32)(parsedKey)
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint32IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint32IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint32IPNetMapValue) Type() string { return "map[uint32]net.IPNet" }
+
+func (v *uint32IPNetMapValue) IsCumulative() bool {
+	return true
+}
+
+// -- uint64IPNetMapValue
+type uint64IPNetMapValue struct {
+	value *map[uint64]net.IPNet
+}
+
+var _ RepeatableFlag = (*uint64IPNetMapValue)(nil)
+var _ Value = (*uint64IPNetMapValue)(nil)
+var _ Getter = (*uint64IPNetMapValue)(nil)
+
+func newUint64IPNetMapValue(m *map[uint64]net.IPNet) *uint64IPNetMapValue {
+	return &uint64IPNetMapValue{
+		value: m,
+	}
+}
+
+func (v *uint64IPNetMapValue) Set(s string) error {
+	ss := strings.Split(s, ":")
+	if len(ss) < 2 {
+		return errors.New("invalid map flag syntax, use -map=key1:val1")
+	}
+
+	s = ss[0]
+
+	parsedKey, err := strconv.ParseUint(s, 0, 64)
+	if err != nil {
+		return err
+	}
+
+	key := parsedKey
+
+	s = ss[1]
+
+	parsedVal, err := parseIPNet(s)
+	if err != nil {
+		return err
+	}
+
+	val := parsedVal
+
+	(*v.value)[key] = val
+
+	return nil
+}
+
+func (v *uint64IPNetMapValue) Get() interface{} {
+	if v != nil && v.value != nil {
+		return *v.value
+	}
+	return nil
+}
+
+func (v *uint64IPNetMapValue) String() string {
+	if v != nil && v.value != nil && len(*v.value) > 0 {
+		return fmt.Sprintf("%v", *v.value)
+	}
+	return ""
+}
+
+func (v *uint64IPNetMapValue) Type() string { return "map[uint64]net.IPNet" }
+
+func (v *uint64IPNetMapValue) IsCumulative() bool {
 	return true
 }

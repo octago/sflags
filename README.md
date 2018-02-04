@@ -59,8 +59,7 @@ And you can use your favorite flag or cli library!
  - [x] net.IP
  - [x] time.Duration
  - [x] regexp.Regexp
- - [ ] map[string]string
- - [ ] map[string]int
+ - [x] map for all previous types (e.g. `map[int64]bool`, `map[string]float64`)
 
 ## Custom types:
  - [x] HexBytes

@@ -43,6 +43,105 @@ func TestStringSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringStringMapValue_Zero(t *testing.T) {
+	var nilValue stringStringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringStringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntStringMapValue_Zero(t *testing.T) {
+	var nilValue intStringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intStringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8StringMapValue_Zero(t *testing.T) {
+	var nilValue int8StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16StringMapValue_Zero(t *testing.T) {
+	var nilValue int16StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32StringMapValue_Zero(t *testing.T) {
+	var nilValue int32StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64StringMapValue_Zero(t *testing.T) {
+	var nilValue int64StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintStringMapValue_Zero(t *testing.T) {
+	var nilValue uintStringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintStringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8StringMapValue_Zero(t *testing.T) {
+	var nilValue uint8StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16StringMapValue_Zero(t *testing.T) {
+	var nilValue uint16StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32StringMapValue_Zero(t *testing.T) {
+	var nilValue uint32StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64StringMapValue_Zero(t *testing.T) {
+	var nilValue uint64StringMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64StringMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestStringSliceValue(t *testing.T) {
 	t.Run("in: [val1,val2 val3,val4]", func(t *testing.T) {
 		var err error
@@ -59,6 +158,451 @@ func TestStringSliceValue(t *testing.T) {
 		assert.Equal(t, "stringSlice", v.Type())
 	})
 
+}
+
+func TestStringStringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[string]string)
+		v := newStringStringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("XVlBzval1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("gbaiC:val1")
+		assert.Nil(t, err)
+		err = v.Set("MRAjWval2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("whTHc:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[string]string)
+		v := newStringStringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("tcuAx")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("hxKQF:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestIntStringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[int]string)
+		v := newIntStringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("0:val1")
+		assert.Nil(t, err)
+		err = v.Set("3val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("7:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[int]string)
+		v := newIntStringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("4:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestInt8StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]string)
+		v := newInt8StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("7:val1")
+		assert.Nil(t, err)
+		err = v.Set("5val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("2:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[int8]string)
+		v := newInt8StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("2:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestInt16StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]string)
+		v := newInt16StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("3:val1")
+		assert.Nil(t, err)
+		err = v.Set("1val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("3:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[int16]string)
+		v := newInt16StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("4:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestInt32StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]string)
+		v := newInt32StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("1:val1")
+		assert.Nil(t, err)
+		err = v.Set("5val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("1:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[int32]string)
+		v := newInt32StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("7:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestInt64StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]string)
+		v := newInt64StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("1:val1")
+		assert.Nil(t, err)
+		err = v.Set("0val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("2:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[int64]string)
+		v := newInt64StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("3:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestUintStringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]string)
+		v := newUintStringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("6:val1")
+		assert.Nil(t, err)
+		err = v.Set("5val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("4:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[uint]string)
+		v := newUintStringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("4:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestUint8StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]string)
+		v := newUint8StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("2:val1")
+		assert.Nil(t, err)
+		err = v.Set("7val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("2:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]string)
+		v := newUint8StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("0:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestUint16StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]string)
+		v := newUint16StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("6:val1")
+		assert.Nil(t, err)
+		err = v.Set("7val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("6:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]string)
+		v := newUint16StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("7:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestUint32StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]string)
+		v := newUint32StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("4:val1")
+		assert.Nil(t, err)
+		err = v.Set("7val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("1:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]string)
+		v := newUint32StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("5:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+}
+
+func TestUint64StringMapValue(t *testing.T) {
+	t.Run("in: [val1 val2]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]string)
+		v := newUint64StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1val1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val1")
+		assert.NotNil(t, err)
+		err = v.Set("3:val1")
+		assert.Nil(t, err)
+		err = v.Set("1val2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":val2")
+		assert.NotNil(t, err)
+		err = v.Set("3:val2")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: []", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]string)
+		v := newUint64StringMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":")
+		assert.NotNil(t, err)
+		err = v.Set("2:")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]string", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
 }
 
 func TestBoolValue_Zero(t *testing.T) {
@@ -133,6 +677,105 @@ func TestBoolSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringBoolMapValue_Zero(t *testing.T) {
+	var nilValue stringBoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringBoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntBoolMapValue_Zero(t *testing.T) {
+	var nilValue intBoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intBoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8BoolMapValue_Zero(t *testing.T) {
+	var nilValue int8BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16BoolMapValue_Zero(t *testing.T) {
+	var nilValue int16BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32BoolMapValue_Zero(t *testing.T) {
+	var nilValue int32BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64BoolMapValue_Zero(t *testing.T) {
+	var nilValue int64BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintBoolMapValue_Zero(t *testing.T) {
+	var nilValue uintBoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintBoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8BoolMapValue_Zero(t *testing.T) {
+	var nilValue uint8BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16BoolMapValue_Zero(t *testing.T) {
+	var nilValue uint16BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32BoolMapValue_Zero(t *testing.T) {
+	var nilValue uint32BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64BoolMapValue_Zero(t *testing.T) {
+	var nilValue uint64BoolMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64BoolMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestBoolSliceValue(t *testing.T) {
 	t.Run("in: [true,false true]", func(t *testing.T) {
 		var err error
@@ -161,6 +804,451 @@ func TestBoolSliceValue(t *testing.T) {
 		assert.Equal(t, "boolSlice", v.Type())
 	})
 
+}
+
+func TestStringBoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[string]bool)
+		v := newStringBoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("gmotatrue")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("FetHs:true")
+		assert.Nil(t, err)
+		err = v.Set("bZRjxfalse")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("Awnwe:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[string]bool)
+		v := newStringBoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("krBEmunexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("fdzdc:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntBoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[int]bool)
+		v := newIntBoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("2:true")
+		assert.Nil(t, err)
+		err = v.Set("5false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("7:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[int]bool)
+		v := newIntBoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("6:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]bool)
+		v := newInt8BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("6:true")
+		assert.Nil(t, err)
+		err = v.Set("3false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("5:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]bool)
+		v := newInt8BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("7:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]bool)
+		v := newInt16BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("6:true")
+		assert.Nil(t, err)
+		err = v.Set("3false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("5:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]bool)
+		v := newInt16BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("2:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]bool)
+		v := newInt32BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("7:true")
+		assert.Nil(t, err)
+		err = v.Set("0false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("3:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]bool)
+		v := newInt32BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("4:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]bool)
+		v := newInt64BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("7:true")
+		assert.Nil(t, err)
+		err = v.Set("4false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("2:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]bool)
+		v := newInt64BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("4:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintBoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]bool)
+		v := newUintBoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("7:true")
+		assert.Nil(t, err)
+		err = v.Set("4false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("4:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]bool)
+		v := newUintBoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("7:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]bool)
+		v := newUint8BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("2:true")
+		assert.Nil(t, err)
+		err = v.Set("2false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("2:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]bool)
+		v := newUint8BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("7:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]bool)
+		v := newUint16BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("2:true")
+		assert.Nil(t, err)
+		err = v.Set("6false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("7:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]bool)
+		v := newUint16BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("0:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]bool)
+		v := newUint32BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("0:true")
+		assert.Nil(t, err)
+		err = v.Set("6false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("6:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]bool)
+		v := newUint32BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("0:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64BoolMapValue(t *testing.T) {
+	t.Run("in: [true false]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]bool)
+		v := newUint64BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0true")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":true")
+		assert.NotNil(t, err)
+		err = v.Set("2:true")
+		assert.Nil(t, err)
+		err = v.Set("1false")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":false")
+		assert.NotNil(t, err)
+		err = v.Set("7:false")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]bool", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [unexpected]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]bool)
+		v := newUint64BoolMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3unexpected")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":unexpected")
+		assert.NotNil(t, err)
+		err = v.Set("7:unexpected")
+		assert.EqualError(t, err, "strconv.ParseBool: parsing \"unexpected\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]bool", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestUintValue_Zero(t *testing.T) {
@@ -225,6 +1313,105 @@ func TestUintSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUintMapValue_Zero(t *testing.T) {
+	var nilValue stringUintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUintMapValue_Zero(t *testing.T) {
+	var nilValue intUintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8UintMapValue_Zero(t *testing.T) {
+	var nilValue int8UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16UintMapValue_Zero(t *testing.T) {
+	var nilValue int16UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32UintMapValue_Zero(t *testing.T) {
+	var nilValue int32UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64UintMapValue_Zero(t *testing.T) {
+	var nilValue int64UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUintMapValue_Zero(t *testing.T) {
+	var nilValue uintUintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8UintMapValue_Zero(t *testing.T) {
+	var nilValue uint8UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16UintMapValue_Zero(t *testing.T) {
+	var nilValue uint16UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32UintMapValue_Zero(t *testing.T) {
+	var nilValue uint32UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64UintMapValue_Zero(t *testing.T) {
+	var nilValue uint64UintMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64UintMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUintSliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -253,6 +1440,451 @@ func TestUintSliceValue(t *testing.T) {
 		assert.Equal(t, "uintSlice", v.Type())
 	})
 
+}
+
+func TestStringUintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint)
+		v := newStringUintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("sbOJi10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("FQGZs:10")
+		assert.Nil(t, err)
+		err = v.Set("nwTKS20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("mVoiG:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint)
+		v := newStringUintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("LOpbU-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("OpEdK:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntUintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint)
+		v := newIntUintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint)
+		v := newIntUintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint)
+		v := newInt8UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint)
+		v := newInt8UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint)
+		v := newInt16UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint)
+		v := newInt16UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint)
+		v := newInt32UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint)
+		v := newInt32UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint)
+		v := newInt64UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint)
+		v := newInt64UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintUintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint)
+		v := newUintUintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint)
+		v := newUintUintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint)
+		v := newUint8UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("5:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint)
+		v := newUint8UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint)
+		v := newUint16UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint)
+		v := newUint16UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("6:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint)
+		v := newUint32UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint)
+		v := newUint32UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("3:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64UintMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint)
+		v := newUint64UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint)
+		v := newUint64UintMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestUint8Value_Zero(t *testing.T) {
@@ -317,6 +1949,105 @@ func TestUint8SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUint8MapValue_Zero(t *testing.T) {
+	var nilValue stringUint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint8MapValue_Zero(t *testing.T) {
+	var nilValue intUint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint8MapValue_Zero(t *testing.T) {
+	var nilValue int8Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint8MapValue_Zero(t *testing.T) {
+	var nilValue int16Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint8MapValue_Zero(t *testing.T) {
+	var nilValue int32Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint8MapValue_Zero(t *testing.T) {
+	var nilValue int64Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint8MapValue_Zero(t *testing.T) {
+	var nilValue uintUint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint8MapValue_Zero(t *testing.T) {
+	var nilValue uint8Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint8MapValue_Zero(t *testing.T) {
+	var nilValue uint16Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint8MapValue_Zero(t *testing.T) {
+	var nilValue uint32Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint8MapValue_Zero(t *testing.T) {
+	var nilValue uint64Uint8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUint8SliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -345,6 +2076,451 @@ func TestUint8SliceValue(t *testing.T) {
 		assert.Equal(t, "uint8Slice", v.Type())
 	})
 
+}
+
+func TestStringUint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint8)
+		v := newStringUint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("YCOhg10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("HOvgS:10")
+		assert.Nil(t, err)
+		err = v.Set("eycJP20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("JHYNu:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint8)
+		v := newStringUint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("fNjJh-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("hjUVR:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntUint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint8)
+		v := newIntUint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint8)
+		v := newIntUint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint8)
+		v := newInt8Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint8)
+		v := newInt8Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("3:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint8)
+		v := newInt16Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint8)
+		v := newInt16Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint8)
+		v := newInt32Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint8)
+		v := newInt32Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint8)
+		v := newInt64Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint8)
+		v := newInt64Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintUint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint8)
+		v := newUintUint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint8)
+		v := newUintUint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint8)
+		v := newUint8Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint8)
+		v := newUint8Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint8)
+		v := newUint16Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint8)
+		v := newUint16Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint8)
+		v := newUint32Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint8)
+		v := newUint32Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Uint8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint8)
+		v := newUint64Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint8)
+		v := newUint64Uint8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("3:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint8", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestUint16Value_Zero(t *testing.T) {
@@ -409,6 +2585,105 @@ func TestUint16SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUint16MapValue_Zero(t *testing.T) {
+	var nilValue stringUint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint16MapValue_Zero(t *testing.T) {
+	var nilValue intUint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint16MapValue_Zero(t *testing.T) {
+	var nilValue int8Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint16MapValue_Zero(t *testing.T) {
+	var nilValue int16Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint16MapValue_Zero(t *testing.T) {
+	var nilValue int32Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint16MapValue_Zero(t *testing.T) {
+	var nilValue int64Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint16MapValue_Zero(t *testing.T) {
+	var nilValue uintUint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint16MapValue_Zero(t *testing.T) {
+	var nilValue uint8Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint16MapValue_Zero(t *testing.T) {
+	var nilValue uint16Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint16MapValue_Zero(t *testing.T) {
+	var nilValue uint32Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint16MapValue_Zero(t *testing.T) {
+	var nilValue uint64Uint16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUint16SliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -437,6 +2712,451 @@ func TestUint16SliceValue(t *testing.T) {
 		assert.Equal(t, "uint16Slice", v.Type())
 	})
 
+}
+
+func TestStringUint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint16)
+		v := newStringUint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("sdjSG10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("pngCw:10")
+		assert.Nil(t, err)
+		err = v.Set("FkDif20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("IBuuf:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint16)
+		v := newStringUint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("FMoWd-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("iTskZ:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntUint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint16)
+		v := newIntUint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint16)
+		v := newIntUint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint16)
+		v := newInt8Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint16)
+		v := newInt8Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint16)
+		v := newInt16Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint16)
+		v := newInt16Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint16)
+		v := newInt32Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint16)
+		v := newInt32Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("6:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint16)
+		v := newInt64Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint16)
+		v := newInt64Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("3:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintUint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint16)
+		v := newUintUint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint16)
+		v := newUintUint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("3:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint16)
+		v := newUint8Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint16)
+		v := newUint8Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("6:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint16)
+		v := newUint16Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint16)
+		v := newUint16Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint16)
+		v := newUint32Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint16)
+		v := newUint32Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Uint16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint16)
+		v := newUint64Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint16)
+		v := newUint64Uint16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint16", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestUint32Value_Zero(t *testing.T) {
@@ -501,6 +3221,105 @@ func TestUint32SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUint32MapValue_Zero(t *testing.T) {
+	var nilValue stringUint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint32MapValue_Zero(t *testing.T) {
+	var nilValue intUint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint32MapValue_Zero(t *testing.T) {
+	var nilValue int8Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint32MapValue_Zero(t *testing.T) {
+	var nilValue int16Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint32MapValue_Zero(t *testing.T) {
+	var nilValue int32Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint32MapValue_Zero(t *testing.T) {
+	var nilValue int64Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint32MapValue_Zero(t *testing.T) {
+	var nilValue uintUint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint32MapValue_Zero(t *testing.T) {
+	var nilValue uint8Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint32MapValue_Zero(t *testing.T) {
+	var nilValue uint16Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint32MapValue_Zero(t *testing.T) {
+	var nilValue uint32Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint32MapValue_Zero(t *testing.T) {
+	var nilValue uint64Uint32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUint32SliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -529,6 +3348,451 @@ func TestUint32SliceValue(t *testing.T) {
 		assert.Equal(t, "uint32Slice", v.Type())
 	})
 
+}
+
+func TestStringUint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint32)
+		v := newStringUint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("VgzHb10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("lmYYt:10")
+		assert.Nil(t, err)
+		err = v.Set("EjVgw20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("fFbbG:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint32)
+		v := newStringUint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("Gcnqb-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("aEREu:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntUint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint32)
+		v := newIntUint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint32)
+		v := newIntUint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("1:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint32)
+		v := newInt8Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint32)
+		v := newInt8Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("7:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint32)
+		v := newInt16Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint32)
+		v := newInt16Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint32)
+		v := newInt32Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint32)
+		v := newInt32Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint32)
+		v := newInt64Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("5:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint32)
+		v := newInt64Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("6:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintUint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint32)
+		v := newUintUint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint32)
+		v := newUintUint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint32)
+		v := newUint8Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint32)
+		v := newUint8Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint32)
+		v := newUint16Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint32)
+		v := newUint16Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint32)
+		v := newUint32Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint32)
+		v := newUint32Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("3:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Uint32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint32)
+		v := newUint64Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint32)
+		v := newUint64Uint32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint32", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestUint64Value_Zero(t *testing.T) {
@@ -593,6 +3857,105 @@ func TestUint64SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringUint64MapValue_Zero(t *testing.T) {
+	var nilValue stringUint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringUint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntUint64MapValue_Zero(t *testing.T) {
+	var nilValue intUint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intUint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Uint64MapValue_Zero(t *testing.T) {
+	var nilValue int8Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Uint64MapValue_Zero(t *testing.T) {
+	var nilValue int16Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Uint64MapValue_Zero(t *testing.T) {
+	var nilValue int32Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Uint64MapValue_Zero(t *testing.T) {
+	var nilValue int64Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintUint64MapValue_Zero(t *testing.T) {
+	var nilValue uintUint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintUint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Uint64MapValue_Zero(t *testing.T) {
+	var nilValue uint8Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Uint64MapValue_Zero(t *testing.T) {
+	var nilValue uint16Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Uint64MapValue_Zero(t *testing.T) {
+	var nilValue uint32Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Uint64MapValue_Zero(t *testing.T) {
+	var nilValue uint64Uint64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Uint64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestUint64SliceValue(t *testing.T) {
 	t.Run("in: [10,20 0]", func(t *testing.T) {
 		var err error
@@ -621,6 +3984,451 @@ func TestUint64SliceValue(t *testing.T) {
 		assert.Equal(t, "uint64Slice", v.Type())
 	})
 
+}
+
+func TestStringUint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint64)
+		v := newStringUint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("Lpruc10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("jiOgj:10")
+		assert.Nil(t, err)
+		err = v.Set("hYeVw20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("BTCML:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[string]uint64)
+		v := newStringUint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("frDGX-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("qwpzw:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntUint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint64)
+		v := newIntUint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int]uint64)
+		v := newIntUint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint64)
+		v := newInt8Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]uint64)
+		v := newInt8Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint64)
+		v := newInt16Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]uint64)
+		v := newInt16Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint64)
+		v := newInt32Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]uint64)
+		v := newInt32Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("6:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint64)
+		v := newInt64Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]uint64)
+		v := newInt64Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintUint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint64)
+		v := newUintUint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]uint64)
+		v := newUintUint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("5:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint64)
+		v := newUint8Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]uint64)
+		v := newUint8Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("2:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint64)
+		v := newUint16Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]uint64)
+		v := newUint16Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("0:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint64)
+		v := newUint32Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]uint64)
+		v := newUint32Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("1:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Uint64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint64)
+		v := newUint64Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [-1]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]uint64)
+		v := newUint64Uint64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1-1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":-1")
+		assert.NotNil(t, err)
+		err = v.Set("4:-1")
+		assert.EqualError(t, err, "strconv.ParseUint: parsing \"-1\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]uint64", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestIntValue_Zero(t *testing.T) {
@@ -725,6 +4533,105 @@ func TestIntSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringIntMapValue_Zero(t *testing.T) {
+	var nilValue stringIntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringIntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntIntMapValue_Zero(t *testing.T) {
+	var nilValue intIntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intIntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8IntMapValue_Zero(t *testing.T) {
+	var nilValue int8IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16IntMapValue_Zero(t *testing.T) {
+	var nilValue int16IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32IntMapValue_Zero(t *testing.T) {
+	var nilValue int32IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64IntMapValue_Zero(t *testing.T) {
+	var nilValue int64IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintIntMapValue_Zero(t *testing.T) {
+	var nilValue uintIntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintIntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8IntMapValue_Zero(t *testing.T) {
+	var nilValue uint8IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16IntMapValue_Zero(t *testing.T) {
+	var nilValue uint16IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32IntMapValue_Zero(t *testing.T) {
+	var nilValue uint32IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64IntMapValue_Zero(t *testing.T) {
+	var nilValue uint64IntMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64IntMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestIntSliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -753,6 +4660,451 @@ func TestIntSliceValue(t *testing.T) {
 		assert.Equal(t, "intSlice", v.Type())
 	})
 
+}
+
+func TestStringIntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int)
+		v := newStringIntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("aiIsN10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("BakqS:10")
+		assert.Nil(t, err)
+		err = v.Set("wQpOQ20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("gNczg:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int)
+		v := newStringIntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("aczAIa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("nLqLI:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntIntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int)
+		v := newIntIntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int)
+		v := newIntIntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int)
+		v := newInt8IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int)
+		v := newInt8IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int)
+		v := newInt16IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int)
+		v := newInt16IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int)
+		v := newInt32IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int)
+		v := newInt32IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("5:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int)
+		v := newInt64IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int)
+		v := newInt64IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintIntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int)
+		v := newUintIntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int)
+		v := newUintIntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int)
+		v := newUint8IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int)
+		v := newUint8IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("0:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int)
+		v := newUint16IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int)
+		v := newUint16IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int)
+		v := newUint32IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int)
+		v := newUint32IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64IntMapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int)
+		v := newUint64IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int)
+		v := newUint64IntMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestInt8Value_Zero(t *testing.T) {
@@ -827,6 +5179,105 @@ func TestInt8SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringInt8MapValue_Zero(t *testing.T) {
+	var nilValue stringInt8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt8MapValue_Zero(t *testing.T) {
+	var nilValue intInt8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int8MapValue_Zero(t *testing.T) {
+	var nilValue int8Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int8MapValue_Zero(t *testing.T) {
+	var nilValue int16Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int8MapValue_Zero(t *testing.T) {
+	var nilValue int32Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int8MapValue_Zero(t *testing.T) {
+	var nilValue int64Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt8MapValue_Zero(t *testing.T) {
+	var nilValue uintInt8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int8MapValue_Zero(t *testing.T) {
+	var nilValue uint8Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int8MapValue_Zero(t *testing.T) {
+	var nilValue uint16Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int8MapValue_Zero(t *testing.T) {
+	var nilValue uint32Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int8MapValue_Zero(t *testing.T) {
+	var nilValue uint64Int8MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int8MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestInt8SliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -855,6 +5306,451 @@ func TestInt8SliceValue(t *testing.T) {
 		assert.Equal(t, "int8Slice", v.Type())
 	})
 
+}
+
+func TestStringInt8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int8)
+		v := newStringInt8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("eBZBF10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("elhXk:10")
+		assert.Nil(t, err)
+		err = v.Set("zzfNa20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("VtAyy:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int8)
+		v := newStringInt8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("qWzKqa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("QFbuc:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntInt8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int8)
+		v := newIntInt8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int8)
+		v := newIntInt8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int8)
+		v := newInt8Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int8)
+		v := newInt8Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("5:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int8)
+		v := newInt16Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int8)
+		v := newInt16Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int8)
+		v := newInt32Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int8)
+		v := newInt32Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int8)
+		v := newInt64Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int8)
+		v := newInt64Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintInt8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int8)
+		v := newUintInt8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("020")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int8)
+		v := newUintInt8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("0:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int8)
+		v := newUint8Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int8)
+		v := newUint8Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int8)
+		v := newUint16Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int8)
+		v := newUint16Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int8)
+		v := newUint32Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int8)
+		v := newUint32Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("5:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Int8MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int8)
+		v := newUint64Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int8", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int8)
+		v := newUint64Int8MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int8", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestInt16Value_Zero(t *testing.T) {
@@ -929,6 +5825,105 @@ func TestInt16SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringInt16MapValue_Zero(t *testing.T) {
+	var nilValue stringInt16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt16MapValue_Zero(t *testing.T) {
+	var nilValue intInt16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int16MapValue_Zero(t *testing.T) {
+	var nilValue int8Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int16MapValue_Zero(t *testing.T) {
+	var nilValue int16Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int16MapValue_Zero(t *testing.T) {
+	var nilValue int32Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int16MapValue_Zero(t *testing.T) {
+	var nilValue int64Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt16MapValue_Zero(t *testing.T) {
+	var nilValue uintInt16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int16MapValue_Zero(t *testing.T) {
+	var nilValue uint8Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int16MapValue_Zero(t *testing.T) {
+	var nilValue uint16Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int16MapValue_Zero(t *testing.T) {
+	var nilValue uint32Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int16MapValue_Zero(t *testing.T) {
+	var nilValue uint64Int16MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int16MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestInt16SliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -957,6 +5952,451 @@ func TestInt16SliceValue(t *testing.T) {
 		assert.Equal(t, "int16Slice", v.Type())
 	})
 
+}
+
+func TestStringInt16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int16)
+		v := newStringInt16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("qcnCT10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("uGZam:10")
+		assert.Nil(t, err)
+		err = v.Set("CToZv20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("PynaE:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int16)
+		v := newStringInt16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("phIdXa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("aKUaq:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntInt16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int16)
+		v := newIntInt16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int16)
+		v := newIntInt16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int16)
+		v := newInt8Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int16)
+		v := newInt8Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("5:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int16)
+		v := newInt16Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("120")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int16)
+		v := newInt16Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int16)
+		v := newInt32Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int16)
+		v := newInt32Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int16)
+		v := newInt64Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("0:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int16)
+		v := newInt64Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintInt16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int16)
+		v := newUintInt16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int16)
+		v := newUintInt16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int16)
+		v := newUint8Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int16)
+		v := newUint8Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("0:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int16)
+		v := newUint16Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int16)
+		v := newUint16Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int16)
+		v := newUint32Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("5:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int16)
+		v := newUint32Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Int16MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int16)
+		v := newUint64Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int16", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int16)
+		v := newUint64Int16MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int16", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestInt32Value_Zero(t *testing.T) {
@@ -1031,6 +6471,105 @@ func TestInt32SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringInt32MapValue_Zero(t *testing.T) {
+	var nilValue stringInt32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt32MapValue_Zero(t *testing.T) {
+	var nilValue intInt32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int32MapValue_Zero(t *testing.T) {
+	var nilValue int8Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int32MapValue_Zero(t *testing.T) {
+	var nilValue int16Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int32MapValue_Zero(t *testing.T) {
+	var nilValue int32Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int32MapValue_Zero(t *testing.T) {
+	var nilValue int64Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt32MapValue_Zero(t *testing.T) {
+	var nilValue uintInt32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int32MapValue_Zero(t *testing.T) {
+	var nilValue uint8Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int32MapValue_Zero(t *testing.T) {
+	var nilValue uint16Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int32MapValue_Zero(t *testing.T) {
+	var nilValue uint32Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int32MapValue_Zero(t *testing.T) {
+	var nilValue uint64Int32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestInt32SliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -1059,6 +6598,451 @@ func TestInt32SliceValue(t *testing.T) {
 		assert.Equal(t, "int32Slice", v.Type())
 	})
 
+}
+
+func TestStringInt32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int32)
+		v := newStringInt32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("hGCMd10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("fLitT:10")
+		assert.Nil(t, err)
+		err = v.Set("qwLUe20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("cgOcz:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int32)
+		v := newStringInt32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("XTbRMa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("GxqPe:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntInt32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int32)
+		v := newIntInt32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int32)
+		v := newIntInt32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int32)
+		v := newInt8Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int32)
+		v := newInt8Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int32)
+		v := newInt16Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int32)
+		v := newInt16Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("0:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int32)
+		v := newInt32Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int32)
+		v := newInt32Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int32)
+		v := newInt64Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("5:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int32)
+		v := newInt64Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintInt32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int32)
+		v := newUintInt32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int32)
+		v := newUintInt32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int32)
+		v := newUint8Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("5:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int32)
+		v := newUint8Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int32)
+		v := newUint16Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("0:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int32)
+		v := newUint16Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int32)
+		v := newUint32Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int32)
+		v := newUint32Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Int32MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int32)
+		v := newUint64Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("5:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int32)
+		v := newUint64Int32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("5:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int32", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestInt64Value_Zero(t *testing.T) {
@@ -1133,6 +7117,105 @@ func TestInt64SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringInt64MapValue_Zero(t *testing.T) {
+	var nilValue stringInt64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringInt64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntInt64MapValue_Zero(t *testing.T) {
+	var nilValue intInt64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intInt64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Int64MapValue_Zero(t *testing.T) {
+	var nilValue int8Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Int64MapValue_Zero(t *testing.T) {
+	var nilValue int16Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Int64MapValue_Zero(t *testing.T) {
+	var nilValue int32Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Int64MapValue_Zero(t *testing.T) {
+	var nilValue int64Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintInt64MapValue_Zero(t *testing.T) {
+	var nilValue uintInt64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintInt64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Int64MapValue_Zero(t *testing.T) {
+	var nilValue uint8Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Int64MapValue_Zero(t *testing.T) {
+	var nilValue uint16Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Int64MapValue_Zero(t *testing.T) {
+	var nilValue uint32Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Int64MapValue_Zero(t *testing.T) {
+	var nilValue uint64Int64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Int64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestInt64SliceValue(t *testing.T) {
 	t.Run("in: [10,20 -1]", func(t *testing.T) {
 		var err error
@@ -1161,6 +7244,451 @@ func TestInt64SliceValue(t *testing.T) {
 		assert.Equal(t, "int64Slice", v.Type())
 	})
 
+}
+
+func TestStringInt64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int64)
+		v := newStringInt64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("ORvAU10")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("kAwww:10")
+		assert.Nil(t, err)
+		err = v.Set("TndUJ20")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("HiQec:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]int64)
+		v := newStringInt64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("bxzvqa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("zlPWy:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntInt64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int64)
+		v := newIntInt64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]int64)
+		v := newIntInt64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int64)
+		v := newInt8Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("6:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]int64)
+		v := newInt8Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int64)
+		v := newInt16Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]int64)
+		v := newInt16Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int64)
+		v := newInt32Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("2:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("7:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]int64)
+		v := newInt32Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("1:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int64)
+		v := newInt64Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("420")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("4:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]int64)
+		v := newInt64Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintInt64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int64)
+		v := newUintInt64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("4:10")
+		assert.Nil(t, err)
+		err = v.Set("320")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("5:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]int64)
+		v := newUintInt64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int64)
+		v := newUint8Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("220")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("2:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]int64)
+		v := newUint8Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int64)
+		v := newUint16Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("1:10")
+		assert.Nil(t, err)
+		err = v.Set("720")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("6:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]int64)
+		v := newUint16Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int64)
+		v := newUint32Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("610")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("3:10")
+		assert.Nil(t, err)
+		err = v.Set("520")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("1:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]int64)
+		v := newUint32Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Int64MapValue(t *testing.T) {
+	t.Run("in: [10 20]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int64)
+		v := newUint64Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10")
+		assert.NotNil(t, err)
+		err = v.Set("7:10")
+		assert.Nil(t, err)
+		err = v.Set("620")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20")
+		assert.NotNil(t, err)
+		err = v.Set("3:20")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]int64)
+		v := newUint64Int64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]int64", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestFloat64Value_Zero(t *testing.T) {
@@ -1215,6 +7743,105 @@ func TestFloat64SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringFloat64MapValue_Zero(t *testing.T) {
+	var nilValue stringFloat64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringFloat64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntFloat64MapValue_Zero(t *testing.T) {
+	var nilValue intFloat64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intFloat64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Float64MapValue_Zero(t *testing.T) {
+	var nilValue int8Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Float64MapValue_Zero(t *testing.T) {
+	var nilValue int16Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Float64MapValue_Zero(t *testing.T) {
+	var nilValue int32Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Float64MapValue_Zero(t *testing.T) {
+	var nilValue int64Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintFloat64MapValue_Zero(t *testing.T) {
+	var nilValue uintFloat64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintFloat64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Float64MapValue_Zero(t *testing.T) {
+	var nilValue uint8Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Float64MapValue_Zero(t *testing.T) {
+	var nilValue uint16Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Float64MapValue_Zero(t *testing.T) {
+	var nilValue uint32Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Float64MapValue_Zero(t *testing.T) {
+	var nilValue uint64Float64MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Float64MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestFloat64SliceValue(t *testing.T) {
 	t.Run("in: [10.2,20.99 3.4]", func(t *testing.T) {
 		var err error
@@ -1243,6 +7870,451 @@ func TestFloat64SliceValue(t *testing.T) {
 		assert.Equal(t, "float64Slice", v.Type())
 	})
 
+}
+
+func TestStringFloat64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[string]float64)
+		v := newStringFloat64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("hTtUT10.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("uWJRG:10.2")
+		assert.Nil(t, err)
+		err = v.Set("iQjOT20.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("cVwHj:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]float64)
+		v := newStringFloat64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("KVtPoa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("VVTYN:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntFloat64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int]float64)
+		v := newIntFloat64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("5:10.2")
+		assert.Nil(t, err)
+		err = v.Set("520.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("5:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]float64)
+		v := newIntFloat64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]float64)
+		v := newInt8Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("0:10.2")
+		assert.Nil(t, err)
+		err = v.Set("620.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("4:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]float64)
+		v := newInt8Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]float64)
+		v := newInt16Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("0:10.2")
+		assert.Nil(t, err)
+		err = v.Set("520.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("1:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]float64)
+		v := newInt16Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("0:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]float64)
+		v := newInt32Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("2:10.2")
+		assert.Nil(t, err)
+		err = v.Set("220.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("4:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]float64)
+		v := newInt32Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]float64)
+		v := newInt64Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("310.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("3:10.2")
+		assert.Nil(t, err)
+		err = v.Set("420.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("3:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]float64)
+		v := newInt64Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintFloat64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]float64)
+		v := newUintFloat64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("7:10.2")
+		assert.Nil(t, err)
+		err = v.Set("620.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("3:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]float64)
+		v := newUintFloat64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]float64)
+		v := newUint8Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("5:10.2")
+		assert.Nil(t, err)
+		err = v.Set("120.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("2:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]float64)
+		v := newUint8Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("0:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]float64)
+		v := newUint16Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("2:10.2")
+		assert.Nil(t, err)
+		err = v.Set("420.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("7:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]float64)
+		v := newUint16Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("7:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]float64)
+		v := newUint32Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("6:10.2")
+		assert.Nil(t, err)
+		err = v.Set("420.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("1:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]float64)
+		v := newUint32Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Float64MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]float64)
+		v := newUint64Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("6:10.2")
+		assert.Nil(t, err)
+		err = v.Set("420.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("4:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]float64", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]float64)
+		v := newUint64Float64MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]float64", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestFloat32Value_Zero(t *testing.T) {
@@ -1297,6 +8369,105 @@ func TestFloat32SliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringFloat32MapValue_Zero(t *testing.T) {
+	var nilValue stringFloat32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringFloat32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntFloat32MapValue_Zero(t *testing.T) {
+	var nilValue intFloat32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intFloat32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8Float32MapValue_Zero(t *testing.T) {
+	var nilValue int8Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16Float32MapValue_Zero(t *testing.T) {
+	var nilValue int16Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32Float32MapValue_Zero(t *testing.T) {
+	var nilValue int32Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64Float32MapValue_Zero(t *testing.T) {
+	var nilValue int64Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintFloat32MapValue_Zero(t *testing.T) {
+	var nilValue uintFloat32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintFloat32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8Float32MapValue_Zero(t *testing.T) {
+	var nilValue uint8Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16Float32MapValue_Zero(t *testing.T) {
+	var nilValue uint16Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32Float32MapValue_Zero(t *testing.T) {
+	var nilValue uint32Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64Float32MapValue_Zero(t *testing.T) {
+	var nilValue uint64Float32MapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64Float32MapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestFloat32SliceValue(t *testing.T) {
 	t.Run("in: [10.2,20.99 3.4]", func(t *testing.T) {
 		var err error
@@ -1325,6 +8496,451 @@ func TestFloat32SliceValue(t *testing.T) {
 		assert.Equal(t, "float32Slice", v.Type())
 	})
 
+}
+
+func TestStringFloat32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[string]float32)
+		v := newStringFloat32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("aWlfV10.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("cjYMc:10.2")
+		assert.Nil(t, err)
+		err = v.Set("wVxDr20.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("nsfUr:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[string]float32)
+		v := newStringFloat32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("CFsVya")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("SzWtb:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntFloat32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int]float32)
+		v := newIntFloat32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("6:10.2")
+		assert.Nil(t, err)
+		err = v.Set("520.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("2:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int]float32)
+		v := newIntFloat32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]float32)
+		v := newInt8Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("0:10.2")
+		assert.Nil(t, err)
+		err = v.Set("520.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("2:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]float32)
+		v := newInt8Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]float32)
+		v := newInt16Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("010.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("7:10.2")
+		assert.Nil(t, err)
+		err = v.Set("020.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("2:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]float32)
+		v := newInt16Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]float32)
+		v := newInt32Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("2:10.2")
+		assert.Nil(t, err)
+		err = v.Set("120.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("4:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]float32)
+		v := newInt32Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]float32)
+		v := newInt64Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("6:10.2")
+		assert.Nil(t, err)
+		err = v.Set("720.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("1:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]float32)
+		v := newInt64Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("3:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintFloat32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]float32)
+		v := newUintFloat32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("0:10.2")
+		assert.Nil(t, err)
+		err = v.Set("420.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("2:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]float32)
+		v := newUintFloat32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]float32)
+		v := newUint8Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("1:10.2")
+		assert.Nil(t, err)
+		err = v.Set("120.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("1:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]float32)
+		v := newUint8Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("5:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]float32)
+		v := newUint16Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("5:10.2")
+		assert.Nil(t, err)
+		err = v.Set("220.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("1:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]float32)
+		v := newUint16Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("6:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]float32)
+		v := newUint32Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("4:10.2")
+		assert.Nil(t, err)
+		err = v.Set("220.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("0:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]float32)
+		v := newUint32Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("4:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64Float32MapValue(t *testing.T) {
+	t.Run("in: [10.2 20.99]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]float32)
+		v := newUint64Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710.2")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10.2")
+		assert.NotNil(t, err)
+		err = v.Set("0:10.2")
+		assert.Nil(t, err)
+		err = v.Set("520.99")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":20.99")
+		assert.NotNil(t, err)
+		err = v.Set("2:20.99")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]float32", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [a]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]float32)
+		v := newUint64Float32MapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7a")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":a")
+		assert.NotNil(t, err)
+		err = v.Set("2:a")
+		assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]float32", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestDurationValue_Zero(t *testing.T) {
@@ -1369,6 +8985,105 @@ func TestDurationSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringDurationMapValue_Zero(t *testing.T) {
+	var nilValue stringDurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringDurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntDurationMapValue_Zero(t *testing.T) {
+	var nilValue intDurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intDurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8DurationMapValue_Zero(t *testing.T) {
+	var nilValue int8DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16DurationMapValue_Zero(t *testing.T) {
+	var nilValue int16DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32DurationMapValue_Zero(t *testing.T) {
+	var nilValue int32DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64DurationMapValue_Zero(t *testing.T) {
+	var nilValue int64DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintDurationMapValue_Zero(t *testing.T) {
+	var nilValue uintDurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintDurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8DurationMapValue_Zero(t *testing.T) {
+	var nilValue uint8DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16DurationMapValue_Zero(t *testing.T) {
+	var nilValue uint16DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32DurationMapValue_Zero(t *testing.T) {
+	var nilValue uint32DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64DurationMapValue_Zero(t *testing.T) {
+	var nilValue uint64DurationMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64DurationMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestDurationSliceValue(t *testing.T) {
 	t.Run("in: [10s,30m 1ms]", func(t *testing.T) {
 		var err error
@@ -1397,6 +9112,451 @@ func TestDurationSliceValue(t *testing.T) {
 		assert.Equal(t, "durationSlice", v.Type())
 	})
 
+}
+
+func TestStringDurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[string]time.Duration)
+		v := newStringDurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("oLEzi10s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("JiWmA:10s")
+		assert.Nil(t, err)
+		err = v.Set("PKvAT30m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("djZyE:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[string]time.Duration)
+		v := newStringDurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("vvmsI3l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("DSJeK:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntDurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[int]time.Duration)
+		v := newIntDurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("210s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("5:10s")
+		assert.Nil(t, err)
+		err = v.Set("130m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("7:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[int]time.Duration)
+		v := newIntDurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("63l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("0:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]time.Duration)
+		v := newInt8DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("0:10s")
+		assert.Nil(t, err)
+		err = v.Set("330m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("0:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]time.Duration)
+		v := newInt8DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("53l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("5:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]time.Duration)
+		v := newInt16DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("510s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("4:10s")
+		assert.Nil(t, err)
+		err = v.Set("230m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("7:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]time.Duration)
+		v := newInt16DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("53l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("1:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]time.Duration)
+		v := newInt32DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("410s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("7:10s")
+		assert.Nil(t, err)
+		err = v.Set("530m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("0:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]time.Duration)
+		v := newInt32DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("63l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("3:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]time.Duration)
+		v := newInt64DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("110s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("3:10s")
+		assert.Nil(t, err)
+		err = v.Set("130m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("7:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]time.Duration)
+		v := newInt64DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("73l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("1:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintDurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]time.Duration)
+		v := newUintDurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("6:10s")
+		assert.Nil(t, err)
+		err = v.Set("730m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("4:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]time.Duration)
+		v := newUintDurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("03l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("3:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]time.Duration)
+		v := newUint8DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("2:10s")
+		assert.Nil(t, err)
+		err = v.Set("730m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("4:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]time.Duration)
+		v := newUint8DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("03l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("6:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]time.Duration)
+		v := newUint16DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("4:10s")
+		assert.Nil(t, err)
+		err = v.Set("230m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("6:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]time.Duration)
+		v := newUint16DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("73l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("4:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]time.Duration)
+		v := newUint32DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("2:10s")
+		assert.Nil(t, err)
+		err = v.Set("630m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("6:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]time.Duration)
+		v := newUint32DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("23l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("1:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64DurationMapValue(t *testing.T) {
+	t.Run("in: [10s 30m]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]time.Duration)
+		v := newUint64DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("710s")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":10s")
+		assert.NotNil(t, err)
+		err = v.Set("2:10s")
+		assert.Nil(t, err)
+		err = v.Set("330m")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":30m")
+		assert.NotNil(t, err)
+		err = v.Set("5:30m")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]time.Duration", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [3l]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]time.Duration)
+		v := newUint64DurationMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("33l")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":3l")
+		assert.NotNil(t, err)
+		err = v.Set("3:3l")
+		assert.EqualError(t, err, "time: unknown unit l in duration 3l")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]time.Duration", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestIPValue_Zero(t *testing.T) {
@@ -1441,6 +9601,105 @@ func TestIPSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringIPMapValue_Zero(t *testing.T) {
+	var nilValue stringIPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringIPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntIPMapValue_Zero(t *testing.T) {
+	var nilValue intIPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intIPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8IPMapValue_Zero(t *testing.T) {
+	var nilValue int8IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16IPMapValue_Zero(t *testing.T) {
+	var nilValue int16IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32IPMapValue_Zero(t *testing.T) {
+	var nilValue int32IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64IPMapValue_Zero(t *testing.T) {
+	var nilValue int64IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintIPMapValue_Zero(t *testing.T) {
+	var nilValue uintIPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintIPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8IPMapValue_Zero(t *testing.T) {
+	var nilValue uint8IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16IPMapValue_Zero(t *testing.T) {
+	var nilValue uint16IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32IPMapValue_Zero(t *testing.T) {
+	var nilValue uint32IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64IPMapValue_Zero(t *testing.T) {
+	var nilValue uint64IPMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64IPMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestIPSliceValue(t *testing.T) {
 	t.Run("in: [127.0.0.1,127.0.0.2 127.0.0.3]", func(t *testing.T) {
 		var err error
@@ -1469,6 +9728,451 @@ func TestIPSliceValue(t *testing.T) {
 		assert.Equal(t, "ipSlice", v.Type())
 	})
 
+}
+
+func TestStringIPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[string]net.IP)
+		v := newStringIPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("iyeoU127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("qzMJG:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("HOxYT127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("sbfqA:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[string]net.IP)
+		v := newStringIPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("qtXjk127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("VItIB:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntIPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int]net.IP)
+		v := newIntIPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("6127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("5:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int]net.IP)
+		v := newIntIPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("1:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]net.IP)
+		v := newInt8IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("4:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("1127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("5:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]net.IP)
+		v := newInt8IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("4:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]net.IP)
+		v := newInt16IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("1:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("2127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("1:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]net.IP)
+		v := newInt16IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("6:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]net.IP)
+		v := newInt32IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("3:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("5127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]net.IP)
+		v := newInt32IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]net.IP)
+		v := newInt64IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("7:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("7127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]net.IP)
+		v := newInt64IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintIPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]net.IP)
+		v := newUintIPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("7127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("1:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]net.IP)
+		v := newUintIPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("6:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]net.IP)
+		v := newUint8IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("6:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("5127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("4:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]net.IP)
+		v := newUint8IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("2:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]net.IP)
+		v := newUint16IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("0:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("3127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("4:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]net.IP)
+		v := newUint16IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("0:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]net.IP)
+		v := newUint32IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("6:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("2127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("1:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]net.IP)
+		v := newUint32IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("5:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64IPMapValue(t *testing.T) {
+	t.Run("in: [127.0.0.1 127.0.0.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]net.IP)
+		v := newUint64IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7127.0.0.1")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1")
+		assert.NotNil(t, err)
+		err = v.Set("1:127.0.0.1")
+		assert.Nil(t, err)
+		err = v.Set("2127.0.0.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.3")
+		assert.NotNil(t, err)
+		err = v.Set("7:127.0.0.3")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]net.IP", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [127.0.0.1.3]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]net.IP)
+		v := newUint64IPMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5127.0.0.1.3")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":127.0.0.1.3")
+		assert.NotNil(t, err)
+		err = v.Set("7:127.0.0.1.3")
+		assert.EqualError(t, err, "failed to parse IP: \"127.0.0.1.3\"")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]net.IP", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestHexBytesValue_Zero(t *testing.T) {
@@ -1533,6 +10237,105 @@ func TestHexBytesSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringHexBytesMapValue_Zero(t *testing.T) {
+	var nilValue stringHexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringHexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntHexBytesMapValue_Zero(t *testing.T) {
+	var nilValue intHexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intHexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue int8HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue int16HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue int32HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue int64HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintHexBytesMapValue_Zero(t *testing.T) {
+	var nilValue uintHexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintHexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue uint8HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue uint16HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue uint32HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64HexBytesMapValue_Zero(t *testing.T) {
+	var nilValue uint64HexBytesMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64HexBytesMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestHexBytesSliceValue(t *testing.T) {
 	t.Run("in: [ff,aa,bb cc]", func(t *testing.T) {
 		var err error
@@ -1561,6 +10364,451 @@ func TestHexBytesSliceValue(t *testing.T) {
 		assert.Equal(t, "hexBytesSlice", v.Type())
 	})
 
+}
+
+func TestStringHexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[string]HexBytes)
+		v := newStringHexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("OxKmRff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("NwKDO:ff")
+		assert.Nil(t, err)
+		err = v.Set("UnXzmaa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("DikdJ:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[string]HexBytes)
+		v := newStringHexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("PukQLgg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("axAHz:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntHexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[int]HexBytes)
+		v := newIntHexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("4:ff")
+		assert.Nil(t, err)
+		err = v.Set("5aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("6:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[int]HexBytes)
+		v := newIntHexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("7:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]HexBytes)
+		v := newInt8HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("0:ff")
+		assert.Nil(t, err)
+		err = v.Set("3aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("6:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]HexBytes)
+		v := newInt8HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("5:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]HexBytes)
+		v := newInt16HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("1:ff")
+		assert.Nil(t, err)
+		err = v.Set("2aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("6:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]HexBytes)
+		v := newInt16HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("2:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]HexBytes)
+		v := newInt32HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("6:ff")
+		assert.Nil(t, err)
+		err = v.Set("4aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("4:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]HexBytes)
+		v := newInt32HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("3:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]HexBytes)
+		v := newInt64HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("5:ff")
+		assert.Nil(t, err)
+		err = v.Set("0aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("5:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]HexBytes)
+		v := newInt64HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("6:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintHexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]HexBytes)
+		v := newUintHexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("1:ff")
+		assert.Nil(t, err)
+		err = v.Set("7aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("6:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]HexBytes)
+		v := newUintHexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("6:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]HexBytes)
+		v := newUint8HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("1:ff")
+		assert.Nil(t, err)
+		err = v.Set("5aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("1:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]HexBytes)
+		v := newUint8HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("5:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]HexBytes)
+		v := newUint16HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("4:ff")
+		assert.Nil(t, err)
+		err = v.Set("6aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("5:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]HexBytes)
+		v := newUint16HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("6:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]HexBytes)
+		v := newUint32HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("7:ff")
+		assert.Nil(t, err)
+		err = v.Set("5aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("6:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]HexBytes)
+		v := newUint32HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("5:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64HexBytesMapValue(t *testing.T) {
+	t.Run("in: [ff aa]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]HexBytes)
+		v := newUint64HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1ff")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":ff")
+		assert.NotNil(t, err)
+		err = v.Set("2:ff")
+		assert.Nil(t, err)
+		err = v.Set("6aa")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":aa")
+		assert.NotNil(t, err)
+		err = v.Set("4:aa")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]HexBytes", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [gg]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]HexBytes)
+		v := newUint64HexBytesMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5gg")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":gg")
+		assert.NotNil(t, err)
+		err = v.Set("3:gg")
+		assert.EqualError(t, err, "encoding/hex: invalid byte: U+0067 'g'")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]HexBytes", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestRegexpValue_Zero(t *testing.T) {
@@ -1605,6 +10853,105 @@ func TestRegexpSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringRegexpMapValue_Zero(t *testing.T) {
+	var nilValue stringRegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringRegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntRegexpMapValue_Zero(t *testing.T) {
+	var nilValue intRegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intRegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8RegexpMapValue_Zero(t *testing.T) {
+	var nilValue int8RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16RegexpMapValue_Zero(t *testing.T) {
+	var nilValue int16RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32RegexpMapValue_Zero(t *testing.T) {
+	var nilValue int32RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64RegexpMapValue_Zero(t *testing.T) {
+	var nilValue int64RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintRegexpMapValue_Zero(t *testing.T) {
+	var nilValue uintRegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintRegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8RegexpMapValue_Zero(t *testing.T) {
+	var nilValue uint8RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16RegexpMapValue_Zero(t *testing.T) {
+	var nilValue uint16RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32RegexpMapValue_Zero(t *testing.T) {
+	var nilValue uint32RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64RegexpMapValue_Zero(t *testing.T) {
+	var nilValue uint64RegexpMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64RegexpMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestRegexpSliceValue(t *testing.T) {
 	t.Run("in: [abc.*,def.* xyz.*]", func(t *testing.T) {
 		var err error
@@ -1633,6 +10980,451 @@ func TestRegexpSliceValue(t *testing.T) {
 		assert.Equal(t, "regexpSlice", v.Type())
 	})
 
+}
+
+func TestStringRegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[string]*regexp.Regexp)
+		v := newStringRegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("LLBLbabc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("uEhZF:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("xQuvAxyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("pLIPk:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[string]*regexp.Regexp)
+		v := newStringRegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("PzXDP[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("izdhp:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntRegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[int]*regexp.Regexp)
+		v := newIntRegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("3:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("2xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("1:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[int]*regexp.Regexp)
+		v := newIntRegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("7:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]*regexp.Regexp)
+		v := newInt8RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("4:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("2xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("7:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]*regexp.Regexp)
+		v := newInt8RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("0:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]*regexp.Regexp)
+		v := newInt16RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("0:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("3xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("3:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]*regexp.Regexp)
+		v := newInt16RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("4:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]*regexp.Regexp)
+		v := newInt32RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("6:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("2xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("4:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]*regexp.Regexp)
+		v := newInt32RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("2:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]*regexp.Regexp)
+		v := newInt64RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("4:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("4xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("7:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]*regexp.Regexp)
+		v := newInt64RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("7[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("0:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintRegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]*regexp.Regexp)
+		v := newUintRegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("5:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("6xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("4:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]*regexp.Regexp)
+		v := newUintRegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("2:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]*regexp.Regexp)
+		v := newUint8RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("1abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("0:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("6xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("5:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]*regexp.Regexp)
+		v := newUint8RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("5[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("5:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]*regexp.Regexp)
+		v := newUint16RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("6abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("2:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("4xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("1:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]*regexp.Regexp)
+		v := newUint16RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("3[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("3:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]*regexp.Regexp)
+		v := newUint32RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("2:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("3xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("6:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]*regexp.Regexp)
+		v := newUint32RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("4[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("3:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64RegexpMapValue(t *testing.T) {
+	t.Run("in: [abc.* xyz.*]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]*regexp.Regexp)
+		v := newUint64RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("0abc.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":abc.*")
+		assert.NotNil(t, err)
+		err = v.Set("6:abc.*")
+		assert.Nil(t, err)
+		err = v.Set("3xyz.*")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":xyz.*")
+		assert.NotNil(t, err)
+		err = v.Set("5:xyz.*")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]*regexp.Regexp", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [[abc]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]*regexp.Regexp)
+		v := newUint64RegexpMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("2[abc")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":[abc")
+		assert.NotNil(t, err)
+		err = v.Set("4:[abc")
+		assert.EqualError(t, err, "error parsing regexp: missing closing ]: `[abc`")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]*regexp.Regexp", v.Type())
+		assert.Empty(t, v.String())
+	})
 }
 
 func TestTCPAddrValue_Zero(t *testing.T) {
@@ -1809,6 +11601,105 @@ func TestIPNetSliceValue_Zero(t *testing.T) {
 	assert.Nil(t, nilObj.Get())
 }
 
+func TestStringIPNetMapValue_Zero(t *testing.T) {
+	var nilValue stringIPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*stringIPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestIntIPNetMapValue_Zero(t *testing.T) {
+	var nilValue intIPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*intIPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt8IPNetMapValue_Zero(t *testing.T) {
+	var nilValue int8IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int8IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt16IPNetMapValue_Zero(t *testing.T) {
+	var nilValue int16IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int16IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt32IPNetMapValue_Zero(t *testing.T) {
+	var nilValue int32IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int32IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestInt64IPNetMapValue_Zero(t *testing.T) {
+	var nilValue int64IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*int64IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUintIPNetMapValue_Zero(t *testing.T) {
+	var nilValue uintIPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uintIPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint8IPNetMapValue_Zero(t *testing.T) {
+	var nilValue uint8IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint8IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint16IPNetMapValue_Zero(t *testing.T) {
+	var nilValue uint16IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint16IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint32IPNetMapValue_Zero(t *testing.T) {
+	var nilValue uint32IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint32IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
+func TestUint64IPNetMapValue_Zero(t *testing.T) {
+	var nilValue uint64IPNetMapValue
+	assert.Equal(t, "", nilValue.String())
+	assert.Nil(t, nilValue.Get())
+	nilObj := (*uint64IPNetMapValue)(nil)
+	assert.Equal(t, "", nilObj.String())
+	assert.Nil(t, nilObj.Get())
+}
+
 func TestIPNetSliceValue(t *testing.T) {
 	t.Run("in: [0.0.0.0/0,1.2.3.4/8 255.255.255.255/19]", func(t *testing.T) {
 		var err error
@@ -1837,4 +11728,455 @@ func TestIPNetSliceValue(t *testing.T) {
 		assert.Equal(t, "ipNetSlice", v.Type())
 	})
 
+}
+
+func TestStringIPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[string]net.IPNet)
+		v := newStringIPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("EqCuP0.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("DMNeu:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("iKTxR255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("INKSz:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[string]net.IPNet)
+		v := newStringIPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("jAIvx0.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set("BRDRL:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[string]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestIntIPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[int]net.IPNet)
+		v := newIntIPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("00.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("6:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("0255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("3:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[int]net.IPNet)
+		v := newIntIPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("60.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("4:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt8IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]net.IPNet)
+		v := newInt8IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("70.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("6:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("6255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("5:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[int8]net.IPNet)
+		v := newInt8IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("10.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("7:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int8]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt16IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]net.IPNet)
+		v := newInt16IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("10.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("0:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("5255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("7:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[int16]net.IPNet)
+		v := newInt16IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("40.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("2:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int16]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt32IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]net.IPNet)
+		v := newInt32IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("00.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("2:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("7255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("1:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[int32]net.IPNet)
+		v := newInt32IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("10.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("2:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int32]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestInt64IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]net.IPNet)
+		v := newInt64IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("10.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("5:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("5255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("2:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[int64]net.IPNet)
+		v := newInt64IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("10.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("1:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[int64]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUintIPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]net.IPNet)
+		v := newUintIPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("40.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("7:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("1255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("7:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[uint]net.IPNet)
+		v := newUintIPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("60.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("2:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint8IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]net.IPNet)
+		v := newUint8IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("70.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("1:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("4255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("5:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[uint8]net.IPNet)
+		v := newUint8IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("10.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("6:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint8]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint16IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]net.IPNet)
+		v := newUint16IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("40.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("7:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("6255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("2:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[uint16]net.IPNet)
+		v := newUint16IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("40.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("4:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint16]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint32IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]net.IPNet)
+		v := newUint32IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("70.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("4:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("1255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("2:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[uint32]net.IPNet)
+		v := newUint32IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("50.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("5:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint32]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestUint64IPNetMapValue(t *testing.T) {
+	t.Run("in: [0.0.0.0/0 255.255.255.255/19]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]net.IPNet)
+		v := newUint64IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("30.0.0.0/0")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.0/0")
+		assert.NotNil(t, err)
+		err = v.Set("1:0.0.0.0/0")
+		assert.Nil(t, err)
+		err = v.Set("2255.255.255.255/19")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":255.255.255.255/19")
+		assert.NotNil(t, err)
+		err = v.Set("7:255.255.255.255/19")
+		assert.Nil(t, err)
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]net.IPNet", v.Type())
+		assert.NotEmpty(t, v.String())
+	})
+	t.Run("in: [0.0.0.256/16]", func(t *testing.T) {
+		var err error
+		a := make(map[uint64]net.IPNet)
+		v := newUint64IPNetMapValue(&a)
+		assert.Equal(t, parseGeneratedMap(&a), v)
+		assert.True(t, v.IsCumulative())
+		err = v.Set("50.0.0.256/16")
+		assert.EqualError(t, err, "invalid map flag syntax, use -map=key1:val1")
+		err = v.Set(":0.0.0.256/16")
+		assert.NotNil(t, err)
+		err = v.Set("1:0.0.0.256/16")
+		assert.EqualError(t, err, "invalid CIDR address: 0.0.0.256/16")
+		assert.Equal(t, a, v.Get())
+		assert.Equal(t, "map[uint64]net.IPNet", v.Type())
+		assert.Empty(t, v.String())
+	})
+}
+
+func TestParseGeneratedMap_NilDefault(t *testing.T) {
+	a := new(bool)
+	v := parseGeneratedMap(a)
+	assert.Nil(t, v)
 }
