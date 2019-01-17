@@ -1,8 +1,13 @@
 language: go
 
+env:
+  matrix:
+  - GO111MODULE=on
+
 go:
   - 1.8.x
   - 1.9.x
+  - 1.11.x
   - tip
 
 before_install:
