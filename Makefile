@@ -29,8 +29,8 @@ lint:
 	@test -z "$$(golint -min_confidence 0.3 ./... | tee /dev/stderr)"
 
 check:
-	@echo "$(OK_COLOR)Run golangci-lint(NO_COLOR)"
-	@golangci-lint run --no-config --exclude-use-default=false --max-same-issues=10 --disable=golint --enable=megacheck --enable=interfacer  --enable=goconst --enable=misspell --enable=unparam --enable=goimports --disable=errcheck --disable=ineffassign  --disable=gocyclo --disable=gas
+	@echo "$(OK_COLOR)Run golangci-lint$(NO_COLOR)"
+	@golangci-lint run --no-config --exclude-use-default=true --max-same-issues=10 --disable=gosimple --disable=golint --enable=megacheck --enable=interfacer  --enable=goconst --enable=misspell --enable=unparam --enable=goimports --disable=errcheck --disable=ineffassign  --disable=gocyclo --disable=gas
 
 vet:
 	@echo "$(OK_COLOR)Run vet$(NO_COLOR)"
