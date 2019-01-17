@@ -29,8 +29,8 @@ lint:
 	@test -z "$$(golint -min_confidence 0.3 ./... | tee /dev/stderr)"
 
 check:
-	@echo "$(OK_COLOR)Run metalinter$(NO_COLOR)"
-	@gometalinter --deadline 60s --enable lll --line-length=120 --enable goimports --disable golint --disable vet --disable gocyclo
+	@echo "$(OK_COLOR)Run golangci-lint(NO_COLOR)"
+	@golangci-lint run --no-config --exclude-use-default=false --max-same-issues=10 --disable=golint --enable=megacheck --enable=interfacer  --enable=goconst --enable=misspell --enable=unparam --enable=goimports --disable=errcheck --disable=ineffassign  --disable=gocyclo --disable=gas
 
 vet:
 	@echo "$(OK_COLOR)Run vet$(NO_COLOR)"
@@ -56,5 +56,6 @@ tools:
 	@echo "$(OK_COLOR)Install tools$(NO_COLOR)"
 	go get -u github.com/warmans/golocc
 	go get -u github.com/divan/depscheck
-	go get -u github.com/alecthomas/gometalinter
-	gometalinter --install --update
+	GO111MODULE=off go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
+	cd ${GOPATH}/src/github.com/golangci/golangci-lint/cmd/golangci-lint
+    go install -ldflags "-X 'main.version=$(git describe --tags)' -X 'main.commit=$(git rev-parse --short HEAD)' -X 'main.date=$(date)'"

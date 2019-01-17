@@ -7,14 +7,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"os"
 	"os/exec"
-	"strings"
 	"reflect"
+	"strings"
 	"text/template"
 	"unicode"
 	"unicode/utf8"
-	"math/rand"
 )
 
 const (
