@@ -132,7 +132,7 @@ func TestParse(t *testing.T) {
 				return nil
 			}
 			cli.ErrWriter = ioutil.Discard
-			cliApp.OnUsageError = func(c *cli.Context, err error, isSubcommand bool) error {
+			cliApp.OnUsageError = func(_ *cli.Context, err error, _ bool) error {
 				return err
 			}
 
