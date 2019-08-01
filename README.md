@@ -221,3 +221,8 @@ func Flatten(val bool)
 ## Known issues
 
  - kingpin doesn't pass value for boolean arguments. Counter can't get initial value from arguments.
+ 
+## Similar projects
+
+ * https://github.com/jaffee/commandeer
+ * https://github.com/anacrolix/tagflag
