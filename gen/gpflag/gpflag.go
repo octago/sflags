@@ -27,8 +27,7 @@ func GenerateTo(src []*sflags.Flag, dst flagSet) {
 		}
 		flag.Hidden = srcFlag.Hidden
 		if srcFlag.Deprecated {
-			// we use Usage as Deprecated message for a pflag
-			flag.Deprecated = srcFlag.Usage
+			flag.Deprecated = srcFlag.DeprecatedNotice
 			if flag.Deprecated == "" {
 				flag.Deprecated = "Deprecated"
 			}
