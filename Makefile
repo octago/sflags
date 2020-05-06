@@ -56,6 +56,7 @@ tools:
 	@echo "$(OK_COLOR)Install tools$(NO_COLOR)"
 	GO111MODULE=off go get -u github.com/warmans/golocc
 	GO111MODULE=off go get -u github.com/divan/depscheck
-	GO111MODULE=off go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
-	cd ${GOPATH}/src/github.com/golangci/golangci-lint/cmd/golangci-lint
-	go install -ldflags "-X 'main.version=$(git describe --tags)' -X 'main.commit=$(git rev-parse --short HEAD)' -X 'main.date=$(date)'"
+	# golint.go:21:14: l.LintPkg undefined (type *"github.com/golangci/lint-1".Linter has no field or method LintPkg)
+	# gomnd.go:13:6: cannot use magic_numbers.Analyzer (type *"github.com/tommy-muehle/go-mnd/vendor/golang.org/x/tools/go/analysis".Analyzer)
+	# 	as type *"golang.org/x/tools/go/analysis".Analyzer in slice literal
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.26.0
