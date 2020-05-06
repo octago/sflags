@@ -26,7 +26,7 @@ type config struct {
 	HTTP       httpConfig
 	Regexp     *regexp.Regexp
 	Count      sflags.Counter
-	OldFlag    string `flag:",deprecated" desc:"use other flag instead"`
+	OldFlag    string `flag:",deprecated" desc:"Yet another flag" deprecated:"use other flag instead"`
 	HiddenFlag string `flag:",hidden"`
 }
 

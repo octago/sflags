@@ -22,7 +22,7 @@ type simple struct {
 func TestParseStruct(t *testing.T) {
 	simpleCfg := &struct {
 		Name  string `desc:"name description" env:"-"`
-		Name2 string `flag:"name_two t,hidden,deprecated"`
+		Name2 string `flag:"name_two t,hidden,deprecated" deprecated:"use other flag instead"`
 		Name3 string `env:"NAME_THREE"`
 		Name4 *string
 		Name5 string `flag:"-"`
@@ -127,13 +127,14 @@ func TestParseStruct(t *testing.T) {
 					Usage:    "name description",
 				},
 				{
-					Name:       "name_two",
-					Short:      "t",
-					EnvName:    "NAME_TWO",
-					DefValue:   "name2_value",
-					Value:      newStringValue(&simpleCfg.Name2),
-					Hidden:     true,
-					Deprecated: true,
+					Name:             "name_two",
+					Short:            "t",
+					EnvName:          "NAME_TWO",
+					DefValue:         "name2_value",
+					Value:            newStringValue(&simpleCfg.Name2),
+					Hidden:           true,
+					Deprecated:       true,
+					DeprecatedNotice: "use other flag instead",
 				},
 				{
 					Name:     "name3",
@@ -174,13 +175,14 @@ func TestParseStruct(t *testing.T) {
 					Usage:    "name description",
 				},
 				{
-					Name:       "name_two",
-					Short:      "t",
-					EnvName:    "PP|NAME_TWO",
-					DefValue:   "name2_value",
-					Value:      newStringValue(&simpleCfg.Name2),
-					Hidden:     true,
-					Deprecated: true,
+					Name:             "name_two",
+					Short:            "t",
+					EnvName:          "PP|NAME_TWO",
+					DefValue:         "name2_value",
+					Value:            newStringValue(&simpleCfg.Name2),
+					Hidden:           true,
+					Deprecated:       true,
+					DeprecatedNotice: "use other flag instead",
 				},
 				{
 					Name:     "name3",

@@ -7,6 +7,7 @@ import (
 )
 
 const (
+	defaultDeprTag     = "deprecated"
 	defaultDescTag     = "desc"
 	defaultFlagTag     = "flag"
 	defaultEnvTag      = "env"
@@ -22,6 +23,7 @@ const (
 type ValidateFunc func(val string, field reflect.StructField, cfg interface{}) error
 
 type opts struct {
+	deprTag     string
 	descTag     string
 	flagTag     string
 	prefix      string
@@ -82,6 +84,7 @@ func hasOption(options []string, option string) bool {
 
 func defOpts() opts {
 	return opts{
+		deprTag:     defaultDeprTag,
 		descTag:     defaultDescTag,
 		flagTag:     defaultFlagTag,
 		flagDivider: defaultFlagDivider,
@@ -249,6 +252,7 @@ fields:
 
 		flag.EnvName = parseEnv(flag.Name, field, opt)
 		flag.Usage = field.Tag.Get(opt.descTag)
+		flag.DeprecatedNotice = field.Tag.Get(opt.deprTag)
 		prefix := flag.Name + opt.flagDivider
 		if field.Anonymous && opt.flatten {
 			prefix = opt.prefix
