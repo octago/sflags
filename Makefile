@@ -59,4 +59,4 @@ tools:
 	# golint.go:21:14: l.LintPkg undefined (type *"github.com/golangci/lint-1".Linter has no field or method LintPkg)
 	# gomnd.go:13:6: cannot use magic_numbers.Analyzer (type *"github.com/tommy-muehle/go-mnd/vendor/golang.org/x/tools/go/analysis".Analyzer)
 	# 	as type *"golang.org/x/tools/go/analysis".Analyzer in slice literal
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.26.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${GOPATH}/bin v1.26.0
